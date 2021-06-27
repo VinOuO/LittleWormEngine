@@ -15,7 +15,7 @@ class Game
         Collider_Mesh.AddComponent<Transform>();
         Collider_Mesh.AddComponent<BoxCollider>();
         Collider_Mesh.AddCustomComponent<Test_Collider>();
-        DesignerHandler.Add_GameObject(Collider_Mesh);
+        DesignerHandler.AddGameObject(Collider_Mesh);
         /*
         GameObject Cam = new GameObject("Camera");
         Cam.AddComponent<Camera>();

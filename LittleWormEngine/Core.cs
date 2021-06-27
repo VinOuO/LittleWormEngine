@@ -281,7 +281,7 @@ namespace LittleWormEngine
                             break;
                     }
                 }
-                DesignerHandler.Add_GameObject(_GameObject);
+                DesignerHandler.AddGameObject(_GameObject);
             }
         }
 

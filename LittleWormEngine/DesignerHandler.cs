@@ -9,7 +9,7 @@ namespace LittleWormEngine
     {
         public static int ChoosingGameObjectID = 1;
 
-        public static void Add_GameObject(GameObject _GameObject)
+        public static void AddGameObject(GameObject _GameObject)
         {
             Core.GameObjects.Add(_GameObject);
         }
