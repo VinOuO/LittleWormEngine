@@ -68,6 +68,17 @@ namespace LittleWormEngine.Renderer
                 Vertices = _Vertices;
                 Indices = _Indices;
             }
+
+            public void Add_MeshData(MeshData _MeshData)
+            {
+                uint _Temp_VerticesNum = (uint)Vertices.Count;
+                Vertices.AddRange(_MeshData.Vertices);
+                for(int i = 0; i < _MeshData.Indices.Count; i++)
+                {
+                    _MeshData.Indices[i] += _Temp_VerticesNum;
+                }
+                Indices.AddRange(_MeshData.Indices);
+            }
         }
 
         public static MeshData Get_LineMesh(Vector3 _StartPos, Vector3 _EndPos, float _Radius)
@@ -78,29 +89,36 @@ namespace LittleWormEngine.Renderer
 
             List<Vertex> _Vertices = new List<Vertex>();
             List<uint> _Indices = new List<uint>();
-
+            Vector3 _Temp = _EndPos - _StartPos;
             _Vertices.Add(new Vertex(new Vector3(_StartPos)));
             for (int i = 1; i <= _SectorCount + 1; i++)
             {
                 _SectorAngle = i * _SectorStep;
                 Vector3 _Temp_Vec3 = new Vector3((float)Math.Cos(_SectorAngle) * _Radius, (float)Math.Sin(_SectorAngle) * _Radius, 0);
-                float _Temp_Angle = 0;
-
-                Console.WriteLine((float)Mathematics.Math_of_Rotation.ZAngle_between(_StartPos, _EndPos));
-                _Temp_Angle = (float)Mathematics.Math_of_Rotation.ZAngle_between(_StartPos, _EndPos);
+                float _Temp_Angle;
+                //if (_Temp.x == 0 && _Temp.y == 0 && _Temp.z > 0)
+                    //Console.WriteLine((int)Mathematics.Math_of_Rotation.ZAngle_between(_Temp, Vector3.Backward));
+                _Temp_Angle = (float)Mathematics.Math_of_Rotation.ZAngle_between(_Temp, Vector3.Backward);
                 _Temp_Vec3 *= Matrix3.RotateZ(_Temp_Angle);
-
-                Console.WriteLine((float)Mathematics.Math_of_Rotation.YAngle_between(Matrix3.RotateZ(_Temp_Angle) * _StartPos, Matrix3.RotateZ(_Temp_Angle) * _EndPos));
-                _Temp_Angle = (float)Mathematics.Math_of_Rotation.YAngle_between(Matrix3.RotateZ(_Temp_Angle) * _StartPos, Matrix3.RotateZ(_Temp_Angle) * _EndPos);
+                //if (_Temp.x == 0 && _Temp.y == 0 && _Temp.z > 0)
+                    //Console.WriteLine((int)Mathematics.Math_of_Rotation.YAngle_between(Matrix3.RotateZ(_Temp_Angle) * (_Temp), Vector3.Backward));
+                _Temp_Angle = (float)Mathematics.Math_of_Rotation.YAngle_between(Matrix3.RotateZ(_Temp_Angle) * (_Temp), Vector3.Backward);
                 _Temp_Vec3 *= Matrix3.RotateY(_Temp_Angle);
-
-                Console.WriteLine((float)Mathematics.Math_of_Rotation.XAngle_between(Matrix3.RotateZ(_Temp_Angle) * (Matrix3.RotateY(_Temp_Angle) * _StartPos), Matrix3.RotateZ(_Temp_Angle) * (Matrix3.RotateY(_Temp_Angle) * _EndPos)));
-                _Temp_Angle = (float)Mathematics.Math_of_Rotation.XAngle_between(Matrix3.RotateZ(_Temp_Angle) * (Matrix3.RotateY(_Temp_Angle) * _StartPos), Matrix3.RotateZ(_Temp_Angle) * (Matrix3.RotateY(_Temp_Angle) * _EndPos));
+                //if (_Temp.x == 0 && _Temp.y == 0 && _Temp.z > 0)
+                    //Console.WriteLine((int)Mathematics.Math_of_Rotation.XAngle_between(Matrix3.RotateY(_Temp_Angle) * (Matrix3.RotateZ(_Temp_Angle) * (_Temp)), Vector3.Backward));
+                _Temp_Angle = (float)Mathematics.Math_of_Rotation.XAngle_between(Matrix3.RotateY(_Temp_Angle) * (Matrix3.RotateZ(_Temp_Angle) * (_Temp)), Vector3.Backward);
                 _Temp_Vec3 *= Matrix3.RotateX(_Temp_Angle);
                 _Vertices.Add(new Vertex(_Temp_Vec3 + _StartPos));
                 if(i >= 2)
                 {
-                    _Indices.Add(0); _Indices.Add((uint)i); _Indices.Add((uint)i - 1);
+                    if(Mathematics.Math_of_Rotation.RoundAngle(Mathematics.Math_of_Rotation.Angle_between(Mathematics.Math_of_Rotation.Cross(_Vertices[i].Position,_Vertices[i-1].Position), _Temp)) < 180)
+                    {
+                        _Indices.Add(0); _Indices.Add((uint)i - 1); _Indices.Add((uint)i);
+                    }
+                    else
+                    {
+                        _Indices.Add(0); _Indices.Add((uint)i); _Indices.Add((uint)i - 1);
+                    }
                 }
             }
             
@@ -110,32 +128,42 @@ namespace LittleWormEngine.Renderer
             {
                 _SectorAngle = i * _SectorStep;
                 Vector3 _Temp_Vec3 = new Vector3((float)Math.Cos(_SectorAngle) * _Radius, (float)Math.Sin(_SectorAngle) * _Radius, 0);
-                float _Temp_Angle = 0;
-
-                Console.WriteLine((float)Mathematics.Math_of_Rotation.ZAngle_between(_StartPos, _EndPos));
-                _Temp_Angle = (float)Mathematics.Math_of_Rotation.ZAngle_between(_StartPos, _EndPos);
+                float _Temp_Angle;
+                if (_Temp.x == 0 && _Temp.y == 0 && _Temp.z > 0)
+                    Console.WriteLine((int)Mathematics.Math_of_Rotation.ZAngle_between(_Temp, Vector3.Backward));
+                _Temp_Angle = (float)Mathematics.Math_of_Rotation.ZAngle_between(_Temp, Vector3.Backward);
                 _Temp_Vec3 *= Matrix3.RotateZ(_Temp_Angle);
-
-                Console.WriteLine((float)Mathematics.Math_of_Rotation.YAngle_between(Matrix3.RotateZ(_Temp_Angle) * _StartPos, Matrix3.RotateZ(_Temp_Angle) * _EndPos));
-                _Temp_Angle = (float)Mathematics.Math_of_Rotation.YAngle_between(Matrix3.RotateZ(_Temp_Angle) * _StartPos, Matrix3.RotateZ(_Temp_Angle) * _EndPos);
+                if (_Temp.x == 0 && _Temp.y == 0 && _Temp.z > 0)
+                    Console.WriteLine((int)Mathematics.Math_of_Rotation.YAngle_between(Matrix3.RotateZ(_Temp_Angle) * _Temp, Vector3.Backward, 0));
+                _Temp_Angle = (float)Mathematics.Math_of_Rotation.YAngle_between(Matrix3.RotateZ(_Temp_Angle) * _Temp, Vector3.Backward);
                 _Temp_Vec3 *= Matrix3.RotateY(_Temp_Angle);
-
-                Console.WriteLine((float)Mathematics.Math_of_Rotation.XAngle_between(Matrix3.RotateZ(_Temp_Angle) * (Matrix3.RotateY(_Temp_Angle) * _StartPos), Matrix3.RotateZ(_Temp_Angle) * (Matrix3.RotateY(_Temp_Angle) * _EndPos)));
-                _Temp_Angle = (float)Mathematics.Math_of_Rotation.XAngle_between(Matrix3.RotateZ(_Temp_Angle) * (Matrix3.RotateY(_Temp_Angle) * _StartPos), Matrix3.RotateZ(_Temp_Angle) * (Matrix3.RotateY(_Temp_Angle) * _EndPos));
+                if (_Temp.x == 0 && _Temp.y == 0 && _Temp.z > 0)
+                    Console.WriteLine((int)Mathematics.Math_of_Rotation.XAngle_between(Matrix3.RotateY(_Temp_Angle) * (Matrix3.RotateZ(_Temp_Angle) * _Temp), Vector3.Backward, 0));
+                _Temp_Angle = (float)Mathematics.Math_of_Rotation.XAngle_between(Matrix3.RotateY(_Temp_Angle) * (Matrix3.RotateZ(_Temp_Angle) * _Temp), Vector3.Backward);
                 _Temp_Vec3 *= Matrix3.RotateX(_Temp_Angle);
                 _Vertices.Add(new Vertex(_Temp_Vec3 + _EndPos));
                 if (i >= 2)
                 {
-                    _Indices.Add((uint)_Origin_Index); _Indices.Add((uint)i - 1); _Indices.Add((uint)i);
+                    if (Mathematics.Math_of_Rotation.RoundAngle(Mathematics.Math_of_Rotation.Angle_between(Mathematics.Math_of_Rotation.Cross(_Vertices[i].Position, _Vertices[i - 1].Position), _Temp)) < 180)
+                    {
+                        _Indices.Add((uint)_Origin_Index); _Indices.Add((uint)i); _Indices.Add((uint)i - 1);
+                    }
+                    else
+                    {
+                        _Indices.Add((uint)_Origin_Index); _Indices.Add((uint)i - 1); _Indices.Add((uint)i);
+                    }
                 }
             }
-
+            
             for (int i = 2, j = _Temp_Vertices_Num + 1; i <= _SectorCount + 1; i++, j++)
             {
-                _Indices.Add((uint)i); _Indices.Add((uint)j); _Indices.Add((uint)j - 1);
-                _Indices.Add((uint)j - 1); _Indices.Add((uint)i - 1); _Indices.Add((uint)i);
-            }
+                _Indices.Add((uint)i); _Indices.Add((uint)j - 1); _Indices.Add((uint)j);    
+                _Indices.Add((uint)j - 1); _Indices.Add((uint)i); _Indices.Add((uint)i - 1);
 
+                //_Indices.Add((uint)i); _Indices.Add((uint)j); _Indices.Add((uint)j - 1);
+                //_Indices.Add((uint)j - 1);  _Indices.Add((uint)i - 1); _Indices.Add((uint)i);
+            }
+            
 
             return new MeshData(_Vertices, _Indices);
         }

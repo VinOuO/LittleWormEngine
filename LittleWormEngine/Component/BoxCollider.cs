@@ -52,9 +52,10 @@ namespace LittleWormEngine
             OffSet = new Vector3(Vector3.Zero);
 
             Mesh _Mesh = new Mesh();
+            /*
             List<Vertex> _Vertices = new List<Vertex>();
             List<uint> _Indices = new List<uint>();
-
+            
             _Vertices.Add(new Vertex(new Vector3(-1, -1, 1)));
             _Vertices.Add(new Vertex(new Vector3(1,-1, 1)));
             _Vertices.Add(new Vertex(new Vector3(-1, 1, 1)));
@@ -76,9 +77,18 @@ namespace LittleWormEngine
             _Indices.Add(4 - 1); _Indices.Add(8 - 1); _Indices.Add(6 - 1);
             _Indices.Add(7 - 1); _Indices.Add(1 - 1); _Indices.Add(5 - 1);
             _Indices.Add(5 - 1); _Indices.Add(1 - 1); _Indices.Add(3 - 1);
-
             //_Mesh.AddVertices(_Vertices, _Indices);
-            RenderUtility.MeshData _Temp = RenderUtility.Get_LineMesh(Vector3.Zero, Vector3.Right * 3, 0.05f);
+            */
+            //RenderUtility.MeshData _Temp = RenderUtility.Get_LineMesh(Vector3.Forward * 3, -Vector3.Forward * 3, 1f);
+            //RenderUtility.MeshData _Temp = RenderUtility.Get_LineMesh(-Vector3.Forward * 3, Vector3.Forward * 3, 1f);
+            
+            RenderUtility.MeshData _Temp = RenderUtility.Get_LineMesh(Vector3.Zero, Vector3.Up * 3, 0.7f);
+            _Temp.Add_MeshData(RenderUtility.Get_LineMesh(Vector3.Zero, Vector3.Right* 3, 0.7f));
+            _Temp.Add_MeshData(RenderUtility.Get_LineMesh(Vector3.Zero, Vector3.Forward * 3, 0.7f));
+            _Temp.Add_MeshData(RenderUtility.Get_LineMesh(Vector3.Zero, -Vector3.Up * 3, 0.7f));
+            _Temp.Add_MeshData(RenderUtility.Get_LineMesh(Vector3.Zero, -Vector3.Right * 3, 0.7f));
+            _Temp.Add_MeshData(RenderUtility.Get_LineMesh(Vector3.Zero, -Vector3.Forward * 3, 0.7f));
+            
             _Mesh.AddVertices(_Temp.Vertices, _Temp.Indices);
             Set(_Mesh, new Shader("ColliderVertex.vs", "", "ColliderFragment.fs"));
         }

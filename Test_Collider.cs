@@ -47,6 +47,14 @@ class Test_Collider : DesignerProgram
         {
             GetComponent<Transform>().Rotation.y -= 20f * Time.DeltaTime;
         }
+        if (Input.GetKey(KeyCode.Numpad8))
+        {
+            GetComponent<Transform>().Rotation.x += 20f * Time.DeltaTime;
+        }
+        if (Input.GetKey(KeyCode.Numpad2))
+        {
+            GetComponent<Transform>().Rotation.x -= 20f * Time.DeltaTime;
+        }
     }
 }
 
