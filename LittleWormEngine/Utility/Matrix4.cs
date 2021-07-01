@@ -84,7 +84,6 @@ namespace LittleWormEngine.Utility
         public static Matrix4 RotateZ(float _Angle)
         {
             double _Radians = Math_of_Rotation.Radians_of(_Angle);
-            //Console.WriteLine((float)Math.Cos(_Radians) + ", " + (float)Math.Sin(_Radians));
             return new Matrix4(new Vector4((float)Math.Cos(_Radians), -(float)Math.Sin(_Radians), 0, 0), 
                                new Vector4((float)Math.Sin(_Radians), (float)Math.Cos(_Radians), 0, 0), 
                                new Vector4(0, 0, 1, 0), 
