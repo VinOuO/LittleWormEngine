@@ -22,6 +22,7 @@ class Test_Mesh2 : DesignerProgram
 
     override public void Update()
     {
+        /*
         if (Input.GetKey(KeyCode.T))
         {
             GetComponent<Transform>().Position.z -= 2f * Time.DeltaTime;
@@ -46,7 +47,7 @@ class Test_Mesh2 : DesignerProgram
         {
             GetComponent<Transform>().Position.x += 2f * Time.DeltaTime;
         }
-
+        */
     }
 }
 

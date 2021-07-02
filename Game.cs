@@ -11,11 +11,15 @@ class Game
 {
     public static void Start()
     {
+        
         GameObject Collider_Mesh = new GameObject("TestObj");
         Collider_Mesh.AddComponent<Transform>();
         Collider_Mesh.AddComponent<BoxCollider>();
         Collider_Mesh.AddCustomComponent<Test_Collider>();
         DesignerHandler.AddGameObject(Collider_Mesh);
+        
+        GameObject.Find("Ashe").AddComponent<BoxCollider>();
+        GameObject.Find("Box").AddComponent<BoxCollider>();
         /*
         GameObject Cam = new GameObject("Camera");
         Cam.AddComponent<Camera>();

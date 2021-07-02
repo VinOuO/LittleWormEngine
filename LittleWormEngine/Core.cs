@@ -31,7 +31,6 @@ namespace LittleWormEngine
             Game.Start();
             Glfw.SetCursorPositionCallback(The_GameWindow,Input.Check_Cursor_Position);
             The_Camera = Get_Camera();
-            Start_GameObjects_Components();
 
             switch (Mode)
             {
@@ -44,6 +43,8 @@ namespace LittleWormEngine
                     Physic_Thread.Start();
                     break;
             }
+
+            Start_GameObjects_Components();
 
             if (!Is_Running)
             {

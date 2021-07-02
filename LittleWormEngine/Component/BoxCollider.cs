@@ -5,6 +5,7 @@ using LittleWormEngine.Renderer;
 using LittleWormEngine.Utility;
 using GLFW;
 using static OpenGL.GL;
+using BulletSharp;
 
 namespace LittleWormEngine
 {
@@ -14,10 +15,18 @@ namespace LittleWormEngine
         public string Tag { get; set; }
         public Vector3 OffSet { get; set; }
         public Vector3 HalfSize { get; set; }
-
+        public CollisionShape Collider;
         public void Start()
         {
-
+            switch (Core.Mode)
+            {
+                case "Editor":
+                    Set_Mesh(BoxColliderMesh(), new Shader("ColliderVertex.vs", "", "ColliderFragment.fs"));
+                    break;
+                case "Game":
+                    //Set_Collider();
+                    break;
+            }
         }
 
         public void Update(string _Type)
@@ -49,7 +58,15 @@ namespace LittleWormEngine
         public Shader RenderShader { get; set; }
         public BoxCollider()
         {
-            Tag = "Renderer";
+            switch (Core.Mode)
+            {
+                case "Editor":
+                    Tag = "Renderer";
+                    break;
+                case "Game":
+                    Tag = "Collider";
+                    break;
+            }
             OffSet = Vector3.Zero;
             HalfSize = Vector3.One;
             /*
@@ -79,15 +96,19 @@ namespace LittleWormEngine
             _Indices.Add(5 - 1); _Indices.Add(1 - 1); _Indices.Add(3 - 1);
             //_Mesh.AddVertices(_Vertices, _Indices);
             */
-            
-            Set(BoxColliderMesh(), new Shader("ColliderVertex.vs", "", "ColliderFragment.fs"));
+
         }
 
-        public void Set(Mesh _RenderMesh, Shader _RenderShader)
+        public void Set_Mesh(Mesh _RenderMesh, Shader _RenderShader)
         {
             RenderMesh = _RenderMesh;
             RenderShader = _RenderShader;
             RenderShader.AddUniform("transform");
+        }
+
+        public void Set_Collider()
+        {
+            PhysicWorld.Creat_Box(this, HalfSize);
         }
 
         Mesh BoxColliderMesh()
