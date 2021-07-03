@@ -22,6 +22,18 @@ class Test_Mesh2 : DesignerProgram
 
     override public void Update()
     {
+        //Console.WriteLine("Name: " + (PhysicWorld.Get_Rigibody(Attaching_GameObject).UserObject as GameObject).Name);
+
+        //Console.WriteLine("_x: " + PhysicWorld._x);
+        BulletSharp.RigidBody _Body = PhysicWorld.Get_Rigibody(Attaching_GameObject);
+        if (_Body != null)
+            lock (_Body)
+            {
+                Console.WriteLine("Name: " + (_Body.UserObject as GameObject).Name);
+                //PhysicWorld.Apply_LinearVelocity(Attaching_GameObject);
+                _Body.Activate(true);
+                _Body.LinearVelocity = new BulletSharp.Math.Vector3(PhysicWorld._x, 0, 0);
+            }
         /*
         if (Input.GetKey(KeyCode.T))
         {

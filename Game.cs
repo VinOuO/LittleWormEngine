@@ -19,6 +19,7 @@ class Game
         DesignerHandler.AddGameObject(Collider_Mesh);
         
         GameObject.Find("Ashe").AddComponent<BoxCollider>();
+
         GameObject.Find("Box").AddComponent<BoxCollider>();
         /*
         GameObject Cam = new GameObject("Camera");

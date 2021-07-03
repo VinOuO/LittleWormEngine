@@ -106,11 +106,6 @@ namespace LittleWormEngine
             RenderShader.AddUniform("transform");
         }
 
-        public void Set_Collider()
-        {
-            PhysicWorld.Creat_Box(this, HalfSize);
-        }
-
         Mesh BoxColliderMesh()
         {
             Mesh _Mesh = new Mesh();
