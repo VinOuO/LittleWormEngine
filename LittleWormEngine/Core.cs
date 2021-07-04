@@ -44,6 +44,11 @@ namespace LittleWormEngine
                     break;
             }
 
+            while (!PhysicWorld.InisReady)
+            {
+                Thread.Sleep(1);
+            }
+
             Start_GameObjects_Components();
 
             if (!Is_Running)

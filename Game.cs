@@ -44,14 +44,7 @@ class Game
 
     public static void Update()
     {
-        if (Input.GetKey(KeyCode.Right))
-        {
-            PhysicWorld._x = 1;
-        }
-        else if (Input.GetKey(KeyCode.Left))
-        {
-            PhysicWorld._x = -1;
-        }
+        
     }
 
     public static void End()

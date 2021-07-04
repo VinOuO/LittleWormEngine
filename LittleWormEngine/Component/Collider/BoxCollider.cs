@@ -5,7 +5,6 @@ using LittleWormEngine.Renderer;
 using LittleWormEngine.Utility;
 using GLFW;
 using static OpenGL.GL;
-using BulletSharp;
 
 namespace LittleWormEngine
 {
@@ -15,7 +14,8 @@ namespace LittleWormEngine
         public string Tag { get; set; }
         public Vector3 OffSet { get; set; }
         public Vector3 HalfSize { get; set; }
-        public CollisionShape Collider;
+        public RigiBody Attaching_Rigibody {get;set;}
+
         public void Start()
         {
             switch (Core.Mode)
@@ -24,8 +24,12 @@ namespace LittleWormEngine
                     Set_Mesh(BoxColliderMesh(), new Shader("ColliderVertex.vs", "", "ColliderFragment.fs"));
                     break;
                 case "Game":
-                    //Set_Collider();
+                    Attaching_Rigibody = new RigiBody(PhysicWorld.Get_Rigibody(Attaching_GameObject));
                     break;
+            }
+            if (Attaching_Rigibody.Is_Static)
+            {
+                Attaching_Rigibody.Set_Static();
             }
         }
 

@@ -19,21 +19,38 @@ class Test_Mesh2 : DesignerProgram
         GetComponent<Transform>().Position.x = 0;
         */
     }
-
+    bool b = true;
+    public int _x = 1;
     override public void Update()
     {
         //Console.WriteLine("Name: " + (PhysicWorld.Get_Rigibody(Attaching_GameObject).UserObject as GameObject).Name);
 
         //Console.WriteLine("_x: " + PhysicWorld._x);
-        BulletSharp.RigidBody _Body = PhysicWorld.Get_Rigibody(Attaching_GameObject);
-        if (_Body != null)
-            lock (_Body)
+        if (Input.GetKeyDown(KeyCode.Right))
+        {
+            _x = 1;
+        }
+        else if (Input.GetKeyDown(KeyCode.Left))
+        {
+            _x = -1;
+        }
+        else if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //GetComponent<BoxCollider>().Attaching_Rigibody.Set_Static();
+            
+            if (b)
             {
-                Console.WriteLine("Name: " + (_Body.UserObject as GameObject).Name);
-                //PhysicWorld.Apply_LinearVelocity(Attaching_GameObject);
-                _Body.Activate(true);
-                _Body.LinearVelocity = new BulletSharp.Math.Vector3(PhysicWorld._x, 0, 0);
+                GetComponent<BoxCollider>().Attaching_Rigibody.Set_Dynamic(1, Vector3.Right * _x);
+                b = false;
             }
+            else
+            {
+                GetComponent<BoxCollider>().Attaching_Rigibody.Set_Static();
+                b = true;
+            }
+            
+        }
+        GetComponent<BoxCollider>().Attaching_Rigibody.Set_LinearVelocity(Vector3.Right * _x);
         /*
         if (Input.GetKey(KeyCode.T))
         {

@@ -9,6 +9,7 @@ namespace LittleWormEngine
 {
     class PhysicWorld
     {
+        public static bool InisReady = false;
         //public static List<Component> Colliders; 
         public static BulletSharp.Math.Vector3 V = BulletSharp.Math.Vector3.Zero;
         static int btWorldtoLWWorldScale = 100;
@@ -36,8 +37,8 @@ namespace LittleWormEngine
         public static void Physic_Test()
         {
             Init_Physic_World();
-            Console.WriteLine("PW");
             Create_Colliders();
+            InisReady = true;
             Simulation();
             Clean_World();
         }
@@ -130,8 +131,23 @@ namespace LittleWormEngine
             dynamicsWorld.AddRigidBody(body);
             //---create a dynamic rigidbody
         }
-
-        public static CollisionShape Create_Box(GameObject _GameObject, LittleWormEngine.Utility.Vector3 _HalfSize) //Use this to design collider component
+        /*
+        public static BulletSharp.RigidBody ReCreate_Rigibody(BulletSharp.RigidBody _OldRig)
+        {
+            BulletSharp.Math.Matrix startTransform;
+            startTransform = BulletSharp.Math.Matrix.Identity;
+            //using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
+            DefaultMotionState myMotionState = new DefaultMotionState();
+            RigidBodyConstructionInfo rbInfo = new RigidBodyConstructionInfo(1, _OldRig.MotionState, _OldRig.CollisionShape, _OldRig.LocalInertia);
+            RigidBody body = new RigidBody(rbInfo);
+            body.UserObject = _OldRig.UserObject;
+            dynamicsWorld.AddRigidBody(body);
+            dynamicsWorld.RemoveRigidBody(_OldRig);
+            return body;
+            //---create a dynamic rigidbody
+        }
+        */
+        public static void Create_Box(GameObject _GameObject, LittleWormEngine.Utility.Vector3 _HalfSize) //Use this to design collider component
         {
             //---create a dynamic rigidbody
             CollisionShape colShape = new BoxShape(_HalfSize.x * btWorldtoLWWorldScale, _HalfSize.y * btWorldtoLWWorldScale, _HalfSize.z * btWorldtoLWWorldScale);
@@ -163,7 +179,6 @@ namespace LittleWormEngine
             body.UserObject = _GameObject;
             dynamicsWorld.AddRigidBody(body);
             //---create a dynamic rigidbody
-            return colShape;
         }
 
         public static RigidBody Get_Rigibody(GameObject _GameObject)
@@ -182,7 +197,6 @@ namespace LittleWormEngine
             return null;
         }
 
-        public static float _x = 1;
         static void Simulation()
         {
             bool _r = false;

@@ -18,10 +18,12 @@ class Test_Mesh : DesignerProgram
         GetComponent<Transform>().Position.y = -3;
         GetComponent<Transform>().Position.x = 0;
         */
+        //GetComponent<BoxCollider>().Attaching_Rigibody.Set_Static();
     }
 
     override public void Update()
     {
+        
         if (Input.GetKey(KeyCode.E))
         {
             GetComponent<Transform>().Position.z -= 2f * Time.DeltaTime;
