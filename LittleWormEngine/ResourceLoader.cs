@@ -22,7 +22,12 @@ namespace LittleWormEngine
 
         public static List<string> Load_File(string _FileName)
         {
-            return new List<string>(System.IO.File.ReadAllLines(Directory.GetCurrentDirectory() + @"\" + _FileName));
+            string _Temp_Path = Directory.GetCurrentDirectory() + @"\" + _FileName;
+            if (File.Exists(_Temp_Path))
+            {
+                return new List<string>(File.ReadAllLines(_Temp_Path));
+            }
+            return new List<string>();
         }
 
         public static void Save_GameObjectFile(GameObject _GameObject, string _ComponentName)

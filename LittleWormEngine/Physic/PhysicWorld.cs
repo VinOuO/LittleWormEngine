@@ -34,13 +34,17 @@ namespace LittleWormEngine
         static DiscreteDynamicsWorld dynamicsWorld;// = new DiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
         static List<CollisionShape> collisionShapes;
 
-        public static void Physic_Test()
+        public static void Start_Simulation()
+        {
+            Simulation();
+            Clean_World();
+        }
+
+        public static void Set_PhysicWorld()
         {
             Init_Physic_World();
             Create_Colliders();
             InisReady = true;
-            Simulation();
-            Clean_World();
         }
 
         static void Create_Colliders()
@@ -73,10 +77,10 @@ namespace LittleWormEngine
             dynamicsWorld.Gravity = new BulletSharp.Math.Vector3(0, -5, 0);
 
             //---create the ground
-            CollisionShape groundShape = new BoxShape(99999999, 50, 50);
+            CollisionShape groundShape = new BoxShape(99999999, 10, 10);
             collisionShapes.Add(groundShape);
             BulletSharp.Math.Matrix groundTransform = BulletSharp.Math.Matrix.Identity;
-            groundTransform.Origin = new BulletSharp.Math.Vector3(0, -51, 0);
+            groundTransform.Origin = new BulletSharp.Math.Vector3(0, -60, 0);
 
             float mass = 0;
 
@@ -147,18 +151,20 @@ namespace LittleWormEngine
             //---create a dynamic rigidbody
         }
         */
+        public static CollisionShape Create_Box_Shape(LittleWormEngine.Utility.Vector3 _HalfSize)
+        {
+            return new BoxShape(_HalfSize.x * btWorldtoLWWorldScale, _HalfSize.y * btWorldtoLWWorldScale, _HalfSize.z * btWorldtoLWWorldScale);
+        }
+
         public static void Create_Box(GameObject _GameObject, LittleWormEngine.Utility.Vector3 _HalfSize) //Use this to design collider component
         {
-            //---create a dynamic rigidbody
-            CollisionShape colShape = new BoxShape(_HalfSize.x * btWorldtoLWWorldScale, _HalfSize.y * btWorldtoLWWorldScale, _HalfSize.z * btWorldtoLWWorldScale);
-            //CollisionShape colShape = new SphereShape(1);
+            CollisionShape colShape = Create_Box_Shape(_HalfSize);
             collisionShapes.Add(colShape);
-            colShape.UserObject = _GameObject;
-            //Colliders.Add(_BoxCollider);
-            /// Create Dynamic Objects
+
+            //---create a dynamic rigidbody
             BulletSharp.Math.Matrix startTransform;
             startTransform = BulletSharp.Math.Matrix.Identity;
-
+            
             float mass = 1;
 
             //rigidbody is dynamic if and only if mass is non zero, otherwise static
@@ -179,6 +185,22 @@ namespace LittleWormEngine
             body.UserObject = _GameObject;
             dynamicsWorld.AddRigidBody(body);
             //---create a dynamic rigidbody
+        }
+
+        public static CollisionObject Get_CollisionObject(GameObject _GameObject)
+        {
+            foreach (CollisionObject _Cobj in dynamicsWorld.CollisionObjectArray)
+            {
+                if (_Cobj.UserObject == null)
+                {
+                    continue;
+                }
+                if ((_Cobj.UserObject as GameObject) == _GameObject)
+                {
+                    return _Cobj;
+                }
+            }
+            return null;
         }
 
         public static RigidBody Get_Rigibody(GameObject _GameObject)

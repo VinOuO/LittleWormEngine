@@ -50,5 +50,15 @@ namespace LittleWormEngine
             return Matrix4.Projection(Camera.zNear, Camera.zFar, Camera.Width, Camera.Height, Camera.fov) * Matrix4.RotateX(CameraTransform.Rotation.x) * Matrix4.RotateY(CameraTransform.Rotation.y) * Matrix4.RotateZ(CameraTransform.Rotation.z) * Matrix4.CameraTranslation(CameraTransform.Position) * GetTransform(_OffSet);
         }
 
+        public Matrix4 GetTransformwithoutScale(Vector3 _OffSet)
+        {
+            return Matrix4.Translation(Position - _OffSet) * Matrix4.RotateX(Rotation.x) * Matrix4.RotateY(Rotation.y) * Matrix4.RotateZ(Rotation.z);
+        }
+
+        public Matrix4 GetProjectdTransformwithoutScale(Vector3 _OffSet)
+        {
+            Transform CameraTransform = Core.The_Camera.Attaching_GameObject.transform;
+            return Matrix4.Projection(Camera.zNear, Camera.zFar, Camera.Width, Camera.Height, Camera.fov) * Matrix4.RotateX(CameraTransform.Rotation.x) * Matrix4.RotateY(CameraTransform.Rotation.y) * Matrix4.RotateZ(CameraTransform.Rotation.z) * Matrix4.CameraTranslation(CameraTransform.Position) * GetTransformwithoutScale(_OffSet);
+        }
     }
 }

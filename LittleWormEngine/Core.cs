@@ -12,7 +12,7 @@ namespace LittleWormEngine
 {
     class Core
     {
-        public static string Mode = "Game";
+        public static string Mode = "Editor";
         public static string SceneName = "Scene";
         public static int Width = 800;
         public static int Height = 640;
@@ -31,7 +31,11 @@ namespace LittleWormEngine
             Game.Start();
             Glfw.SetCursorPositionCallback(The_GameWindow,Input.Check_Cursor_Position);
             The_Camera = Get_Camera();
-
+            PhysicWorld.Set_PhysicWorld();
+            while (!PhysicWorld.InisReady)
+            {
+                Thread.Sleep(1);
+            }
             switch (Mode)
             {
                 case "Editor":
@@ -39,14 +43,9 @@ namespace LittleWormEngine
                     Editor_Thread.Start();
                     break;
                 case "Game":
-                    Physic_Thread = new Thread(PhysicWorld.Physic_Test);
+                    Physic_Thread = new Thread(PhysicWorld.Start_Simulation);
                     Physic_Thread.Start();
                     break;
-            }
-
-            while (!PhysicWorld.InisReady)
-            {
-                Thread.Sleep(1);
             }
 
             Start_GameObjects_Components();

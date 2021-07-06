@@ -10,8 +10,8 @@ namespace LittleWormEngine
         public static float zFar = 1000;
         public static float Width = Core.Width;
         public static float Height = Core.Height;
-        public static float fov = 120f;
-        public static Vector3 yAxis = new Vector3(0, 1, 0);
+        public static float fov = 70f;
+        public static Vector3 yAxis = Vector3.Forward;
 
         public GameObject Attaching_GameObject { get; set; }
         public string Tag { get; set; }

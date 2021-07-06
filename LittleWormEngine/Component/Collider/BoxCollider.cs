@@ -25,12 +25,15 @@ namespace LittleWormEngine
                     break;
                 case "Game":
                     Attaching_Rigibody = new RigiBody(PhysicWorld.Get_Rigibody(Attaching_GameObject));
+                    if (Attaching_Rigibody.Is_Static)
+                    {
+                        Attaching_Rigibody.Set_Static();
+                    }
                     break;
             }
-            if (Attaching_Rigibody.Is_Static)
-            {
-                Attaching_Rigibody.Set_Static();
-            }
+            HalfSize.x *= Attaching_GameObject.transform.Scale.x;
+            HalfSize.y *= Attaching_GameObject.transform.Scale.y;
+            HalfSize.z *= Attaching_GameObject.transform.Scale.z;
         }
 
         public void Update(string _Type)
@@ -40,7 +43,7 @@ namespace LittleWormEngine
                 case "Rendering":
                     glUseProgram(RenderShader.Program);
                     glBindVertexArray(RenderMesh.Vao);
-                    RenderShader.SetUniform("transform", Attaching_GameObject.GetComponent<Transform>().GetProjectdTransform(OffSet));
+                    RenderShader.SetUniform("transform", Attaching_GameObject.GetComponent<Transform>().GetProjectdTransformwithoutScale(OffSet));
                     Draw();
                     break;
             }
@@ -55,11 +58,31 @@ namespace LittleWormEngine
             glDisableVertexAttribArray(0);
         }
 
+        public void Set_ColliderSize(Vector3 _HalfSize)
+        {
+            HalfSize = _HalfSize;
+            Debug.Log(HalfSize);
+            HalfSize.x *= Attaching_GameObject.transform.Scale.x;
+            HalfSize.y *= Attaching_GameObject.transform.Scale.y;
+            HalfSize.z *= Attaching_GameObject.transform.Scale.z;
+            Debug.Log(HalfSize);
+            switch (Core.Mode)
+            {
+                case "Editor":
+                    Set_Mesh(BoxColliderMesh(), new Shader("ColliderVertex.vs", "", "ColliderFragment.fs"));
+                    break;
+                case "Game":
+                    PhysicWorld.Get_Rigibody(Attaching_GameObject).CollisionShape = PhysicWorld.Create_Box_Shape(HalfSize);
+                    break;
+            }
+        }
+
         public string MeshFileName;
         public string TextureFileName;
         public Mesh RenderMesh { get; set; }
         public Texture RenderTexture { get; set; }
         public Shader RenderShader { get; set; }
+        bool Mesh_Changed = false;
         public BoxCollider()
         {
             switch (Core.Mode)
@@ -73,34 +96,6 @@ namespace LittleWormEngine
             }
             OffSet = Vector3.Zero;
             HalfSize = Vector3.One;
-            /*
-            List<Vertex> _Vertices = new List<Vertex>();
-            List<uint> _Indices = new List<uint>();
-            
-            _Vertices.Add(new Vertex(new Vector3(-1, -1, 1)));
-            _Vertices.Add(new Vertex(new Vector3(1,-1, 1)));
-            _Vertices.Add(new Vertex(new Vector3(-1, 1, 1)));
-            _Vertices.Add(new Vertex(new Vector3(1, 1, 1)));
-            _Vertices.Add(new Vertex(new Vector3(-1, 1, -1)));
-            _Vertices.Add(new Vertex(new Vector3(1, 1, -1)));
-            _Vertices.Add(new Vertex(new Vector3(-1, -1, -1)));
-            _Vertices.Add(new Vertex(new Vector3(1, -1, -1)));
-            
-            _Indices.Add(1 - 1); _Indices.Add(3 - 1); _Indices.Add(2 - 1);
-            _Indices.Add(3 - 1); _Indices.Add(2 - 1); _Indices.Add(4 - 1);
-            _Indices.Add(3 - 1); _Indices.Add(4 - 1); _Indices.Add(5 - 1);
-            _Indices.Add(5 - 1); _Indices.Add(4 - 1); _Indices.Add(6 - 1);
-            _Indices.Add(5 - 1); _Indices.Add(6 - 1); _Indices.Add(7 - 1);
-            _Indices.Add(7 - 1); _Indices.Add(6 - 1); _Indices.Add(8 - 1);
-            _Indices.Add(7 - 1); _Indices.Add(8 - 1); _Indices.Add(1 - 1);
-            _Indices.Add(1 - 1); _Indices.Add(8 - 1); _Indices.Add(2 - 1);
-            _Indices.Add(2 - 1); _Indices.Add(8 - 1); _Indices.Add(4 - 1);
-            _Indices.Add(4 - 1); _Indices.Add(8 - 1); _Indices.Add(6 - 1);
-            _Indices.Add(7 - 1); _Indices.Add(1 - 1); _Indices.Add(5 - 1);
-            _Indices.Add(5 - 1); _Indices.Add(1 - 1); _Indices.Add(3 - 1);
-            //_Mesh.AddVertices(_Vertices, _Indices);
-            */
-
         }
 
         public void Set_Mesh(Mesh _RenderMesh, Shader _RenderShader)
@@ -113,25 +108,8 @@ namespace LittleWormEngine
         Mesh BoxColliderMesh()
         {
             Mesh _Mesh = new Mesh();
-            /*
-            RenderUtility.MeshData _Temp = RenderUtility.Get_LineMesh(-HalfSize, new Vector3(HalfSize.x, -HalfSize.y, -HalfSize.z) * 0.3f, 0.05f);
-            _Temp.Add_MeshData(RenderUtility.Get_LineMesh(-HalfSize, new Vector3(-HalfSize.x, HalfSize.y, -HalfSize.z) * 0.3f, 0.05f));
-            _Temp.Add_MeshData(RenderUtility.Get_LineMesh(-HalfSize, new Vector3(-HalfSize.x, -HalfSize.y, HalfSize.z) * 0.3f, 0.05f));
-
-
-            _Temp.Add_MeshData(RenderUtility.Get_LineMesh(HalfSize, new Vector3(-HalfSize.x, HalfSize.y, HalfSize.z) * 0.3f, 0.05f));
-            _Temp.Add_MeshData(RenderUtility.Get_LineMesh(HalfSize, new Vector3(HalfSize.x, -HalfSize.y, HalfSize.z) * 0.3f, 0.05f));
-            _Temp.Add_MeshData(RenderUtility.Get_LineMesh(HalfSize, new Vector3(HalfSize.x, HalfSize.y, -HalfSize.z) * 0.3f, 0.05f));
-
-            _Temp.Add_MeshData(RenderUtility.Get_LineMesh(HalfSize, new Vector3(-HalfSize.x, HalfSize.y, HalfSize.z) * 0.3f, 0.05f));
-            _Temp.Add_MeshData(RenderUtility.Get_LineMesh(HalfSize, new Vector3(HalfSize.x, -HalfSize.y, HalfSize.z) * 0.3f, 0.05f));
-            _Temp.Add_MeshData(RenderUtility.Get_LineMesh(HalfSize, new Vector3(HalfSize.x, HalfSize.y, -HalfSize.z) * 0.3f, 0.05f));
-
-            _Temp.Add_MeshData(RenderUtility.Get_LineMesh(HalfSize, new Vector3(-HalfSize.x, HalfSize.y, HalfSize.z) * 0.3f, 0.05f));
-            _Temp.Add_MeshData(RenderUtility.Get_LineMesh(HalfSize, new Vector3(HalfSize.x, -HalfSize.y, HalfSize.z) * 0.3f, 0.05f));
-            _Temp.Add_MeshData(RenderUtility.Get_LineMesh(HalfSize, new Vector3(HalfSize.x, HalfSize.y, -HalfSize.z) * 0.3f, 0.05f));
-            */
             RenderUtility.MeshData _Temp = new RenderUtility.MeshData();
+            float _Sacler = 0.05f;
             for (int i = 0; i <= 1; i++)
             {
                 for (int j = 0; j <= 1; j++)
@@ -140,9 +118,9 @@ namespace LittleWormEngine
                     {
                         Vector3 _Temp_Vec3 = new Vector3((i == 0 ? -1 : 1) * HalfSize.x, (j == 0 ? -1 : 1) * HalfSize.y, (k == 0 ? -1 : 1) * HalfSize.z);
 
-                        _Temp.Add_MeshData(RenderUtility.Get_LineMesh(_Temp_Vec3, new Vector3(-_Temp_Vec3.x * 0.5f, 0, 0) + _Temp_Vec3, 0.05f));
-                        _Temp.Add_MeshData(RenderUtility.Get_LineMesh(_Temp_Vec3, new Vector3(0, -_Temp_Vec3.y * 0.5f, 0) + _Temp_Vec3, 0.05f));
-                        _Temp.Add_MeshData(RenderUtility.Get_LineMesh(_Temp_Vec3, new Vector3(0, 0, -_Temp_Vec3.z * 0.5f) + _Temp_Vec3, 0.05f));
+                        _Temp.Add_MeshData(RenderUtility.Get_LineMesh(_Temp_Vec3, new Vector3(-_Temp_Vec3.x * 0.5f, 0, 0) + _Temp_Vec3, 1f * _Sacler));
+                        _Temp.Add_MeshData(RenderUtility.Get_LineMesh(_Temp_Vec3, new Vector3(0, -_Temp_Vec3.y * 0.5f, 0) + _Temp_Vec3, 1f * _Sacler));
+                        _Temp.Add_MeshData(RenderUtility.Get_LineMesh(_Temp_Vec3, new Vector3(0, 0, -_Temp_Vec3.z * 0.5f) + _Temp_Vec3, 1f * _Sacler));
                     }
                 }
             }

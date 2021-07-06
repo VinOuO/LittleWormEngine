@@ -10,6 +10,7 @@ class Test_Mesh2 : DesignerProgram
 {
     override public void Start()
     {
+        //GetComponent<BoxCollider>().Set_ColliderSize(new Vector3(2, 4, 2));
         /*
         GetComponent<MeshRenderer>().Set(ResourceLoader.Load_Mesh("Cube3.obj"), ResourceLoader.Load_Texture("crate.jpg"));
         GetComponent<Transform>().Scale *= 1f;
@@ -20,7 +21,7 @@ class Test_Mesh2 : DesignerProgram
         */
     }
     bool b = true;
-    public int _x = 1;
+    public int _x = 5;
     override public void Update()
     {
         //Console.WriteLine("Name: " + (PhysicWorld.Get_Rigibody(Attaching_GameObject).UserObject as GameObject).Name);
@@ -28,27 +29,15 @@ class Test_Mesh2 : DesignerProgram
         //Console.WriteLine("_x: " + PhysicWorld._x);
         if (Input.GetKeyDown(KeyCode.Right))
         {
-            _x = 1;
+            _x = 5;
         }
         else if (Input.GetKeyDown(KeyCode.Left))
         {
-            _x = -1;
+            _x = -5;
         }
         else if (Input.GetKeyDown(KeyCode.Space))
         {
-            //GetComponent<BoxCollider>().Attaching_Rigibody.Set_Static();
-            
-            if (b)
-            {
-                GetComponent<BoxCollider>().Attaching_Rigibody.Set_Dynamic(1, Vector3.Right * _x);
-                b = false;
-            }
-            else
-            {
-                GetComponent<BoxCollider>().Attaching_Rigibody.Set_Static();
-                b = true;
-            }
-            
+            GetComponent<BoxCollider>().Set_ColliderSize(new Vector3(5, 1, 1));
         }
         GetComponent<BoxCollider>().Attaching_Rigibody.Set_LinearVelocity(Vector3.Right * _x);
         /*
