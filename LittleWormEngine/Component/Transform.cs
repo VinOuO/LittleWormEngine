@@ -34,9 +34,9 @@ namespace LittleWormEngine
         public Transform()
         {
             Tag = "Normal";
-            Position = new Vector3(Vector3.Zero);
-            Rotation = new Vector3(Vector3.Zero);
-            Scale = new Vector3(Vector3.One);
+            Position = Vector3.Zero;
+            Rotation = Vector3.Zero;
+            Scale = Vector3.One;
         }
 
         public Matrix4 GetTransform(Vector3 _OffSet)

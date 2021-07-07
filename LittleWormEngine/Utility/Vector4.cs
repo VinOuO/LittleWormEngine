@@ -11,9 +11,8 @@ namespace LittleWormEngine.Utility
         public float z { get; set; }
         public float w { get; set; }
 
-        public static readonly Vector4 Zero = new Vector4(0, 0, 0, 0);
-        public static readonly Vector4 One = new Vector4(1, 1, 1, 1);
-
+        public static Vector4 Zero { get { return new Vector4(0, 0, 0, 0); } }
+        public static Vector4 One { get { return new Vector4(1, 1, 1, 1); } }
 
         public Vector4(float _x, float _y, float _z, float _w)
         {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading;
 using GLFW;
 using static OpenGL.GL;
@@ -175,10 +175,6 @@ namespace LittleWormEngine
                         {
                             _Component.Start();
                         }
-                        foreach (CustomComponent _Component in _GameObject.CustomComponents)
-                        {
-                            _Component.Start();
-                        }
                     }
                     break;
             }
@@ -251,43 +247,67 @@ namespace LittleWormEngine
         {
             Glfw.Terminate();
         }
-        
+
         public static void Create_Scene(string _SceneName)
         {
             List<string> _SceneInfos = ResourceLoader.Load_File(@"Save\Scene\" + _SceneName);
-            foreach(string _SceneInfo in _SceneInfos)
+            foreach (string _SceneInfo in _SceneInfos)
             {
-                GameObject _GameObject = new GameObject();
-                List<string> _GameObjectInfos = ResourceLoader.Load_File(@"Save\GameObject\" + _SceneInfo + ".lwobj");
-                foreach (string _GameObjectInfo in _GameObjectInfos)
+                switch (ResourceLoader.Split(_SceneInfo, '_')[0])
                 {
-                    List<string> _LineInfos = ResourceLoader.Split(_GameObjectInfo, ' ');
-                    switch (_LineInfos[0])
-                    {
-                        case "Name":
-                            _GameObject.Name = _LineInfos[1];
-                            break;
-                        case "Camera":
-                            _GameObject.AddComponent<Camera>();
-                            break;
-                        case "Transform":
-                            _GameObject.AddComponent<Transform>();
-                            _GameObject.GetComponent<Transform>().Position = new Vector3(float.Parse(_LineInfos[1]), float.Parse(_LineInfos[2]), float.Parse(_LineInfos[3]));
-                            _GameObject.GetComponent<Transform>().Rotation = new Vector3(float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5]), float.Parse(_LineInfos[6]));
-                            _GameObject.GetComponent<Transform>().Scale = new Vector3(float.Parse(_LineInfos[7]), float.Parse(_LineInfos[8]), float.Parse(_LineInfos[9]));
-                            break;
-                        case "MeshRenderer":
-                            _GameObject.AddComponent<MeshRenderer>();
-                            _GameObject.GetComponent<MeshRenderer>().Set(_LineInfos[1], _LineInfos[2]);
-                            _GameObject.GetComponent<MeshRenderer>().OffSet = new Vector3(float.Parse(_LineInfos[3]), float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5]));
-                            break;
-                        case "Custom":
-                            _GameObject.AddCustomComponent(Type.GetType(_LineInfos[1]));
-                            break;
-                    }
+                    case "GameObject":
+                        GameObject _GameObject = new GameObject();
+                        _GameObject.Name = ResourceLoader.Split(_SceneInfo, '_')[1];
+                        List<string> _GameObjectInfos = ResourceLoader.Load_File(@"Save\GameObject\" + _SceneInfo + ".lwobj");
+                        foreach (string _GameObjectInfo in _GameObjectInfos)
+                        {
+                            List<string> _LineInfos = ResourceLoader.Split(_GameObjectInfo, ' ');
+                            switch (_LineInfos[0])
+                            {
+                                case "Camera":
+                                    _GameObject.AddComponent<Camera>();
+                                    break;
+                                case "Transform":
+                                    _GameObject.AddComponent<Transform>();
+                                    _GameObject.GetComponent<Transform>().Position = new Vector3(float.Parse(_LineInfos[1]), float.Parse(_LineInfos[2]), float.Parse(_LineInfos[3]));
+                                    _GameObject.GetComponent<Transform>().Rotation = new Vector3(float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5]), float.Parse(_LineInfos[6]));
+                                    _GameObject.GetComponent<Transform>().Scale = new Vector3(float.Parse(_LineInfos[7]), float.Parse(_LineInfos[8]), float.Parse(_LineInfos[9]));
+                                    break;
+                                case "MeshRenderer":
+                                    _GameObject.AddComponent<MeshRenderer>();
+                                    _GameObject.GetComponent<MeshRenderer>().Set(_LineInfos[1], _LineInfos[2]);
+                                    _GameObject.GetComponent<MeshRenderer>().OffSet = new Vector3(float.Parse(_LineInfos[3]), float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5]));
+                                    break;
+                                case "BoxCollider":
+                                    _GameObject.AddComponent<BoxCollider>();
+                                    _GameObject.GetComponent<BoxCollider>().OffSet = new Vector3(float.Parse(_LineInfos[1]), float.Parse(_LineInfos[2]), float.Parse(_LineInfos[3]));
+                                    _GameObject.GetComponent<BoxCollider>().HalfSize = new Vector3(float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5]), float.Parse(_LineInfos[6]));
+                                    break;
+                                case "Custom":
+                                    _GameObject.AddCustomComponent(Type.GetType(_LineInfos[1]));
+                                    break;
+                            }
+                        }
+                        DesignerHandler.AddGameObject(_GameObject);
+                        break;
                 }
-                DesignerHandler.AddGameObject(_GameObject);
+
             }
+        }
+
+        public static List<string> Get_Components()
+        {
+            List<string> _Temp_Components = new List<string>();
+            System.Reflection.Assembly _Assembly = System.Reflection.Assembly.GetEntryAssembly();
+            foreach (System.Reflection.TypeInfo _TypeInfo in _Assembly.DefinedTypes)
+            {
+                if (_TypeInfo.ImplementedInterfaces.Contains(typeof(Component)))
+                {
+                    _Temp_Components.Add(_TypeInfo.Name);
+                    Debug.Log(_TypeInfo.FullName);
+                }
+            }
+            return _Temp_Components;
         }
 
         [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true)]

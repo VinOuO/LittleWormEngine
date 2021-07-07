@@ -62,6 +62,12 @@ namespace LittleWorm
             this.TextureLabel = new System.Windows.Forms.Label();
             this.MeshLabel = new System.Windows.Forms.Label();
             this.Debugger = new System.Windows.Forms.Label();
+            this.AddGameObject = new System.Windows.Forms.TextBox();
+            this.AddGameObjectLabel = new System.Windows.Forms.Label();
+            this.AddComponentDropDown = new System.Windows.Forms.ComboBox();
+            this.AddComponentLabel = new System.Windows.Forms.Label();
+            this.AddGObjBut = new System.Windows.Forms.Button();
+            this.AddCmpBut = new System.Windows.Forms.Button();
             this.TransformGroupBox.SuspendLayout();
             this.MeshRendererGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -70,27 +76,30 @@ namespace LittleWorm
             // 
             this.GameObjectDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.GameObjectDropDown.FormattingEnabled = true;
-            this.GameObjectDropDown.Location = new System.Drawing.Point(155, 12);
+            this.GameObjectDropDown.Location = new System.Drawing.Point(491, 11);
+            this.GameObjectDropDown.Margin = new System.Windows.Forms.Padding(2);
             this.GameObjectDropDown.Name = "GameObjectDropDown";
-            this.GameObjectDropDown.Size = new System.Drawing.Size(203, 27);
+            this.GameObjectDropDown.Size = new System.Drawing.Size(159, 23);
             this.GameObjectDropDown.TabIndex = 0;
             this.GameObjectDropDown.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // GameObjectLabel
             // 
             this.GameObjectLabel.AutoSize = true;
-            this.GameObjectLabel.Location = new System.Drawing.Point(54, 15);
+            this.GameObjectLabel.Location = new System.Drawing.Point(412, 14);
+            this.GameObjectLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.GameObjectLabel.Name = "GameObjectLabel";
-            this.GameObjectLabel.Size = new System.Drawing.Size(95, 19);
+            this.GameObjectLabel.Size = new System.Drawing.Size(79, 15);
             this.GameObjectLabel.TabIndex = 1;
             this.GameObjectLabel.Text = "GameObject";
             // 
             // ComponentLabel
             // 
             this.ComponentLabel.AutoSize = true;
-            this.ComponentLabel.Location = new System.Drawing.Point(395, 15);
+            this.ComponentLabel.Location = new System.Drawing.Point(677, 14);
+            this.ComponentLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ComponentLabel.Name = "ComponentLabel";
-            this.ComponentLabel.Size = new System.Drawing.Size(91, 19);
+            this.ComponentLabel.Size = new System.Drawing.Size(75, 15);
             this.ComponentLabel.TabIndex = 2;
             this.ComponentLabel.Text = "Component";
             // 
@@ -98,9 +107,10 @@ namespace LittleWorm
             // 
             this.ComponentDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComponentDropDown.FormattingEnabled = true;
-            this.ComponentDropDown.Location = new System.Drawing.Point(492, 12);
+            this.ComponentDropDown.Location = new System.Drawing.Point(753, 11);
+            this.ComponentDropDown.Margin = new System.Windows.Forms.Padding(2);
             this.ComponentDropDown.Name = "ComponentDropDown";
-            this.ComponentDropDown.Size = new System.Drawing.Size(203, 27);
+            this.ComponentDropDown.Size = new System.Drawing.Size(159, 23);
             this.ComponentDropDown.TabIndex = 3;
             this.ComponentDropDown.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
@@ -127,9 +137,11 @@ namespace LittleWorm
             this.TransformGroupBox.Controls.Add(this.RotationLabel);
             this.TransformGroupBox.Controls.Add(this.PositionLabel);
             this.TransformGroupBox.Controls.Add(this.Positionx);
-            this.TransformGroupBox.Location = new System.Drawing.Point(54, 100);
+            this.TransformGroupBox.Location = new System.Drawing.Point(412, 81);
+            this.TransformGroupBox.Margin = new System.Windows.Forms.Padding(2);
             this.TransformGroupBox.Name = "TransformGroupBox";
-            this.TransformGroupBox.Size = new System.Drawing.Size(641, 397);
+            this.TransformGroupBox.Padding = new System.Windows.Forms.Padding(2);
+            this.TransformGroupBox.Size = new System.Drawing.Size(499, 313);
             this.TransformGroupBox.TabIndex = 4;
             this.TransformGroupBox.TabStop = false;
             this.TransformGroupBox.Text = "Transform";
@@ -138,9 +150,10 @@ namespace LittleWorm
             // 
             this.ScazLabel.AutoSize = true;
             this.ScazLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ScazLabel.Location = new System.Drawing.Point(313, 162);
+            this.ScazLabel.Location = new System.Drawing.Point(243, 128);
+            this.ScazLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ScazLabel.Name = "ScazLabel";
-            this.ScazLabel.Size = new System.Drawing.Size(22, 25);
+            this.ScazLabel.Size = new System.Drawing.Size(17, 20);
             this.ScazLabel.TabIndex = 20;
             this.ScazLabel.Text = "z";
             // 
@@ -148,9 +161,10 @@ namespace LittleWorm
             // 
             this.ScayLabel.AutoSize = true;
             this.ScayLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ScayLabel.Location = new System.Drawing.Point(197, 162);
+            this.ScayLabel.Location = new System.Drawing.Point(153, 128);
+            this.ScayLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ScayLabel.Name = "ScayLabel";
-            this.ScayLabel.Size = new System.Drawing.Size(22, 25);
+            this.ScayLabel.Size = new System.Drawing.Size(17, 20);
             this.ScayLabel.TabIndex = 19;
             this.ScayLabel.Text = "y";
             // 
@@ -158,9 +172,10 @@ namespace LittleWorm
             // 
             this.ScaxLabel.AutoSize = true;
             this.ScaxLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ScaxLabel.Location = new System.Drawing.Point(85, 162);
+            this.ScaxLabel.Location = new System.Drawing.Point(66, 128);
+            this.ScaxLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ScaxLabel.Name = "ScaxLabel";
-            this.ScaxLabel.Size = new System.Drawing.Size(22, 25);
+            this.ScaxLabel.Size = new System.Drawing.Size(17, 20);
             this.ScaxLabel.TabIndex = 18;
             this.ScaxLabel.Text = "x";
             // 
@@ -168,9 +183,10 @@ namespace LittleWorm
             // 
             this.RotzLabel.AutoSize = true;
             this.RotzLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.RotzLabel.Location = new System.Drawing.Point(313, 105);
+            this.RotzLabel.Location = new System.Drawing.Point(243, 83);
+            this.RotzLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.RotzLabel.Name = "RotzLabel";
-            this.RotzLabel.Size = new System.Drawing.Size(22, 25);
+            this.RotzLabel.Size = new System.Drawing.Size(17, 20);
             this.RotzLabel.TabIndex = 17;
             this.RotzLabel.Text = "z";
             // 
@@ -178,9 +194,10 @@ namespace LittleWorm
             // 
             this.RotyLabel.AutoSize = true;
             this.RotyLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.RotyLabel.Location = new System.Drawing.Point(197, 105);
+            this.RotyLabel.Location = new System.Drawing.Point(153, 83);
+            this.RotyLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.RotyLabel.Name = "RotyLabel";
-            this.RotyLabel.Size = new System.Drawing.Size(22, 25);
+            this.RotyLabel.Size = new System.Drawing.Size(17, 20);
             this.RotyLabel.TabIndex = 16;
             this.RotyLabel.Text = "y";
             // 
@@ -188,9 +205,10 @@ namespace LittleWorm
             // 
             this.RotxLabel.AutoSize = true;
             this.RotxLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.RotxLabel.Location = new System.Drawing.Point(85, 105);
+            this.RotxLabel.Location = new System.Drawing.Point(66, 83);
+            this.RotxLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.RotxLabel.Name = "RotxLabel";
-            this.RotxLabel.Size = new System.Drawing.Size(22, 25);
+            this.RotxLabel.Size = new System.Drawing.Size(17, 20);
             this.RotxLabel.TabIndex = 15;
             this.RotxLabel.Text = "x";
             // 
@@ -198,9 +216,10 @@ namespace LittleWorm
             // 
             this.PoszLabel.AutoSize = true;
             this.PoszLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.PoszLabel.Location = new System.Drawing.Point(313, 50);
+            this.PoszLabel.Location = new System.Drawing.Point(243, 39);
+            this.PoszLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.PoszLabel.Name = "PoszLabel";
-            this.PoszLabel.Size = new System.Drawing.Size(22, 25);
+            this.PoszLabel.Size = new System.Drawing.Size(17, 20);
             this.PoszLabel.TabIndex = 14;
             this.PoszLabel.Text = "z";
             // 
@@ -208,9 +227,10 @@ namespace LittleWorm
             // 
             this.PosyLabel.AutoSize = true;
             this.PosyLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.PosyLabel.Location = new System.Drawing.Point(197, 50);
+            this.PosyLabel.Location = new System.Drawing.Point(153, 39);
+            this.PosyLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.PosyLabel.Name = "PosyLabel";
-            this.PosyLabel.Size = new System.Drawing.Size(22, 25);
+            this.PosyLabel.Size = new System.Drawing.Size(17, 20);
             this.PosyLabel.TabIndex = 13;
             this.PosyLabel.Text = "y";
             // 
@@ -218,108 +238,121 @@ namespace LittleWorm
             // 
             this.PosxLabel.AutoSize = true;
             this.PosxLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.PosxLabel.Location = new System.Drawing.Point(85, 50);
+            this.PosxLabel.Location = new System.Drawing.Point(66, 39);
+            this.PosxLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.PosxLabel.Name = "PosxLabel";
-            this.PosxLabel.Size = new System.Drawing.Size(22, 25);
+            this.PosxLabel.Size = new System.Drawing.Size(17, 20);
             this.PosxLabel.TabIndex = 12;
             this.PosxLabel.Text = "x";
             // 
             // Scalez
             // 
-            this.Scalez.Location = new System.Drawing.Point(341, 160);
+            this.Scalez.Location = new System.Drawing.Point(265, 126);
+            this.Scalez.Margin = new System.Windows.Forms.Padding(2);
             this.Scalez.Name = "Scalez";
-            this.Scalez.Size = new System.Drawing.Size(62, 27);
+            this.Scalez.Size = new System.Drawing.Size(49, 23);
             this.Scalez.TabIndex = 11;
             this.Scalez.TextChanged += new System.EventHandler(this.Scale_TextChanged);
             // 
             // Scaley
             // 
-            this.Scaley.Location = new System.Drawing.Point(225, 160);
+            this.Scaley.Location = new System.Drawing.Point(175, 126);
+            this.Scaley.Margin = new System.Windows.Forms.Padding(2);
             this.Scaley.Name = "Scaley";
-            this.Scaley.Size = new System.Drawing.Size(62, 27);
+            this.Scaley.Size = new System.Drawing.Size(49, 23);
             this.Scaley.TabIndex = 10;
             this.Scaley.TextChanged += new System.EventHandler(this.Scale_TextChanged);
             // 
             // Scalex
             // 
-            this.Scalex.Location = new System.Drawing.Point(113, 160);
+            this.Scalex.Location = new System.Drawing.Point(88, 126);
+            this.Scalex.Margin = new System.Windows.Forms.Padding(2);
             this.Scalex.Name = "Scalex";
-            this.Scalex.Size = new System.Drawing.Size(62, 27);
+            this.Scalex.Size = new System.Drawing.Size(49, 23);
             this.Scalex.TabIndex = 9;
             this.Scalex.TextChanged += new System.EventHandler(this.Scale_TextChanged);
             // 
             // Rotationz
             // 
-            this.Rotationz.Location = new System.Drawing.Point(341, 103);
+            this.Rotationz.Location = new System.Drawing.Point(265, 81);
+            this.Rotationz.Margin = new System.Windows.Forms.Padding(2);
             this.Rotationz.Name = "Rotationz";
-            this.Rotationz.Size = new System.Drawing.Size(62, 27);
+            this.Rotationz.Size = new System.Drawing.Size(49, 23);
             this.Rotationz.TabIndex = 8;
             this.Rotationz.TextChanged += new System.EventHandler(this.Rotation_TextChanged);
             // 
             // Rotationy
             // 
-            this.Rotationy.Location = new System.Drawing.Point(225, 103);
+            this.Rotationy.Location = new System.Drawing.Point(175, 81);
+            this.Rotationy.Margin = new System.Windows.Forms.Padding(2);
             this.Rotationy.Name = "Rotationy";
-            this.Rotationy.Size = new System.Drawing.Size(62, 27);
+            this.Rotationy.Size = new System.Drawing.Size(49, 23);
             this.Rotationy.TabIndex = 7;
             this.Rotationy.TextChanged += new System.EventHandler(this.Rotation_TextChanged);
             // 
             // Rotationx
             // 
-            this.Rotationx.Location = new System.Drawing.Point(113, 103);
+            this.Rotationx.Location = new System.Drawing.Point(88, 81);
+            this.Rotationx.Margin = new System.Windows.Forms.Padding(2);
             this.Rotationx.Name = "Rotationx";
-            this.Rotationx.Size = new System.Drawing.Size(62, 27);
+            this.Rotationx.Size = new System.Drawing.Size(49, 23);
             this.Rotationx.TabIndex = 6;
             this.Rotationx.TextChanged += new System.EventHandler(this.Rotation_TextChanged);
             // 
             // Positionz
             // 
-            this.Positionz.Location = new System.Drawing.Point(341, 48);
+            this.Positionz.Location = new System.Drawing.Point(265, 38);
+            this.Positionz.Margin = new System.Windows.Forms.Padding(2);
             this.Positionz.Name = "Positionz";
-            this.Positionz.Size = new System.Drawing.Size(62, 27);
+            this.Positionz.Size = new System.Drawing.Size(49, 23);
             this.Positionz.TabIndex = 5;
             this.Positionz.TextChanged += new System.EventHandler(this.Position_TextChanged);
             // 
             // Positiony
             // 
-            this.Positiony.Location = new System.Drawing.Point(225, 48);
+            this.Positiony.Location = new System.Drawing.Point(175, 38);
+            this.Positiony.Margin = new System.Windows.Forms.Padding(2);
             this.Positiony.Name = "Positiony";
-            this.Positiony.Size = new System.Drawing.Size(62, 27);
+            this.Positiony.Size = new System.Drawing.Size(49, 23);
             this.Positiony.TabIndex = 4;
             this.Positiony.TextChanged += new System.EventHandler(this.Position_TextChanged);
             // 
             // ScaleLabel
             // 
             this.ScaleLabel.AutoSize = true;
-            this.ScaleLabel.Location = new System.Drawing.Point(14, 164);
+            this.ScaleLabel.Location = new System.Drawing.Point(11, 129);
+            this.ScaleLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ScaleLabel.Name = "ScaleLabel";
-            this.ScaleLabel.Size = new System.Drawing.Size(45, 19);
+            this.ScaleLabel.Size = new System.Drawing.Size(37, 15);
             this.ScaleLabel.TabIndex = 3;
             this.ScaleLabel.Text = "Scale";
             // 
             // RotationLabel
             // 
             this.RotationLabel.AutoSize = true;
-            this.RotationLabel.Location = new System.Drawing.Point(14, 107);
+            this.RotationLabel.Location = new System.Drawing.Point(11, 84);
+            this.RotationLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.RotationLabel.Name = "RotationLabel";
-            this.RotationLabel.Size = new System.Drawing.Size(68, 19);
+            this.RotationLabel.Size = new System.Drawing.Size(56, 15);
             this.RotationLabel.TabIndex = 2;
             this.RotationLabel.Text = "Rotation";
             // 
             // PositionLabel
             // 
             this.PositionLabel.AutoSize = true;
-            this.PositionLabel.Location = new System.Drawing.Point(14, 55);
+            this.PositionLabel.Location = new System.Drawing.Point(11, 43);
+            this.PositionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.PositionLabel.Name = "PositionLabel";
-            this.PositionLabel.Size = new System.Drawing.Size(65, 19);
+            this.PositionLabel.Size = new System.Drawing.Size(52, 15);
             this.PositionLabel.TabIndex = 1;
             this.PositionLabel.Text = "Position";
             // 
             // Positionx
             // 
-            this.Positionx.Location = new System.Drawing.Point(113, 48);
+            this.Positionx.Location = new System.Drawing.Point(88, 38);
+            this.Positionx.Margin = new System.Windows.Forms.Padding(2);
             this.Positionx.Name = "Positionx";
-            this.Positionx.Size = new System.Drawing.Size(62, 27);
+            this.Positionx.Size = new System.Drawing.Size(49, 23);
             this.Positionx.TabIndex = 0;
             this.Positionx.TextChanged += new System.EventHandler(this.Position_TextChanged);
             // 
@@ -336,73 +369,82 @@ namespace LittleWorm
             this.MeshRendererGroupBox.Controls.Add(this.MeshDropDown);
             this.MeshRendererGroupBox.Controls.Add(this.TextureLabel);
             this.MeshRendererGroupBox.Controls.Add(this.MeshLabel);
-            this.MeshRendererGroupBox.Location = new System.Drawing.Point(54, 100);
+            this.MeshRendererGroupBox.Location = new System.Drawing.Point(412, 81);
+            this.MeshRendererGroupBox.Margin = new System.Windows.Forms.Padding(2);
             this.MeshRendererGroupBox.Name = "MeshRendererGroupBox";
-            this.MeshRendererGroupBox.Size = new System.Drawing.Size(641, 397);
+            this.MeshRendererGroupBox.Padding = new System.Windows.Forms.Padding(2);
+            this.MeshRendererGroupBox.Size = new System.Drawing.Size(499, 313);
             this.MeshRendererGroupBox.TabIndex = 12;
             this.MeshRendererGroupBox.TabStop = false;
             this.MeshRendererGroupBox.Text = "MeshRenderer";
             // 
-            // OffsetzLabel
+            // OffSetzLabel
             // 
             this.OffSetzLabel.AutoSize = true;
             this.OffSetzLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.OffSetzLabel.Location = new System.Drawing.Point(398, 128);
+            this.OffSetzLabel.Location = new System.Drawing.Point(310, 101);
+            this.OffSetzLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.OffSetzLabel.Name = "OffSetzLabel";
-            this.OffSetzLabel.Size = new System.Drawing.Size(22, 25);
+            this.OffSetzLabel.Size = new System.Drawing.Size(17, 20);
             this.OffSetzLabel.TabIndex = 27;
             this.OffSetzLabel.Text = "z";
             // 
-            // OffsetyLabel
+            // OffSetyLabel
             // 
             this.OffSetyLabel.AutoSize = true;
             this.OffSetyLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.OffSetyLabel.Location = new System.Drawing.Point(282, 128);
+            this.OffSetyLabel.Location = new System.Drawing.Point(219, 101);
+            this.OffSetyLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.OffSetyLabel.Name = "OffSetyLabel";
-            this.OffSetyLabel.Size = new System.Drawing.Size(22, 25);
+            this.OffSetyLabel.Size = new System.Drawing.Size(17, 20);
             this.OffSetyLabel.TabIndex = 26;
             this.OffSetyLabel.Text = "y";
             // 
-            // OffsetxLabel
+            // OffSetxLabel
             // 
             this.OffSetxLabel.AutoSize = true;
             this.OffSetxLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.OffSetxLabel.Location = new System.Drawing.Point(170, 128);
+            this.OffSetxLabel.Location = new System.Drawing.Point(132, 101);
+            this.OffSetxLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.OffSetxLabel.Name = "OffSetxLabel";
-            this.OffSetxLabel.Size = new System.Drawing.Size(22, 25);
+            this.OffSetxLabel.Size = new System.Drawing.Size(17, 20);
             this.OffSetxLabel.TabIndex = 25;
             this.OffSetxLabel.Text = "x";
             // 
             // OffSetz
             // 
-            this.OffSetz.Location = new System.Drawing.Point(426, 126);
+            this.OffSetz.Location = new System.Drawing.Point(331, 99);
+            this.OffSetz.Margin = new System.Windows.Forms.Padding(2);
             this.OffSetz.Name = "OffSetz";
-            this.OffSetz.Size = new System.Drawing.Size(62, 27);
+            this.OffSetz.Size = new System.Drawing.Size(49, 23);
             this.OffSetz.TabIndex = 24;
             this.OffSetz.TextChanged += new System.EventHandler(this.OffSet_TextChanged);
             // 
             // OffSety
             // 
-            this.OffSety.Location = new System.Drawing.Point(310, 126);
+            this.OffSety.Location = new System.Drawing.Point(241, 99);
+            this.OffSety.Margin = new System.Windows.Forms.Padding(2);
             this.OffSety.Name = "OffSety";
-            this.OffSety.Size = new System.Drawing.Size(62, 27);
+            this.OffSety.Size = new System.Drawing.Size(49, 23);
             this.OffSety.TabIndex = 23;
             this.OffSety.TextChanged += new System.EventHandler(this.OffSet_TextChanged);
             // 
             // OffSetx
             // 
-            this.OffSetx.Location = new System.Drawing.Point(198, 126);
+            this.OffSetx.Location = new System.Drawing.Point(154, 99);
+            this.OffSetx.Margin = new System.Windows.Forms.Padding(2);
             this.OffSetx.Name = "OffSetx";
-            this.OffSetx.Size = new System.Drawing.Size(62, 27);
+            this.OffSetx.Size = new System.Drawing.Size(49, 23);
             this.OffSetx.TabIndex = 22;
             this.OffSetx.TextChanged += new System.EventHandler(this.OffSet_TextChanged);
             // 
             // OffSetLabel
             // 
             this.OffSetLabel.AutoSize = true;
-            this.OffSetLabel.Location = new System.Drawing.Point(99, 130);
+            this.OffSetLabel.Location = new System.Drawing.Point(77, 103);
+            this.OffSetLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.OffSetLabel.Name = "OffSetLabel";
-            this.OffSetLabel.Size = new System.Drawing.Size(53, 19);
+            this.OffSetLabel.Size = new System.Drawing.Size(43, 15);
             this.OffSetLabel.TabIndex = 21;
             this.OffSetLabel.Text = "OffSet";
             // 
@@ -410,9 +452,10 @@ namespace LittleWorm
             // 
             this.TextureDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TextureDropDown.FormattingEnabled = true;
-            this.TextureDropDown.Location = new System.Drawing.Point(400, 41);
+            this.TextureDropDown.Location = new System.Drawing.Point(311, 32);
+            this.TextureDropDown.Margin = new System.Windows.Forms.Padding(2);
             this.TextureDropDown.Name = "TextureDropDown";
-            this.TextureDropDown.Size = new System.Drawing.Size(151, 27);
+            this.TextureDropDown.Size = new System.Drawing.Size(118, 23);
             this.TextureDropDown.TabIndex = 3;
             this.TextureDropDown.SelectedIndexChanged += new System.EventHandler(this.TextureDropDown_SelectedIndexChanged);
             // 
@@ -420,44 +463,113 @@ namespace LittleWorm
             // 
             this.MeshDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.MeshDropDown.FormattingEnabled = true;
-            this.MeshDropDown.Location = new System.Drawing.Point(69, 41);
+            this.MeshDropDown.Location = new System.Drawing.Point(54, 32);
+            this.MeshDropDown.Margin = new System.Windows.Forms.Padding(2);
             this.MeshDropDown.Name = "MeshDropDown";
-            this.MeshDropDown.Size = new System.Drawing.Size(151, 27);
+            this.MeshDropDown.Size = new System.Drawing.Size(118, 23);
             this.MeshDropDown.TabIndex = 2;
             this.MeshDropDown.SelectedIndexChanged += new System.EventHandler(this.MeshDropDown_SelectedIndexChanged);
             // 
             // TextureLabel
             // 
             this.TextureLabel.AutoSize = true;
-            this.TextureLabel.Location = new System.Drawing.Point(334, 44);
+            this.TextureLabel.Location = new System.Drawing.Point(260, 35);
+            this.TextureLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.TextureLabel.Name = "TextureLabel";
-            this.TextureLabel.Size = new System.Drawing.Size(60, 19);
+            this.TextureLabel.Size = new System.Drawing.Size(49, 15);
             this.TextureLabel.TabIndex = 1;
             this.TextureLabel.Text = "Texture";
             // 
             // MeshLabel
             // 
             this.MeshLabel.AutoSize = true;
-            this.MeshLabel.Location = new System.Drawing.Point(16, 44);
+            this.MeshLabel.Location = new System.Drawing.Point(12, 35);
+            this.MeshLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.MeshLabel.Name = "MeshLabel";
-            this.MeshLabel.Size = new System.Drawing.Size(47, 19);
+            this.MeshLabel.Size = new System.Drawing.Size(38, 15);
             this.MeshLabel.TabIndex = 0;
             this.MeshLabel.Text = "Mesh";
             // 
             // Debugger
             // 
             this.Debugger.AutoSize = true;
-            this.Debugger.Location = new System.Drawing.Point(279, 61);
+            this.Debugger.Location = new System.Drawing.Point(587, 50);
+            this.Debugger.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Debugger.Name = "Debugger";
-            this.Debugger.Size = new System.Drawing.Size(39, 19);
+            this.Debugger.Size = new System.Drawing.Size(31, 15);
             this.Debugger.TabIndex = 13;
             this.Debugger.Text = "AAA";
             // 
+            // AddGameObject
+            // 
+            this.AddGameObject.Location = new System.Drawing.Point(127, 29);
+            this.AddGameObject.Margin = new System.Windows.Forms.Padding(2);
+            this.AddGameObject.Name = "AddGameObject";
+            this.AddGameObject.Size = new System.Drawing.Size(75, 23);
+            this.AddGameObject.TabIndex = 0;
+            // 
+            // AddGameObjectLabel
+            // 
+            this.AddGameObjectLabel.AutoSize = true;
+            this.AddGameObjectLabel.Location = new System.Drawing.Point(20, 32);
+            this.AddGameObjectLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.AddGameObjectLabel.Name = "AddGameObjectLabel";
+            this.AddGameObjectLabel.Size = new System.Drawing.Size(103, 15);
+            this.AddGameObjectLabel.TabIndex = 1;
+            this.AddGameObjectLabel.Text = "AddGameObject";
+            // 
+            // AddComponentDropDown
+            // 
+            this.AddComponentDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.AddComponentDropDown.FormattingEnabled = true;
+            this.AddComponentDropDown.Location = new System.Drawing.Point(127, 81);
+            this.AddComponentDropDown.Margin = new System.Windows.Forms.Padding(2);
+            this.AddComponentDropDown.Name = "AddComponentDropDown";
+            this.AddComponentDropDown.Size = new System.Drawing.Size(159, 23);
+            this.AddComponentDropDown.TabIndex = 0;
+            this.AddComponentDropDown.SelectedIndexChanged += new System.EventHandler(this.comboBox_AddCom_SelectedIndexChanged);
+            // 
+            // AddComponentLabel
+            // 
+            this.AddComponentLabel.AutoSize = true;
+            this.AddComponentLabel.Location = new System.Drawing.Point(22, 84);
+            this.AddComponentLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.AddComponentLabel.Name = "AddComponentLabel";
+            this.AddComponentLabel.Size = new System.Drawing.Size(99, 15);
+            this.AddComponentLabel.TabIndex = 1;
+            this.AddComponentLabel.Text = "AddComponent";
+            // 
+            // AddGObjBut
+            // 
+            this.AddGObjBut.Location = new System.Drawing.Point(207, 29);
+            this.AddGObjBut.Name = "AddGObjBut";
+            this.AddGObjBut.Size = new System.Drawing.Size(51, 23);
+            this.AddGObjBut.TabIndex = 14;
+            this.AddGObjBut.Text = "Add";
+            this.AddGObjBut.UseVisualStyleBackColor = true;
+            this.AddGObjBut.Click += new System.EventHandler(this.AddGObjBut_Click);
+            // 
+            // AddCmpBut
+            // 
+            this.AddCmpBut.Location = new System.Drawing.Point(291, 81);
+            this.AddCmpBut.Name = "AddCmpBut";
+            this.AddCmpBut.Size = new System.Drawing.Size(49, 23);
+            this.AddCmpBut.TabIndex = 15;
+            this.AddCmpBut.Text = "Add";
+            this.AddCmpBut.UseVisualStyleBackColor = true;
+            this.AddCmpBut.Click += new System.EventHandler(this.AddCmpBut_Click);
+            // 
             // Inspector
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(764, 537);
+            this.ClientSize = new System.Drawing.Size(925, 414);
+            this.Controls.Add(this.AddCmpBut);
+            this.Controls.Add(this.AddGObjBut);
+            this.Controls.Add(this.AddComponentLabel);
+            this.Controls.Add(this.AddComponentDropDown);
+            this.Controls.Add(this.AddGameObjectLabel);
+            this.Controls.Add(this.AddGameObject);
             this.Controls.Add(this.Debugger);
             this.Controls.Add(this.MeshRendererGroupBox);
             this.Controls.Add(this.TransformGroupBox);
@@ -465,6 +577,7 @@ namespace LittleWorm
             this.Controls.Add(this.ComponentLabel);
             this.Controls.Add(this.GameObjectLabel);
             this.Controls.Add(this.GameObjectDropDown);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Inspector";
             this.Text = "Inspector";
             this.Load += new System.EventHandler(this.Inspector_Load);
@@ -523,6 +636,12 @@ namespace LittleWorm
             this.TextureLabel = new System.Windows.Forms.Label();
             this.MeshLabel = new System.Windows.Forms.Label();
             this.Debugger = new System.Windows.Forms.Label();
+            this.AddGameObject = new System.Windows.Forms.TextBox();
+            this.AddGameObjectLabel = new System.Windows.Forms.Label();
+            this.AddComponentDropDown = new System.Windows.Forms.ComboBox();
+            this.AddComponentLabel = new System.Windows.Forms.Label();
+            this.AddGObjBut = new System.Windows.Forms.Button();
+            this.AddCmpBut = new System.Windows.Forms.Button();
             this.TransformGroupBox.SuspendLayout();
             this.MeshRendererGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -531,27 +650,30 @@ namespace LittleWorm
             // 
             this.GameObjectDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.GameObjectDropDown.FormattingEnabled = true;
-            this.GameObjectDropDown.Location = new System.Drawing.Point(155, 12);
+            this.GameObjectDropDown.Location = new System.Drawing.Point(491, 11);
+            this.GameObjectDropDown.Margin = new System.Windows.Forms.Padding(2);
             this.GameObjectDropDown.Name = "GameObjectDropDown";
-            this.GameObjectDropDown.Size = new System.Drawing.Size(203, 27);
+            this.GameObjectDropDown.Size = new System.Drawing.Size(159, 23);
             this.GameObjectDropDown.TabIndex = 0;
             this.GameObjectDropDown.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // GameObjectLabel
             // 
             this.GameObjectLabel.AutoSize = true;
-            this.GameObjectLabel.Location = new System.Drawing.Point(54, 15);
+            this.GameObjectLabel.Location = new System.Drawing.Point(412, 14);
+            this.GameObjectLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.GameObjectLabel.Name = "GameObjectLabel";
-            this.GameObjectLabel.Size = new System.Drawing.Size(95, 19);
+            this.GameObjectLabel.Size = new System.Drawing.Size(79, 15);
             this.GameObjectLabel.TabIndex = 1;
             this.GameObjectLabel.Text = "GameObject";
             // 
             // ComponentLabel
             // 
             this.ComponentLabel.AutoSize = true;
-            this.ComponentLabel.Location = new System.Drawing.Point(395, 15);
+            this.ComponentLabel.Location = new System.Drawing.Point(677, 14);
+            this.ComponentLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ComponentLabel.Name = "ComponentLabel";
-            this.ComponentLabel.Size = new System.Drawing.Size(91, 19);
+            this.ComponentLabel.Size = new System.Drawing.Size(75, 15);
             this.ComponentLabel.TabIndex = 2;
             this.ComponentLabel.Text = "Component";
             // 
@@ -559,9 +681,10 @@ namespace LittleWorm
             // 
             this.ComponentDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComponentDropDown.FormattingEnabled = true;
-            this.ComponentDropDown.Location = new System.Drawing.Point(492, 12);
+            this.ComponentDropDown.Location = new System.Drawing.Point(753, 11);
+            this.ComponentDropDown.Margin = new System.Windows.Forms.Padding(2);
             this.ComponentDropDown.Name = "ComponentDropDown";
-            this.ComponentDropDown.Size = new System.Drawing.Size(203, 27);
+            this.ComponentDropDown.Size = new System.Drawing.Size(159, 23);
             this.ComponentDropDown.TabIndex = 3;
             this.ComponentDropDown.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
@@ -588,9 +711,11 @@ namespace LittleWorm
             this.TransformGroupBox.Controls.Add(this.RotationLabel);
             this.TransformGroupBox.Controls.Add(this.PositionLabel);
             this.TransformGroupBox.Controls.Add(this.Positionx);
-            this.TransformGroupBox.Location = new System.Drawing.Point(0, 0);
+            this.TransformGroupBox.Location = new System.Drawing.Point(412, 81);
+            this.TransformGroupBox.Margin = new System.Windows.Forms.Padding(2);
             this.TransformGroupBox.Name = "TransformGroupBox";
-            this.TransformGroupBox.Size = new System.Drawing.Size(641, 397);
+            this.TransformGroupBox.Padding = new System.Windows.Forms.Padding(2);
+            this.TransformGroupBox.Size = new System.Drawing.Size(499, 313);
             this.TransformGroupBox.TabIndex = 4;
             this.TransformGroupBox.TabStop = false;
             this.TransformGroupBox.Text = "Transform";
@@ -599,9 +724,10 @@ namespace LittleWorm
             // 
             this.ScazLabel.AutoSize = true;
             this.ScazLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ScazLabel.Location = new System.Drawing.Point(313, 162);
+            this.ScazLabel.Location = new System.Drawing.Point(243, 128);
+            this.ScazLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ScazLabel.Name = "ScazLabel";
-            this.ScazLabel.Size = new System.Drawing.Size(22, 25);
+            this.ScazLabel.Size = new System.Drawing.Size(17, 20);
             this.ScazLabel.TabIndex = 20;
             this.ScazLabel.Text = "z";
             // 
@@ -609,9 +735,10 @@ namespace LittleWorm
             // 
             this.ScayLabel.AutoSize = true;
             this.ScayLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ScayLabel.Location = new System.Drawing.Point(197, 162);
+            this.ScayLabel.Location = new System.Drawing.Point(153, 128);
+            this.ScayLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ScayLabel.Name = "ScayLabel";
-            this.ScayLabel.Size = new System.Drawing.Size(22, 25);
+            this.ScayLabel.Size = new System.Drawing.Size(17, 20);
             this.ScayLabel.TabIndex = 19;
             this.ScayLabel.Text = "y";
             // 
@@ -619,9 +746,10 @@ namespace LittleWorm
             // 
             this.ScaxLabel.AutoSize = true;
             this.ScaxLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.ScaxLabel.Location = new System.Drawing.Point(85, 162);
+            this.ScaxLabel.Location = new System.Drawing.Point(66, 128);
+            this.ScaxLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ScaxLabel.Name = "ScaxLabel";
-            this.ScaxLabel.Size = new System.Drawing.Size(22, 25);
+            this.ScaxLabel.Size = new System.Drawing.Size(17, 20);
             this.ScaxLabel.TabIndex = 18;
             this.ScaxLabel.Text = "x";
             // 
@@ -629,9 +757,10 @@ namespace LittleWorm
             // 
             this.RotzLabel.AutoSize = true;
             this.RotzLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.RotzLabel.Location = new System.Drawing.Point(313, 105);
+            this.RotzLabel.Location = new System.Drawing.Point(243, 83);
+            this.RotzLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.RotzLabel.Name = "RotzLabel";
-            this.RotzLabel.Size = new System.Drawing.Size(22, 25);
+            this.RotzLabel.Size = new System.Drawing.Size(17, 20);
             this.RotzLabel.TabIndex = 17;
             this.RotzLabel.Text = "z";
             // 
@@ -639,9 +768,10 @@ namespace LittleWorm
             // 
             this.RotyLabel.AutoSize = true;
             this.RotyLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.RotyLabel.Location = new System.Drawing.Point(197, 105);
+            this.RotyLabel.Location = new System.Drawing.Point(153, 83);
+            this.RotyLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.RotyLabel.Name = "RotyLabel";
-            this.RotyLabel.Size = new System.Drawing.Size(22, 25);
+            this.RotyLabel.Size = new System.Drawing.Size(17, 20);
             this.RotyLabel.TabIndex = 16;
             this.RotyLabel.Text = "y";
             // 
@@ -649,9 +779,10 @@ namespace LittleWorm
             // 
             this.RotxLabel.AutoSize = true;
             this.RotxLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.RotxLabel.Location = new System.Drawing.Point(85, 105);
+            this.RotxLabel.Location = new System.Drawing.Point(66, 83);
+            this.RotxLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.RotxLabel.Name = "RotxLabel";
-            this.RotxLabel.Size = new System.Drawing.Size(22, 25);
+            this.RotxLabel.Size = new System.Drawing.Size(17, 20);
             this.RotxLabel.TabIndex = 15;
             this.RotxLabel.Text = "x";
             // 
@@ -659,9 +790,10 @@ namespace LittleWorm
             // 
             this.PoszLabel.AutoSize = true;
             this.PoszLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.PoszLabel.Location = new System.Drawing.Point(313, 50);
+            this.PoszLabel.Location = new System.Drawing.Point(243, 39);
+            this.PoszLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.PoszLabel.Name = "PoszLabel";
-            this.PoszLabel.Size = new System.Drawing.Size(22, 25);
+            this.PoszLabel.Size = new System.Drawing.Size(17, 20);
             this.PoszLabel.TabIndex = 14;
             this.PoszLabel.Text = "z";
             // 
@@ -669,9 +801,10 @@ namespace LittleWorm
             // 
             this.PosyLabel.AutoSize = true;
             this.PosyLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.PosyLabel.Location = new System.Drawing.Point(197, 50);
+            this.PosyLabel.Location = new System.Drawing.Point(153, 39);
+            this.PosyLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.PosyLabel.Name = "PosyLabel";
-            this.PosyLabel.Size = new System.Drawing.Size(22, 25);
+            this.PosyLabel.Size = new System.Drawing.Size(17, 20);
             this.PosyLabel.TabIndex = 13;
             this.PosyLabel.Text = "y";
             // 
@@ -679,114 +812,126 @@ namespace LittleWorm
             // 
             this.PosxLabel.AutoSize = true;
             this.PosxLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.PosxLabel.Location = new System.Drawing.Point(85, 50);
+            this.PosxLabel.Location = new System.Drawing.Point(66, 39);
+            this.PosxLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.PosxLabel.Name = "PosxLabel";
-            this.PosxLabel.Size = new System.Drawing.Size(22, 25);
+            this.PosxLabel.Size = new System.Drawing.Size(17, 20);
             this.PosxLabel.TabIndex = 12;
             this.PosxLabel.Text = "x";
             // 
             // Scalez
             // 
-            this.Scalez.Location = new System.Drawing.Point(341, 160);
+            this.Scalez.Location = new System.Drawing.Point(265, 126);
+            this.Scalez.Margin = new System.Windows.Forms.Padding(2);
             this.Scalez.Name = "Scalez";
-            this.Scalez.Size = new System.Drawing.Size(62, 27);
+            this.Scalez.Size = new System.Drawing.Size(49, 23);
             this.Scalez.TabIndex = 11;
             this.Scalez.TextChanged += new System.EventHandler(this.Scale_TextChanged);
             // 
             // Scaley
             // 
-            this.Scaley.Location = new System.Drawing.Point(225, 160);
+            this.Scaley.Location = new System.Drawing.Point(175, 126);
+            this.Scaley.Margin = new System.Windows.Forms.Padding(2);
             this.Scaley.Name = "Scaley";
-            this.Scaley.Size = new System.Drawing.Size(62, 27);
+            this.Scaley.Size = new System.Drawing.Size(49, 23);
             this.Scaley.TabIndex = 10;
             this.Scaley.TextChanged += new System.EventHandler(this.Scale_TextChanged);
             // 
             // Scalex
             // 
-            this.Scalex.Location = new System.Drawing.Point(113, 160);
+            this.Scalex.Location = new System.Drawing.Point(88, 126);
+            this.Scalex.Margin = new System.Windows.Forms.Padding(2);
             this.Scalex.Name = "Scalex";
-            this.Scalex.Size = new System.Drawing.Size(62, 27);
+            this.Scalex.Size = new System.Drawing.Size(49, 23);
             this.Scalex.TabIndex = 9;
             this.Scalex.TextChanged += new System.EventHandler(this.Scale_TextChanged);
             // 
             // Rotationz
             // 
-            this.Rotationz.Location = new System.Drawing.Point(341, 103);
+            this.Rotationz.Location = new System.Drawing.Point(265, 81);
+            this.Rotationz.Margin = new System.Windows.Forms.Padding(2);
             this.Rotationz.Name = "Rotationz";
-            this.Rotationz.Size = new System.Drawing.Size(62, 27);
+            this.Rotationz.Size = new System.Drawing.Size(49, 23);
             this.Rotationz.TabIndex = 8;
             this.Rotationz.TextChanged += new System.EventHandler(this.Rotation_TextChanged);
             // 
             // Rotationy
             // 
-            this.Rotationy.Location = new System.Drawing.Point(225, 103);
+            this.Rotationy.Location = new System.Drawing.Point(175, 81);
+            this.Rotationy.Margin = new System.Windows.Forms.Padding(2);
             this.Rotationy.Name = "Rotationy";
-            this.Rotationy.Size = new System.Drawing.Size(62, 27);
+            this.Rotationy.Size = new System.Drawing.Size(49, 23);
             this.Rotationy.TabIndex = 7;
             this.Rotationy.TextChanged += new System.EventHandler(this.Rotation_TextChanged);
             // 
             // Rotationx
             // 
-            this.Rotationx.Location = new System.Drawing.Point(113, 103);
+            this.Rotationx.Location = new System.Drawing.Point(88, 81);
+            this.Rotationx.Margin = new System.Windows.Forms.Padding(2);
             this.Rotationx.Name = "Rotationx";
-            this.Rotationx.Size = new System.Drawing.Size(62, 27);
+            this.Rotationx.Size = new System.Drawing.Size(49, 23);
             this.Rotationx.TabIndex = 6;
             this.Rotationx.TextChanged += new System.EventHandler(this.Rotation_TextChanged);
             // 
             // Positionz
             // 
-            this.Positionz.Location = new System.Drawing.Point(341, 48);
+            this.Positionz.Location = new System.Drawing.Point(265, 38);
+            this.Positionz.Margin = new System.Windows.Forms.Padding(2);
             this.Positionz.Name = "Positionz";
-            this.Positionz.Size = new System.Drawing.Size(62, 27);
+            this.Positionz.Size = new System.Drawing.Size(49, 23);
             this.Positionz.TabIndex = 5;
             this.Positionz.TextChanged += new System.EventHandler(this.Position_TextChanged);
             // 
             // Positiony
             // 
-            this.Positiony.Location = new System.Drawing.Point(225, 48);
+            this.Positiony.Location = new System.Drawing.Point(175, 38);
+            this.Positiony.Margin = new System.Windows.Forms.Padding(2);
             this.Positiony.Name = "Positiony";
-            this.Positiony.Size = new System.Drawing.Size(62, 27);
+            this.Positiony.Size = new System.Drawing.Size(49, 23);
             this.Positiony.TabIndex = 4;
             this.Positiony.TextChanged += new System.EventHandler(this.Position_TextChanged);
             // 
             // ScaleLabel
             // 
             this.ScaleLabel.AutoSize = true;
-            this.ScaleLabel.Location = new System.Drawing.Point(14, 164);
+            this.ScaleLabel.Location = new System.Drawing.Point(11, 129);
+            this.ScaleLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ScaleLabel.Name = "ScaleLabel";
-            this.ScaleLabel.Size = new System.Drawing.Size(45, 19);
+            this.ScaleLabel.Size = new System.Drawing.Size(37, 15);
             this.ScaleLabel.TabIndex = 3;
             this.ScaleLabel.Text = "Scale";
             // 
             // RotationLabel
             // 
             this.RotationLabel.AutoSize = true;
-            this.RotationLabel.Location = new System.Drawing.Point(14, 107);
+            this.RotationLabel.Location = new System.Drawing.Point(11, 84);
+            this.RotationLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.RotationLabel.Name = "RotationLabel";
-            this.RotationLabel.Size = new System.Drawing.Size(68, 19);
+            this.RotationLabel.Size = new System.Drawing.Size(56, 15);
             this.RotationLabel.TabIndex = 2;
             this.RotationLabel.Text = "Rotation";
             // 
             // PositionLabel
             // 
             this.PositionLabel.AutoSize = true;
-            this.PositionLabel.Location = new System.Drawing.Point(14, 55);
+            this.PositionLabel.Location = new System.Drawing.Point(11, 43);
+            this.PositionLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.PositionLabel.Name = "PositionLabel";
-            this.PositionLabel.Size = new System.Drawing.Size(65, 19);
+            this.PositionLabel.Size = new System.Drawing.Size(52, 15);
             this.PositionLabel.TabIndex = 1;
             this.PositionLabel.Text = "Position";
             // 
             // Positionx
             // 
-            this.Positionx.Location = new System.Drawing.Point(113, 48);
+            this.Positionx.Location = new System.Drawing.Point(88, 38);
+            this.Positionx.Margin = new System.Windows.Forms.Padding(2);
             this.Positionx.Name = "Positionx";
-            this.Positionx.Size = new System.Drawing.Size(62, 27);
+            this.Positionx.Size = new System.Drawing.Size(49, 23);
             this.Positionx.TabIndex = 0;
             this.Positionx.TextChanged += new System.EventHandler(this.Position_TextChanged);
             // 
             // MeshRendererGroupBox
             // 
-            this.MeshRendererGroupBox.Controls.Add(this.TransformGroupBox);
             this.MeshRendererGroupBox.Controls.Add(this.OffSetzLabel);
             this.MeshRendererGroupBox.Controls.Add(this.OffSetyLabel);
             this.MeshRendererGroupBox.Controls.Add(this.OffSetxLabel);
@@ -798,9 +943,11 @@ namespace LittleWorm
             this.MeshRendererGroupBox.Controls.Add(this.MeshDropDown);
             this.MeshRendererGroupBox.Controls.Add(this.TextureLabel);
             this.MeshRendererGroupBox.Controls.Add(this.MeshLabel);
-            this.MeshRendererGroupBox.Location = new System.Drawing.Point(54, 100);
+            this.MeshRendererGroupBox.Location = new System.Drawing.Point(412, 81);
+            this.MeshRendererGroupBox.Margin = new System.Windows.Forms.Padding(2);
             this.MeshRendererGroupBox.Name = "MeshRendererGroupBox";
-            this.MeshRendererGroupBox.Size = new System.Drawing.Size(641, 397);
+            this.MeshRendererGroupBox.Padding = new System.Windows.Forms.Padding(2);
+            this.MeshRendererGroupBox.Size = new System.Drawing.Size(499, 313);
             this.MeshRendererGroupBox.TabIndex = 12;
             this.MeshRendererGroupBox.TabStop = false;
             this.MeshRendererGroupBox.Text = "MeshRenderer";
@@ -809,9 +956,10 @@ namespace LittleWorm
             // 
             this.OffSetzLabel.AutoSize = true;
             this.OffSetzLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.OffSetzLabel.Location = new System.Drawing.Point(398, 128);
+            this.OffSetzLabel.Location = new System.Drawing.Point(310, 101);
+            this.OffSetzLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.OffSetzLabel.Name = "OffSetzLabel";
-            this.OffSetzLabel.Size = new System.Drawing.Size(22, 25);
+            this.OffSetzLabel.Size = new System.Drawing.Size(17, 20);
             this.OffSetzLabel.TabIndex = 27;
             this.OffSetzLabel.Text = "z";
             // 
@@ -819,9 +967,10 @@ namespace LittleWorm
             // 
             this.OffSetyLabel.AutoSize = true;
             this.OffSetyLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.OffSetyLabel.Location = new System.Drawing.Point(282, 128);
+            this.OffSetyLabel.Location = new System.Drawing.Point(219, 101);
+            this.OffSetyLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.OffSetyLabel.Name = "OffSetyLabel";
-            this.OffSetyLabel.Size = new System.Drawing.Size(22, 25);
+            this.OffSetyLabel.Size = new System.Drawing.Size(17, 20);
             this.OffSetyLabel.TabIndex = 26;
             this.OffSetyLabel.Text = "y";
             // 
@@ -829,42 +978,47 @@ namespace LittleWorm
             // 
             this.OffSetxLabel.AutoSize = true;
             this.OffSetxLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.OffSetxLabel.Location = new System.Drawing.Point(170, 128);
+            this.OffSetxLabel.Location = new System.Drawing.Point(132, 101);
+            this.OffSetxLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.OffSetxLabel.Name = "OffSetxLabel";
-            this.OffSetxLabel.Size = new System.Drawing.Size(22, 25);
+            this.OffSetxLabel.Size = new System.Drawing.Size(17, 20);
             this.OffSetxLabel.TabIndex = 25;
             this.OffSetxLabel.Text = "x";
             // 
             // OffSetz
             // 
-            this.OffSetz.Location = new System.Drawing.Point(426, 126);
+            this.OffSetz.Location = new System.Drawing.Point(331, 99);
+            this.OffSetz.Margin = new System.Windows.Forms.Padding(2);
             this.OffSetz.Name = "OffSetz";
-            this.OffSetz.Size = new System.Drawing.Size(62, 27);
+            this.OffSetz.Size = new System.Drawing.Size(49, 23);
             this.OffSetz.TabIndex = 24;
             this.OffSetz.TextChanged += new System.EventHandler(this.OffSet_TextChanged);
             // 
             // OffSety
             // 
-            this.OffSety.Location = new System.Drawing.Point(310, 126);
+            this.OffSety.Location = new System.Drawing.Point(241, 99);
+            this.OffSety.Margin = new System.Windows.Forms.Padding(2);
             this.OffSety.Name = "OffSety";
-            this.OffSety.Size = new System.Drawing.Size(62, 27);
+            this.OffSety.Size = new System.Drawing.Size(49, 23);
             this.OffSety.TabIndex = 23;
             this.OffSety.TextChanged += new System.EventHandler(this.OffSet_TextChanged);
             // 
             // OffSetx
             // 
-            this.OffSetx.Location = new System.Drawing.Point(198, 126);
+            this.OffSetx.Location = new System.Drawing.Point(154, 99);
+            this.OffSetx.Margin = new System.Windows.Forms.Padding(2);
             this.OffSetx.Name = "OffSetx";
-            this.OffSetx.Size = new System.Drawing.Size(62, 27);
+            this.OffSetx.Size = new System.Drawing.Size(49, 23);
             this.OffSetx.TabIndex = 22;
             this.OffSetx.TextChanged += new System.EventHandler(this.OffSet_TextChanged);
             // 
             // OffSetLabel
             // 
             this.OffSetLabel.AutoSize = true;
-            this.OffSetLabel.Location = new System.Drawing.Point(99, 130);
+            this.OffSetLabel.Location = new System.Drawing.Point(77, 103);
+            this.OffSetLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.OffSetLabel.Name = "OffSetLabel";
-            this.OffSetLabel.Size = new System.Drawing.Size(53, 19);
+            this.OffSetLabel.Size = new System.Drawing.Size(43, 15);
             this.OffSetLabel.TabIndex = 21;
             this.OffSetLabel.Text = "OffSet";
             // 
@@ -872,9 +1026,10 @@ namespace LittleWorm
             // 
             this.TextureDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.TextureDropDown.FormattingEnabled = true;
-            this.TextureDropDown.Location = new System.Drawing.Point(400, 41);
+            this.TextureDropDown.Location = new System.Drawing.Point(311, 32);
+            this.TextureDropDown.Margin = new System.Windows.Forms.Padding(2);
             this.TextureDropDown.Name = "TextureDropDown";
-            this.TextureDropDown.Size = new System.Drawing.Size(151, 27);
+            this.TextureDropDown.Size = new System.Drawing.Size(118, 23);
             this.TextureDropDown.TabIndex = 3;
             this.TextureDropDown.SelectedIndexChanged += new System.EventHandler(this.TextureDropDown_SelectedIndexChanged);
             // 
@@ -882,50 +1037,121 @@ namespace LittleWorm
             // 
             this.MeshDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.MeshDropDown.FormattingEnabled = true;
-            this.MeshDropDown.Location = new System.Drawing.Point(69, 41);
+            this.MeshDropDown.Location = new System.Drawing.Point(54, 32);
+            this.MeshDropDown.Margin = new System.Windows.Forms.Padding(2);
             this.MeshDropDown.Name = "MeshDropDown";
-            this.MeshDropDown.Size = new System.Drawing.Size(151, 27);
+            this.MeshDropDown.Size = new System.Drawing.Size(118, 23);
             this.MeshDropDown.TabIndex = 2;
             this.MeshDropDown.SelectedIndexChanged += new System.EventHandler(this.MeshDropDown_SelectedIndexChanged);
             // 
             // TextureLabel
             // 
             this.TextureLabel.AutoSize = true;
-            this.TextureLabel.Location = new System.Drawing.Point(334, 44);
+            this.TextureLabel.Location = new System.Drawing.Point(260, 35);
+            this.TextureLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.TextureLabel.Name = "TextureLabel";
-            this.TextureLabel.Size = new System.Drawing.Size(60, 19);
+            this.TextureLabel.Size = new System.Drawing.Size(49, 15);
             this.TextureLabel.TabIndex = 1;
             this.TextureLabel.Text = "Texture";
             // 
             // MeshLabel
             // 
             this.MeshLabel.AutoSize = true;
-            this.MeshLabel.Location = new System.Drawing.Point(16, 44);
+            this.MeshLabel.Location = new System.Drawing.Point(12, 35);
+            this.MeshLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.MeshLabel.Name = "MeshLabel";
-            this.MeshLabel.Size = new System.Drawing.Size(47, 19);
+            this.MeshLabel.Size = new System.Drawing.Size(38, 15);
             this.MeshLabel.TabIndex = 0;
             this.MeshLabel.Text = "Mesh";
             // 
             // Debugger
             // 
             this.Debugger.AutoSize = true;
-            this.Debugger.Location = new System.Drawing.Point(279, 61);
+            this.Debugger.Location = new System.Drawing.Point(587, 50);
+            this.Debugger.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Debugger.Name = "Debugger";
-            this.Debugger.Size = new System.Drawing.Size(39, 19);
+            this.Debugger.Size = new System.Drawing.Size(31, 15);
             this.Debugger.TabIndex = 13;
             this.Debugger.Text = "AAA";
             // 
+            // AddGameObject
+            // 
+            this.AddGameObject.Location = new System.Drawing.Point(127, 29);
+            this.AddGameObject.Margin = new System.Windows.Forms.Padding(2);
+            this.AddGameObject.Name = "AddGameObject";
+            this.AddGameObject.Size = new System.Drawing.Size(75, 23);
+            this.AddGameObject.TabIndex = 0;
+            // 
+            // AddGameObjectLabel
+            // 
+            this.AddGameObjectLabel.AutoSize = true;
+            this.AddGameObjectLabel.Location = new System.Drawing.Point(20, 32);
+            this.AddGameObjectLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.AddGameObjectLabel.Name = "AddGameObjectLabel";
+            this.AddGameObjectLabel.Size = new System.Drawing.Size(103, 15);
+            this.AddGameObjectLabel.TabIndex = 1;
+            this.AddGameObjectLabel.Text = "AddGameObject";
+            // 
+            // AddComponentDropDown
+            // 
+            this.AddComponentDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.AddComponentDropDown.FormattingEnabled = true;
+            this.AddComponentDropDown.Location = new System.Drawing.Point(127, 81);
+            this.AddComponentDropDown.Margin = new System.Windows.Forms.Padding(2);
+            this.AddComponentDropDown.Name = "AddComponentDropDown";
+            this.AddComponentDropDown.Size = new System.Drawing.Size(159, 23);
+            this.AddComponentDropDown.TabIndex = 0;
+            this.AddComponentDropDown.SelectedIndexChanged += new System.EventHandler(this.comboBox_AddCom_SelectedIndexChanged);
+            // 
+            // AddComponentLabel
+            // 
+            this.AddComponentLabel.AutoSize = true;
+            this.AddComponentLabel.Location = new System.Drawing.Point(22, 84);
+            this.AddComponentLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.AddComponentLabel.Name = "AddComponentLabel";
+            this.AddComponentLabel.Size = new System.Drawing.Size(99, 15);
+            this.AddComponentLabel.TabIndex = 1;
+            this.AddComponentLabel.Text = "AddComponent";
+            // 
+            // AddGObjBut
+            // 
+            this.AddGObjBut.Location = new System.Drawing.Point(207, 29);
+            this.AddGObjBut.Name = "AddGObjBut";
+            this.AddGObjBut.Size = new System.Drawing.Size(51, 23);
+            this.AddGObjBut.TabIndex = 14;
+            this.AddGObjBut.Text = "Add";
+            this.AddGObjBut.UseVisualStyleBackColor = true;
+            this.AddGObjBut.Click += new System.EventHandler(this.AddGObjBut_Click);
+            // 
+            // AddCmpBut
+            // 
+            this.AddCmpBut.Location = new System.Drawing.Point(291, 81);
+            this.AddCmpBut.Name = "AddCmpBut";
+            this.AddCmpBut.Size = new System.Drawing.Size(49, 23);
+            this.AddCmpBut.TabIndex = 15;
+            this.AddCmpBut.Text = "Add";
+            this.AddCmpBut.UseVisualStyleBackColor = true;
+            this.AddCmpBut.Click += new System.EventHandler(this.AddCmpBut_Click);
+            // 
             // Inspector
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(764, 537);
+            this.ClientSize = new System.Drawing.Size(925, 414);
+            this.Controls.Add(this.AddCmpBut);
+            this.Controls.Add(this.AddGObjBut);
+            this.Controls.Add(this.AddComponentLabel);
+            this.Controls.Add(this.AddComponentDropDown);
+            this.Controls.Add(this.AddGameObjectLabel);
+            this.Controls.Add(this.AddGameObject);
             this.Controls.Add(this.Debugger);
             this.Controls.Add(this.MeshRendererGroupBox);
+            this.Controls.Add(this.TransformGroupBox);
             this.Controls.Add(this.ComponentDropDown);
             this.Controls.Add(this.ComponentLabel);
             this.Controls.Add(this.GameObjectLabel);
             this.Controls.Add(this.GameObjectDropDown);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Inspector";
             this.Text = "Inspector";
             this.Load += new System.EventHandler(this.Inspector_Load);
@@ -982,6 +1208,12 @@ namespace LittleWorm
         private System.Windows.Forms.TextBox OffSety;
         private System.Windows.Forms.TextBox OffSetx;
         private System.Windows.Forms.Label OffSetLabel;
+        private System.Windows.Forms.TextBox AddGameObject;
+        private System.Windows.Forms.Label AddGameObjectLabel;
+        private System.Windows.Forms.ComboBox AddComponentDropDown;
+        private System.Windows.Forms.Label AddComponentLabel;
+        private System.Windows.Forms.Button AddGObjBut;
+        private System.Windows.Forms.Button AddCmpBut;
     }
 
 

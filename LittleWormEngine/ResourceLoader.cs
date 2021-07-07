@@ -30,33 +30,49 @@ namespace LittleWormEngine
             return new List<string>();
         }
 
-        public static void Save_GameObjectFile(GameObject _GameObject, string _ComponentName)
+        public static void Save_Scene()
         {
-            List<string> _FileInfo = Load_File(@"Save\GameObject\GameObject_" + _GameObject.Name +".lwobj");
-            switch (_ComponentName)
+            List<string> _FileInfo = new List<string>();
+            foreach (GameObject _GameObject in Core.GameObjects)
             {
-                case "Transform":
-                    for(int i = 0; i < _FileInfo.Count; i++)
-                    {
-                        if(Split(_FileInfo[i], ' ')[0] == _ComponentName)
-                        {
-                            _FileInfo[i] = _ComponentName + " " + _GameObject.GetComponent<Transform>().Position.x + " " + _GameObject.GetComponent<Transform>().Position.y + " " + _GameObject.GetComponent<Transform>().Position.z + " " + _GameObject.GetComponent<Transform>().Rotation.x + " " + _GameObject.GetComponent<Transform>().Rotation.y + " " + _GameObject.GetComponent<Transform>().Rotation.z + " " + _GameObject.GetComponent<Transform>().Scale.x + " " + _GameObject.GetComponent<Transform>().Scale.y + " " + _GameObject.GetComponent<Transform>().Scale.z;
-                        }
-                    }
-                    break;
-                case "MeshRenderer":
-                    for (int i = 0; i < _FileInfo.Count; i++)
-                    {
-                        if (Split(_FileInfo[i], ' ')[0] == _ComponentName)
-                        {
-                            _FileInfo[i] = _ComponentName + " " + _GameObject.GetComponent<MeshRenderer>().MeshFileName + " " + _GameObject.GetComponent<MeshRenderer>().TextureFileName + " " + _GameObject.GetComponent<MeshRenderer>().OffSet.x + " " + _GameObject.GetComponent<MeshRenderer>().OffSet.y + " " + _GameObject.GetComponent<MeshRenderer>().OffSet.z;
-                        }
-                    }
-                    break;
+                _FileInfo.Add("GameObject_" + _GameObject.Name);
             }
+            using (StreamWriter File = new StreamWriter(Directory.GetCurrentDirectory() + @"\Save\Scene\" + Core.SceneName + ".lws", false))
+            {
+                for (int i = 0; i < _FileInfo.Count; i++)
+                {
+                    File.WriteLine(_FileInfo[i]);
+                }
+            }
+        }
+
+        public static void Save_GameObjectFile(GameObject _GameObject)
+        {
+            List<string> _FileInfo = new List<string>();
+
+            foreach(Component _Component in _GameObject.Components)
+            {
+                switch (_Component.GetType().Name)
+                {
+                    case "Camera":
+                        _FileInfo.Add("Camera");
+                        break;
+                    case "Transform":
+                        _FileInfo.Add("Transform" + " " + _GameObject.GetComponent<Transform>().Position.x + " " + _GameObject.GetComponent<Transform>().Position.y + " " + _GameObject.GetComponent<Transform>().Position.z + " " + _GameObject.GetComponent<Transform>().Rotation.x + " " + _GameObject.GetComponent<Transform>().Rotation.y + " " + _GameObject.GetComponent<Transform>().Rotation.z + " " + _GameObject.GetComponent<Transform>().Scale.x + " " + _GameObject.GetComponent<Transform>().Scale.y + " " + _GameObject.GetComponent<Transform>().Scale.z);
+                        break;
+                    case "MeshRenderer":
+                        _FileInfo.Add("MeshRenderer" + " " + _GameObject.GetComponent<MeshRenderer>().MeshFileName + " " + _GameObject.GetComponent<MeshRenderer>().TextureFileName + " " + _GameObject.GetComponent<MeshRenderer>().OffSet.x + " " + _GameObject.GetComponent<MeshRenderer>().OffSet.y + " " + _GameObject.GetComponent<MeshRenderer>().OffSet.z);
+                        break;
+                    case "BoxCollider":
+                        _FileInfo.Add("BoxCollider" + " " + _GameObject.GetComponent<BoxCollider>().OffSet.x + " " + _GameObject.GetComponent<BoxCollider>().OffSet.y + " " + _GameObject.GetComponent<BoxCollider>().OffSet.z + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.x + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.y + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.z);
+                        break;
+                }
+            }
+
+            
             using (StreamWriter File = new StreamWriter(Directory.GetCurrentDirectory() + @"\Save\GameObject\GameObject_" + _GameObject.Name + ".lwobj", false))
             {
-                for(int i = 0; i < _FileInfo.Count; i++)
+                for (int i = 0; i < _FileInfo.Count; i++)
                 {
                     File.WriteLine(_FileInfo[i]);
                 }

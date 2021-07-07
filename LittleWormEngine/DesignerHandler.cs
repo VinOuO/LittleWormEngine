@@ -24,10 +24,12 @@ namespace LittleWormEngine
             {
                 if (Input.GetKeyDown(KeyCode.S))
                 {
-                    foreach(GameObject _GameObject in Core.GameObjects)
+                    ResourceLoader.Save_Scene();
+                    foreach (GameObject _GameObject in Core.GameObjects)
                     {
-                        ResourceLoader.Save_GameObjectFile(_GameObject, "Transform");
-                        ResourceLoader.Save_GameObjectFile(_GameObject, "MeshRenderer");
+                        ResourceLoader.Save_GameObjectFile(_GameObject);
+                        //ResourceLoader.Save_GameObjectFile(_GameObject, "Transform");
+                        //ResourceLoader.Save_GameObjectFile(_GameObject, "MeshRenderer");
                     }
                 }
             }

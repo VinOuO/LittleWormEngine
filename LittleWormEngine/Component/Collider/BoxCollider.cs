@@ -12,6 +12,7 @@ namespace LittleWormEngine
     {
         public GameObject Attaching_GameObject { get; set; }
         public string Tag { get; set; }
+        public bool Started = false;
         public Vector3 OffSet { get; set; }
         public Vector3 HalfSize { get; set; }
         public RigiBody Attaching_Rigibody {get;set;}
@@ -34,10 +35,15 @@ namespace LittleWormEngine
             HalfSize.x *= Attaching_GameObject.transform.Scale.x;
             HalfSize.y *= Attaching_GameObject.transform.Scale.y;
             HalfSize.z *= Attaching_GameObject.transform.Scale.z;
+            Started = true;
         }
 
         public void Update(string _Type)
         {
+            if (!Started)
+            {
+                Start();
+            }
             switch (_Type)
             {
                 case "Rendering":
@@ -61,11 +67,9 @@ namespace LittleWormEngine
         public void Set_ColliderSize(Vector3 _HalfSize)
         {
             HalfSize = _HalfSize;
-            Debug.Log(HalfSize);
             HalfSize.x *= Attaching_GameObject.transform.Scale.x;
             HalfSize.y *= Attaching_GameObject.transform.Scale.y;
             HalfSize.z *= Attaching_GameObject.transform.Scale.z;
-            Debug.Log(HalfSize);
             switch (Core.Mode)
             {
                 case "Editor":
@@ -99,7 +103,7 @@ namespace LittleWormEngine
         }
 
         public void Set_Mesh(Mesh _RenderMesh, Shader _RenderShader)
-        {
+        { 
             RenderMesh = _RenderMesh;
             RenderShader = _RenderShader;
             RenderShader.AddUniform("transform");

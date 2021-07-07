@@ -11,12 +11,14 @@ namespace LittleWormEngine.Utility
         public float y { get; set; }
         public float z { get; set; }
 
-        public static readonly Vector3 Zero = new Vector3(0, 0, 0);
-        public static readonly Vector3 One = new Vector3(1, 1, 1);
-        public static readonly Vector3 Up = new Vector3(0, 1, 0);
-        public static readonly Vector3 Right = new Vector3(1, 0, 0);
-        public static readonly Vector3 Forward = new Vector3(0, 0, 1);
-        public static readonly Vector3 Backward = new Vector3(0, 0, -1);
+        public static Vector3 Zero { get {return new Vector3(0, 0, 0); } }
+        public static Vector3 One { get { return new Vector3(1, 1, 1); } }
+        public static Vector3 Up { get { return new Vector3(0, 1, 0); } }
+        public static Vector3 Down { get { return new Vector3(0, -1, 0); } }
+        public static Vector3 Left { get { return new Vector3(-1, 0, 0); } }
+        public static Vector3 Right { get { return new Vector3(1, 0, 0); } } 
+        public static Vector3 Forward { get { return new Vector3(0, 0, 1); } } 
+        public static Vector3 Backward { get { return new Vector3(0, 0, -1); } } 
 
         public Vector3(float _x, float _y, float _z)
         {

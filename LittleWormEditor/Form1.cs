@@ -32,21 +32,51 @@ namespace LittleWorm
 
             if (EditorCore.SelectingComponent != null)
             {
-                ComponentDropDown.SelectedItem = EditorCore.SelectingComponent.GetType().Name;
+                if (EditorCore.SelectingGameObject.Is_Component_Attached(EditorCore.SelectingComponent.GetType().Name))
+                {
+                    ComponentDropDown.SelectedItem = EditorCore.SelectingComponent.GetType().Name;
+                }
+                else
+                {
+                    Hide_AllPanel();
+                }
             }
+
             Update_Component();
+        }
+
+        private void comboBox_AddCom_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            Debugger.Text = "87";
         }
 
         Thread Inspector_Thread;
         private void Inspector_Load(object sender, EventArgs e)
         {
+            Load_GameObjectDropDown();
+            Load_ComponentDropDown();
+            Hide_AllPanel();
+            Inspector_Thread = new Thread(Inspector_Update);
+            Inspector_Thread.Start();
+        }
+
+        void Load_GameObjectDropDown()
+        {
+            GameObjectDropDown.Items.Clear();
             foreach (GameObject _GameObject in Core.GameObjects)
             {
                 GameObjectDropDown.Items.Add(_GameObject.Name);
             }
-            Hide_AllPanel();
-            Inspector_Thread = new Thread(Inspector_Update);
-            Inspector_Thread.Start();
+        }
+
+        void Load_ComponentDropDown()
+        {
+            AddComponentDropDown.Items.Clear();
+            foreach (string _Component in Core.Get_Components())
+            {
+                AddComponentDropDown.Items.Add(_Component);
+            }
         }
 
         long Frame_Num = 0;
@@ -134,6 +164,7 @@ namespace LittleWorm
 
         void Set_Component()
         {
+            Debugger.Text = EditorCore.SelectingGameObject.Name;
             switch (EditorCore.SelectingComponent.GetType().Name)
             {
                 case "Transform":
@@ -438,6 +469,37 @@ namespace LittleWorm
         private void TextureDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
             (EditorCore.SelectingComponent as MeshRenderer).TextureFileName = TextureDropDown.Text;
+        }
+
+        private void AddGObjBut_Click(object sender, EventArgs e)
+        {
+            if(AddGameObject.Text == "")
+            {
+                return;
+            }
+            GameObject _GameObject = new GameObject(AddGameObject.Text);
+            AddGameObject.Text = "";
+            //_GameObject.AddComponent<Transform>();
+            DesignerHandler.AddGameObject(_GameObject);
+            Load_GameObjectDropDown();
+        }
+
+        private void AddCmpBut_Click(object sender, EventArgs e)
+        {
+            if (AddComponentDropDown.Text == "")
+            {
+                return;
+            }
+            if (EditorCore.SelectingGameObject.Is_Component_Attached(AddComponentDropDown.Text))
+            {
+                return;
+            }
+            EditorCore.SelectingGameObject.AddComponent(AddComponentDropDown.Text);
+            ComponentDropDown.Items.Clear();
+            foreach (LittleWormEngine.Component _Component in EditorCore.SelectingGameObject.Components)
+            {
+                ComponentDropDown.Items.Add(_Component.GetType().Name);
+            }
         }
     }
 }
