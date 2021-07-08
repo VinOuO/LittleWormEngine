@@ -28,8 +28,6 @@ namespace LittleWormEngine
                     foreach (GameObject _GameObject in Core.GameObjects)
                     {
                         ResourceLoader.Save_GameObjectFile(_GameObject);
-                        //ResourceLoader.Save_GameObjectFile(_GameObject, "Transform");
-                        //ResourceLoader.Save_GameObjectFile(_GameObject, "MeshRenderer");
                     }
                 }
             }

@@ -21,6 +21,11 @@ namespace LittleWormEngine
             Name = _Name;
         }
 
+        public void Remove()
+        {
+            Core.GameObjects.Remove(this);
+        }
+
         public void AddComponent<T>() where T : Component
         {
             Component _Adding_Component = (Component)Activator.CreateInstance(typeof(T));
@@ -32,10 +37,51 @@ namespace LittleWormEngine
             }
         }
 
+        public void RemoveComponent<T>() where T : Component
+        {
+            foreach (Component _Component in Components)
+            {
+                if (_Component.GetType().Name == typeof(T).Name)
+                {
+                    Components.Remove(_Component);
+                    break;
+                }
+            }
+            foreach (Component _Component in RenderComponents)
+            {
+                if (_Component.GetType().Name == typeof(T).Name)
+                {
+                    RenderComponents.Remove(_Component);
+                    return;
+                }
+            }
+        }
+
+        public void RemoveComponent(string _T)
+        {
+            foreach (Component _Component in Components)
+            {
+                if (_Component.GetType().Name == _T)
+                {
+                    Components.Remove(_Component);
+                    _Component.Attaching_GameObject = null;
+                    break;
+                }
+            }
+            foreach (Component _Component in RenderComponents)
+            {
+                if (_Component.GetType().Name == _T)
+                {
+                    RenderComponents.Remove(_Component);
+                    return;
+                }
+            }
+        }
+
         public void AddComponent(string _T)
         {
             Component _Adding_Component = (Component)Activator.CreateInstance(Type.GetType("LittleWormEngine." + _T));
-            if(_Adding_Component == null)
+            if (_Adding_Component == null)
             {
                 return;
             }
@@ -90,7 +136,7 @@ namespace LittleWormEngine
         {
             foreach (GameObject _GameObject in Core.GameObjects)
             {
-                if(_GameObject.Name == _GameObject_Name)
+                if (_GameObject.Name == _GameObject_Name)
                 {
                     return _GameObject;
                 }
@@ -100,9 +146,9 @@ namespace LittleWormEngine
 
         public bool Is_Component_Attached(string _ComponentName)
         {
-            foreach(Component _Component in Components)
+            foreach (Component _Component in Components)
             {
-                if(_ComponentName == _Component.GetType().Name)
+                if (_ComponentName == _Component.GetType().Name)
                 {
                     return true;
                 }

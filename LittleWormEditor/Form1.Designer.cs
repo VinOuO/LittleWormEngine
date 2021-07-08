@@ -68,6 +68,9 @@ namespace LittleWorm
             this.AddComponentLabel = new System.Windows.Forms.Label();
             this.AddGObjBut = new System.Windows.Forms.Button();
             this.AddCmpBut = new System.Windows.Forms.Button();
+            this.RemoveGObjBut = new System.Windows.Forms.Button();
+            this.SetPrefabBut = new System.Windows.Forms.Button();
+            this.RemoveCmpBut = new System.Windows.Forms.Button();
             this.TransformGroupBox.SuspendLayout();
             this.MeshRendererGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -96,7 +99,7 @@ namespace LittleWorm
             // ComponentLabel
             // 
             this.ComponentLabel.AutoSize = true;
-            this.ComponentLabel.Location = new System.Drawing.Point(677, 14);
+            this.ComponentLabel.Location = new System.Drawing.Point(415, 67);
             this.ComponentLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ComponentLabel.Name = "ComponentLabel";
             this.ComponentLabel.Size = new System.Drawing.Size(75, 15);
@@ -107,7 +110,7 @@ namespace LittleWorm
             // 
             this.ComponentDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComponentDropDown.FormattingEnabled = true;
-            this.ComponentDropDown.Location = new System.Drawing.Point(753, 11);
+            this.ComponentDropDown.Location = new System.Drawing.Point(491, 64);
             this.ComponentDropDown.Margin = new System.Windows.Forms.Padding(2);
             this.ComponentDropDown.Name = "ComponentDropDown";
             this.ComponentDropDown.Size = new System.Drawing.Size(159, 23);
@@ -137,7 +140,7 @@ namespace LittleWorm
             this.TransformGroupBox.Controls.Add(this.RotationLabel);
             this.TransformGroupBox.Controls.Add(this.PositionLabel);
             this.TransformGroupBox.Controls.Add(this.Positionx);
-            this.TransformGroupBox.Location = new System.Drawing.Point(412, 81);
+            this.TransformGroupBox.Location = new System.Drawing.Point(412, 125);
             this.TransformGroupBox.Margin = new System.Windows.Forms.Padding(2);
             this.TransformGroupBox.Name = "TransformGroupBox";
             this.TransformGroupBox.Padding = new System.Windows.Forms.Padding(2);
@@ -369,7 +372,7 @@ namespace LittleWorm
             this.MeshRendererGroupBox.Controls.Add(this.MeshDropDown);
             this.MeshRendererGroupBox.Controls.Add(this.TextureLabel);
             this.MeshRendererGroupBox.Controls.Add(this.MeshLabel);
-            this.MeshRendererGroupBox.Location = new System.Drawing.Point(412, 81);
+            this.MeshRendererGroupBox.Location = new System.Drawing.Point(412, 125);
             this.MeshRendererGroupBox.Margin = new System.Windows.Forms.Padding(2);
             this.MeshRendererGroupBox.Name = "MeshRendererGroupBox";
             this.MeshRendererGroupBox.Padding = new System.Windows.Forms.Padding(2);
@@ -493,7 +496,7 @@ namespace LittleWorm
             // Debugger
             // 
             this.Debugger.AutoSize = true;
-            this.Debugger.Location = new System.Drawing.Point(587, 50);
+            this.Debugger.Location = new System.Drawing.Point(11, 423);
             this.Debugger.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Debugger.Name = "Debugger";
             this.Debugger.Size = new System.Drawing.Size(31, 15);
@@ -502,7 +505,7 @@ namespace LittleWorm
             // 
             // AddGameObject
             // 
-            this.AddGameObject.Location = new System.Drawing.Point(127, 29);
+            this.AddGameObject.Location = new System.Drawing.Point(129, 11);
             this.AddGameObject.Margin = new System.Windows.Forms.Padding(2);
             this.AddGameObject.Name = "AddGameObject";
             this.AddGameObject.Size = new System.Drawing.Size(75, 23);
@@ -511,7 +514,7 @@ namespace LittleWorm
             // AddGameObjectLabel
             // 
             this.AddGameObjectLabel.AutoSize = true;
-            this.AddGameObjectLabel.Location = new System.Drawing.Point(20, 32);
+            this.AddGameObjectLabel.Location = new System.Drawing.Point(22, 14);
             this.AddGameObjectLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.AddGameObjectLabel.Name = "AddGameObjectLabel";
             this.AddGameObjectLabel.Size = new System.Drawing.Size(103, 15);
@@ -522,7 +525,7 @@ namespace LittleWorm
             // 
             this.AddComponentDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.AddComponentDropDown.FormattingEnabled = true;
-            this.AddComponentDropDown.Location = new System.Drawing.Point(127, 81);
+            this.AddComponentDropDown.Location = new System.Drawing.Point(129, 67);
             this.AddComponentDropDown.Margin = new System.Windows.Forms.Padding(2);
             this.AddComponentDropDown.Name = "AddComponentDropDown";
             this.AddComponentDropDown.Size = new System.Drawing.Size(159, 23);
@@ -532,7 +535,7 @@ namespace LittleWorm
             // AddComponentLabel
             // 
             this.AddComponentLabel.AutoSize = true;
-            this.AddComponentLabel.Location = new System.Drawing.Point(22, 84);
+            this.AddComponentLabel.Location = new System.Drawing.Point(24, 70);
             this.AddComponentLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.AddComponentLabel.Name = "AddComponentLabel";
             this.AddComponentLabel.Size = new System.Drawing.Size(99, 15);
@@ -541,7 +544,7 @@ namespace LittleWorm
             // 
             // AddGObjBut
             // 
-            this.AddGObjBut.Location = new System.Drawing.Point(207, 29);
+            this.AddGObjBut.Location = new System.Drawing.Point(209, 11);
             this.AddGObjBut.Name = "AddGObjBut";
             this.AddGObjBut.Size = new System.Drawing.Size(51, 23);
             this.AddGObjBut.TabIndex = 14;
@@ -551,7 +554,7 @@ namespace LittleWorm
             // 
             // AddCmpBut
             // 
-            this.AddCmpBut.Location = new System.Drawing.Point(291, 81);
+            this.AddCmpBut.Location = new System.Drawing.Point(293, 67);
             this.AddCmpBut.Name = "AddCmpBut";
             this.AddCmpBut.Size = new System.Drawing.Size(49, 23);
             this.AddCmpBut.TabIndex = 15;
@@ -559,11 +562,44 @@ namespace LittleWorm
             this.AddCmpBut.UseVisualStyleBackColor = true;
             this.AddCmpBut.Click += new System.EventHandler(this.AddCmpBut_Click);
             // 
+            // RemoveGObjBut
+            // 
+            this.RemoveGObjBut.Location = new System.Drawing.Point(664, 11);
+            this.RemoveGObjBut.Name = "RemoveGObjBut";
+            this.RemoveGObjBut.Size = new System.Drawing.Size(75, 23);
+            this.RemoveGObjBut.TabIndex = 16;
+            this.RemoveGObjBut.Text = "Remove";
+            this.RemoveGObjBut.UseVisualStyleBackColor = true;
+            this.RemoveGObjBut.Click += new System.EventHandler(this.RemoveGObjBut_Click);
+            // 
+            // SetPrefabBut
+            // 
+            this.SetPrefabBut.Location = new System.Drawing.Point(755, 10);
+            this.SetPrefabBut.Name = "SetPrefabBut";
+            this.SetPrefabBut.Size = new System.Drawing.Size(99, 23);
+            this.SetPrefabBut.TabIndex = 17;
+            this.SetPrefabBut.Text = "Set as Prefab";
+            this.SetPrefabBut.UseVisualStyleBackColor = true;
+            this.SetPrefabBut.Click += new System.EventHandler(this.SetPrefabBut_Click);
+            // 
+            // RemoveCmpBut
+            // 
+            this.RemoveCmpBut.Location = new System.Drawing.Point(664, 64);
+            this.RemoveCmpBut.Name = "RemoveCmpBut";
+            this.RemoveCmpBut.Size = new System.Drawing.Size(75, 23);
+            this.RemoveCmpBut.TabIndex = 18;
+            this.RemoveCmpBut.Text = "Remove";
+            this.RemoveCmpBut.UseVisualStyleBackColor = true;
+            this.RemoveCmpBut.Click += new System.EventHandler(this.RemoveCmpBut_Click);
+            // 
             // Inspector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(925, 414);
+            this.ClientSize = new System.Drawing.Size(922, 457);
+            this.Controls.Add(this.RemoveCmpBut);
+            this.Controls.Add(this.SetPrefabBut);
+            this.Controls.Add(this.RemoveGObjBut);
             this.Controls.Add(this.AddCmpBut);
             this.Controls.Add(this.AddGObjBut);
             this.Controls.Add(this.AddComponentLabel);
@@ -642,6 +678,9 @@ namespace LittleWorm
             this.AddComponentLabel = new System.Windows.Forms.Label();
             this.AddGObjBut = new System.Windows.Forms.Button();
             this.AddCmpBut = new System.Windows.Forms.Button();
+            this.RemoveGObjBut = new System.Windows.Forms.Button();
+            this.SetPrefabBut = new System.Windows.Forms.Button();
+            this.RemoveCmpBut = new System.Windows.Forms.Button();
             this.TransformGroupBox.SuspendLayout();
             this.MeshRendererGroupBox.SuspendLayout();
             this.SuspendLayout();
@@ -670,7 +709,7 @@ namespace LittleWorm
             // ComponentLabel
             // 
             this.ComponentLabel.AutoSize = true;
-            this.ComponentLabel.Location = new System.Drawing.Point(677, 14);
+            this.ComponentLabel.Location = new System.Drawing.Point(415, 67);
             this.ComponentLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.ComponentLabel.Name = "ComponentLabel";
             this.ComponentLabel.Size = new System.Drawing.Size(75, 15);
@@ -681,7 +720,7 @@ namespace LittleWorm
             // 
             this.ComponentDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComponentDropDown.FormattingEnabled = true;
-            this.ComponentDropDown.Location = new System.Drawing.Point(753, 11);
+            this.ComponentDropDown.Location = new System.Drawing.Point(491, 64);
             this.ComponentDropDown.Margin = new System.Windows.Forms.Padding(2);
             this.ComponentDropDown.Name = "ComponentDropDown";
             this.ComponentDropDown.Size = new System.Drawing.Size(159, 23);
@@ -711,7 +750,7 @@ namespace LittleWorm
             this.TransformGroupBox.Controls.Add(this.RotationLabel);
             this.TransformGroupBox.Controls.Add(this.PositionLabel);
             this.TransformGroupBox.Controls.Add(this.Positionx);
-            this.TransformGroupBox.Location = new System.Drawing.Point(412, 81);
+            this.TransformGroupBox.Location = new System.Drawing.Point(412, 125);
             this.TransformGroupBox.Margin = new System.Windows.Forms.Padding(2);
             this.TransformGroupBox.Name = "TransformGroupBox";
             this.TransformGroupBox.Padding = new System.Windows.Forms.Padding(2);
@@ -943,7 +982,7 @@ namespace LittleWorm
             this.MeshRendererGroupBox.Controls.Add(this.MeshDropDown);
             this.MeshRendererGroupBox.Controls.Add(this.TextureLabel);
             this.MeshRendererGroupBox.Controls.Add(this.MeshLabel);
-            this.MeshRendererGroupBox.Location = new System.Drawing.Point(412, 81);
+            this.MeshRendererGroupBox.Location = new System.Drawing.Point(412, 125);
             this.MeshRendererGroupBox.Margin = new System.Windows.Forms.Padding(2);
             this.MeshRendererGroupBox.Name = "MeshRendererGroupBox";
             this.MeshRendererGroupBox.Padding = new System.Windows.Forms.Padding(2);
@@ -1067,7 +1106,7 @@ namespace LittleWorm
             // Debugger
             // 
             this.Debugger.AutoSize = true;
-            this.Debugger.Location = new System.Drawing.Point(587, 50);
+            this.Debugger.Location = new System.Drawing.Point(11, 423);
             this.Debugger.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.Debugger.Name = "Debugger";
             this.Debugger.Size = new System.Drawing.Size(31, 15);
@@ -1076,7 +1115,7 @@ namespace LittleWorm
             // 
             // AddGameObject
             // 
-            this.AddGameObject.Location = new System.Drawing.Point(127, 29);
+            this.AddGameObject.Location = new System.Drawing.Point(129, 11);
             this.AddGameObject.Margin = new System.Windows.Forms.Padding(2);
             this.AddGameObject.Name = "AddGameObject";
             this.AddGameObject.Size = new System.Drawing.Size(75, 23);
@@ -1085,7 +1124,7 @@ namespace LittleWorm
             // AddGameObjectLabel
             // 
             this.AddGameObjectLabel.AutoSize = true;
-            this.AddGameObjectLabel.Location = new System.Drawing.Point(20, 32);
+            this.AddGameObjectLabel.Location = new System.Drawing.Point(22, 14);
             this.AddGameObjectLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.AddGameObjectLabel.Name = "AddGameObjectLabel";
             this.AddGameObjectLabel.Size = new System.Drawing.Size(103, 15);
@@ -1096,7 +1135,7 @@ namespace LittleWorm
             // 
             this.AddComponentDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.AddComponentDropDown.FormattingEnabled = true;
-            this.AddComponentDropDown.Location = new System.Drawing.Point(127, 81);
+            this.AddComponentDropDown.Location = new System.Drawing.Point(129, 67);
             this.AddComponentDropDown.Margin = new System.Windows.Forms.Padding(2);
             this.AddComponentDropDown.Name = "AddComponentDropDown";
             this.AddComponentDropDown.Size = new System.Drawing.Size(159, 23);
@@ -1106,7 +1145,7 @@ namespace LittleWorm
             // AddComponentLabel
             // 
             this.AddComponentLabel.AutoSize = true;
-            this.AddComponentLabel.Location = new System.Drawing.Point(22, 84);
+            this.AddComponentLabel.Location = new System.Drawing.Point(24, 70);
             this.AddComponentLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.AddComponentLabel.Name = "AddComponentLabel";
             this.AddComponentLabel.Size = new System.Drawing.Size(99, 15);
@@ -1115,7 +1154,7 @@ namespace LittleWorm
             // 
             // AddGObjBut
             // 
-            this.AddGObjBut.Location = new System.Drawing.Point(207, 29);
+            this.AddGObjBut.Location = new System.Drawing.Point(209, 11);
             this.AddGObjBut.Name = "AddGObjBut";
             this.AddGObjBut.Size = new System.Drawing.Size(51, 23);
             this.AddGObjBut.TabIndex = 14;
@@ -1125,7 +1164,7 @@ namespace LittleWorm
             // 
             // AddCmpBut
             // 
-            this.AddCmpBut.Location = new System.Drawing.Point(291, 81);
+            this.AddCmpBut.Location = new System.Drawing.Point(293, 67);
             this.AddCmpBut.Name = "AddCmpBut";
             this.AddCmpBut.Size = new System.Drawing.Size(49, 23);
             this.AddCmpBut.TabIndex = 15;
@@ -1133,11 +1172,44 @@ namespace LittleWorm
             this.AddCmpBut.UseVisualStyleBackColor = true;
             this.AddCmpBut.Click += new System.EventHandler(this.AddCmpBut_Click);
             // 
+            // RemoveGObjBut
+            // 
+            this.RemoveGObjBut.Location = new System.Drawing.Point(664, 11);
+            this.RemoveGObjBut.Name = "RemoveGObjBut";
+            this.RemoveGObjBut.Size = new System.Drawing.Size(75, 23);
+            this.RemoveGObjBut.TabIndex = 16;
+            this.RemoveGObjBut.Text = "Remove";
+            this.RemoveGObjBut.UseVisualStyleBackColor = true;
+            this.RemoveGObjBut.Click += new System.EventHandler(this.RemoveGObjBut_Click);
+            // 
+            // SetPrefabBut
+            // 
+            this.SetPrefabBut.Location = new System.Drawing.Point(755, 10);
+            this.SetPrefabBut.Name = "SetPrefabBut";
+            this.SetPrefabBut.Size = new System.Drawing.Size(99, 23);
+            this.SetPrefabBut.TabIndex = 17;
+            this.SetPrefabBut.Text = "Set as Prefab";
+            this.SetPrefabBut.UseVisualStyleBackColor = true;
+            this.SetPrefabBut.Click += new System.EventHandler(this.SetPrefabBut_Click);
+            // 
+            // RemoveCmpBut
+            // 
+            this.RemoveCmpBut.Location = new System.Drawing.Point(664, 64);
+            this.RemoveCmpBut.Name = "RemoveCmpBut";
+            this.RemoveCmpBut.Size = new System.Drawing.Size(75, 23);
+            this.RemoveCmpBut.TabIndex = 18;
+            this.RemoveCmpBut.Text = "Remove";
+            this.RemoveCmpBut.UseVisualStyleBackColor = true;
+            this.RemoveCmpBut.Click += new System.EventHandler(this.RemoveCmpBut_Click);
+            // 
             // Inspector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(925, 414);
+            this.ClientSize = new System.Drawing.Size(922, 457);
+            this.Controls.Add(this.RemoveCmpBut);
+            this.Controls.Add(this.SetPrefabBut);
+            this.Controls.Add(this.RemoveGObjBut);
             this.Controls.Add(this.AddCmpBut);
             this.Controls.Add(this.AddGObjBut);
             this.Controls.Add(this.AddComponentLabel);
@@ -1214,6 +1286,9 @@ namespace LittleWorm
         private System.Windows.Forms.Label AddComponentLabel;
         private System.Windows.Forms.Button AddGObjBut;
         private System.Windows.Forms.Button AddCmpBut;
+        private System.Windows.Forms.Button RemoveGObjBut;
+        private System.Windows.Forms.Button SetPrefabBut;
+        private System.Windows.Forms.Button RemoveCmpBut;
     }
 
 

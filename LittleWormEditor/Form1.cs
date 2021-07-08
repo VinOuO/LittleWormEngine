@@ -55,7 +55,7 @@ namespace LittleWorm
         private void Inspector_Load(object sender, EventArgs e)
         {
             Load_GameObjectDropDown();
-            Load_ComponentDropDown();
+            Load_AddComponentDropDown();
             Hide_AllPanel();
             Inspector_Thread = new Thread(Inspector_Update);
             Inspector_Thread.Start();
@@ -70,12 +70,24 @@ namespace LittleWorm
             }
         }
 
-        void Load_ComponentDropDown()
+        void Load_AddComponentDropDown()
         {
             AddComponentDropDown.Items.Clear();
             foreach (string _Component in Core.Get_Components())
             {
                 AddComponentDropDown.Items.Add(_Component);
+            }
+        }
+
+        void Load_ComponentDropDown()
+        {
+            ComponentDropDown.Items.Clear();
+            foreach (LittleWormEngine.Component _Component in EditorCore.SelectingGameObject.Components.ToList())
+            {
+                if (_Component != null)
+                {
+                    ComponentDropDown.Items.Add(_Component.GetType().Name);
+                }
             }
         }
 
@@ -87,12 +99,16 @@ namespace LittleWorm
                 if (Core.Frame_Num > Frame_Num)
                 {
                     Frame_Num = Core.Frame_Num;
+
                     if (EditorCore.SelectingComponent != null)
                     {
-                        if (Need_Update(EditorCore.SelectingComponent.GetType().Name))
+                        lock (EditorCore.SelectingComponent)
                         {
-                            MethodInvoker _temp_Invoke = delegate () { Update_Component("Transformation"); Check_Mouse(); };
-                            Invoke(_temp_Invoke);
+                            if (Need_Update(EditorCore.SelectingComponent.GetType().Name))
+                            {
+                                MethodInvoker _temp_Invoke = delegate () { Update_Component("Transformation"); Check_Mouse(); };
+                                Invoke(_temp_Invoke);
+                            }
                         }
                     }
                 }
@@ -479,18 +495,17 @@ namespace LittleWorm
             }
             GameObject _GameObject = new GameObject(AddGameObject.Text);
             AddGameObject.Text = "";
-            //_GameObject.AddComponent<Transform>();
             DesignerHandler.AddGameObject(_GameObject);
             Load_GameObjectDropDown();
         }
 
         private void AddCmpBut_Click(object sender, EventArgs e)
         {
-            if (AddComponentDropDown.Text == "")
+            if (AddComponentDropDown.Text == "" || EditorCore.SelectingGameObject == null)
             {
                 return;
             }
-            if (EditorCore.SelectingGameObject.Is_Component_Attached(AddComponentDropDown.Text))
+            else if (EditorCore.SelectingGameObject.Is_Component_Attached(AddComponentDropDown.Text))
             {
                 return;
             }
@@ -500,6 +515,33 @@ namespace LittleWorm
             {
                 ComponentDropDown.Items.Add(_Component.GetType().Name);
             }
+        }
+
+        private void RemoveGObjBut_Click(object sender, EventArgs e)
+        {
+            lock (Core.GameObjects)
+            {
+                Core.ModifyingGameObjectInfos.Add(new ModifyingGameObjectInfo(EditorCore.SelectingGameObject));
+                //EditorCore.SelectingGameObject.Remove();
+                EditorCore.SelectingGameObject = null;
+            }
+            Load_GameObjectDropDown();
+        }
+
+        private void SetPrefabBut_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void RemoveCmpBut_Click(object sender, EventArgs e)
+        {
+            lock (EditorCore.SelectingGameObject.Components)
+            {
+                Core.ModifyingGameObjectInfos.Add(new ModifyingGameObjectInfo(EditorCore.SelectingGameObject, EditorCore.SelectingComponent.GetType().Name));
+                //EditorCore.SelectingGameObject.RemoveComponent(EditorCore.SelectingComponent.GetType().Name);
+                EditorCore.SelectingComponent = null;
+            }
+            Load_ComponentDropDown();
         }
     }
 }

@@ -24,6 +24,7 @@ namespace LittleWormEngine
         public static uint Mesh_Num = 0;
         public static long Frame_Num = 0;
         static Thread Editor_Thread, Physic_Thread;
+        public static List<ModifyingGameObjectInfo> ModifyingGameObjectInfos = new List<ModifyingGameObjectInfo>();
 
         public static void Start()
         {
@@ -104,8 +105,10 @@ namespace LittleWormEngine
                         case "Editor":
                             Input.Update(The_GameWindow);
                             DesignerHandler.Editor_Mode_Check_Input();
+                            Modify_GameObjects();
                             break;
                     }
+
                     Run_GameObjects_Components();
                     Game.Update();
                 }
@@ -149,6 +152,23 @@ namespace LittleWormEngine
                 }
             }
             return null;
+        }
+
+        static void Modify_GameObjects()
+        {
+            ModifyingGameObjectInfo _Temp_Info;
+            while(ModifyingGameObjectInfos.Count > 0)
+            {
+                if(ModifyingGameObjectInfos[0].RemovingComponent == null)
+                {
+                    RemoveGameObject(ModifyingGameObjectInfos[0].ModifyingGameObject);
+                }
+                else
+                {
+                    ModifyingGameObjectInfos[0].ModifyingGameObject.RemoveComponent(ModifyingGameObjectInfos[0].RemovingComponent);
+                }
+                ModifyingGameObjectInfos.RemoveAt(0);
+            }
         }
 
         static void Start_GameObjects_Components()
@@ -208,7 +228,6 @@ namespace LittleWormEngine
                     break;
             }
 
-            
         }
 
         static void Render_Meshes()
@@ -288,7 +307,7 @@ namespace LittleWormEngine
                                     break;
                             }
                         }
-                        DesignerHandler.AddGameObject(_GameObject);
+                        GameObjects.Add(_GameObject);
                         break;
                 }
 
@@ -310,6 +329,11 @@ namespace LittleWormEngine
             return _Temp_Components;
         }
 
+        public static void RemoveGameObject(GameObject _GameObject)
+        {
+            GameObjects.Remove(_GameObject);
+        }
+
         [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true)]
         static extern bool AllocConsole();
 
@@ -323,7 +347,7 @@ namespace LittleWormEngine
             {
                 case "Game":
                     The_GameWindow = GameWindow.Create_Window(Width, Height, "Game");
-                    //he_GameWindow = GameWindow.Create_Window("Game");
+                    //The_GameWindow = GameWindow.Create_Window("Game");
                     break;
                 case "Editor":
                     The_GameWindow = GameWindow.Create_Window(Width, Height, "Scene");
@@ -333,5 +357,22 @@ namespace LittleWormEngine
             Start();
         }
         
+    }
+
+    class ModifyingGameObjectInfo
+    {
+        public GameObject ModifyingGameObject;
+        public string RemovingComponent;
+
+        public ModifyingGameObjectInfo(GameObject _ModifyingGameObject, string _RemovingComponent)
+        {
+            ModifyingGameObject = _ModifyingGameObject;
+            RemovingComponent = _RemovingComponent;
+        }
+
+        public ModifyingGameObjectInfo(GameObject _ModifyingGameObject)
+        {
+            ModifyingGameObject = _ModifyingGameObject;
+        }
     }
 }
