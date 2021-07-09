@@ -17,11 +17,11 @@ namespace LittleWorm
     {
         public Inspector()
         {
-            //InitializeComponent();
-            CustomInitializeComponent();
+            InitializeComponent();
+            //CustomInitializeComponent();
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void GameObjectDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
             EditorCore.SelectingGameObject = Core.GameObjects.Find(_x => _x.Name == GameObjectDropDown.Text);
             ComponentDropDown.Items.Clear();
@@ -38,6 +38,7 @@ namespace LittleWorm
                 }
                 else
                 {
+                    EditorCore.SelectingComponent = null;
                     Hide_AllPanel();
                 }
             }
@@ -123,11 +124,13 @@ namespace LittleWorm
                     return true;
                 case "MeshRenderer":
                     return true;
+                case "BoxCollider":
+                    return true;
             }
             return false;
         }
         bool Changing_Component = false;
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        private void ComponentDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
             Changing_Component = true;
             if (EditorCore.SelectingComponent != null)
@@ -152,6 +155,10 @@ namespace LittleWorm
                     MeshRendererGroupBox.Enabled = false;
                     MeshRendererGroupBox.Hide();
                     break;
+                case "BoxCollider":
+                    BoxColliderGroupBox.Enabled = false;
+                    BoxColliderGroupBox.Hide();
+                    break;
             }
         }
 
@@ -161,6 +168,8 @@ namespace LittleWorm
             TransformGroupBox.Hide();
             MeshRendererGroupBox.Enabled = false;
             MeshRendererGroupBox.Hide();
+            BoxColliderGroupBox.Enabled = false;
+            BoxColliderGroupBox.Hide();
         }
 
         void Show_Panel(string _Name)
@@ -174,6 +183,10 @@ namespace LittleWorm
                 case "MeshRenderer":
                     MeshRendererGroupBox.Enabled = true;
                     MeshRendererGroupBox.Show();
+                    break;
+                case "BoxCollider":
+                    BoxColliderGroupBox.Enabled = true;
+                    BoxColliderGroupBox.Show();
                     break;
             }
         }
@@ -210,6 +223,17 @@ namespace LittleWorm
                         TextureDropDown.Items.Add(_temp[_temp.Count - 1]);
                     }
                     TextureDropDown.SelectedItem = EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().TextureFileName;
+                    GuiUtility.Find_Control("OffSetx", MeshRendererGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.x;
+                    GuiUtility.Find_Control("OffSety", MeshRendererGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.y;
+                    GuiUtility.Find_Control("OffSetz", MeshRendererGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.z;
+                    break;
+                case "BoxCollider":
+                    GuiUtility.Find_Control("OffSet2x", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.x;
+                    GuiUtility.Find_Control("OffSet2y", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.y;
+                    GuiUtility.Find_Control("OffSet2z", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.z;
+                    GuiUtility.Find_Control("HalfSizex", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.x;
+                    GuiUtility.Find_Control("HalfSizey", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.y;
+                    GuiUtility.Find_Control("HalfSizez", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.z;
                     break;
             }
         }
@@ -221,7 +245,6 @@ namespace LittleWorm
         void Check_Mouse()
         {
             Label _temp = new Label();
-
             switch (EditorCore.SelectingComponent.GetType().Name)
             {
                 case "Transform":
@@ -229,6 +252,9 @@ namespace LittleWorm
                     break;
                 case "MeshRenderer":
                     _temp = GuiUtility.Captured_Label(MeshRendererGroupBox.Controls);
+                    break;
+                case "BoxCollider":
+                    _temp = GuiUtility.Captured_Label(BoxColliderGroupBox.Controls);
                     break;
             }
 
@@ -321,6 +347,42 @@ namespace LittleWorm
                             OffSetz.Text = "" + (_Output + MouseMovement.x * 10);
                         }
                         break;
+                    case "OffSet2xLabel":
+                        if (float.TryParse(OffSet2x.Text, out _Output))
+                        {
+                            OffSet2x.Text = "" + (_Output + MouseMovement.x * 10);
+                        }
+                        break;
+                    case "OffSet2yLabel":
+                        if (float.TryParse(OffSet2y.Text, out _Output))
+                        {
+                            OffSet2y.Text = "" + (_Output + MouseMovement.x * 10);
+                        }
+                        break;
+                    case "OffSet2zLabel":
+                        if (float.TryParse(OffSet2z.Text, out _Output))
+                        {
+                            OffSet2z.Text = "" + (_Output + MouseMovement.x * 10);
+                        }
+                        break;
+                    case "HalfSizexLabel":
+                        if (float.TryParse(HalfSizex.Text, out _Output))
+                        {
+                            HalfSizex.Text = "" + (_Output + MouseMovement.x * 10);
+                        }
+                        break;
+                    case "HalfSizeyLabel":
+                        if (float.TryParse(HalfSizey.Text, out _Output))
+                        {
+                            HalfSizey.Text = "" + (_Output + MouseMovement.x * 10);
+                        }
+                        break;
+                    case "HalfSizezLabel":
+                        if (float.TryParse(HalfSizez.Text, out _Output))
+                        {
+                            HalfSizez.Text = "" + (_Output + MouseMovement.x * 10);
+                        }
+                        break;
                 }
             }
             else
@@ -355,24 +417,38 @@ namespace LittleWorm
                     }
                     break;
                 case "MeshRenderer":
-                    MeshDropDown.Items.Clear();
-                    foreach (string _MeshFileName in ResourceLoader.Get_AllFiles("Models"))
+                    if (!User_Typing_Num && !GuiUtility.Is_Focused(MeshRendererGroupBox.Controls))
                     {
-                        List<string> _temp = ResourceLoader.Split(_MeshFileName, '\\');
-                        MeshDropDown.Items.Add(_temp[_temp.Count - 1]);
-                    }
-                    MeshDropDown.SelectedItem = EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().MeshFileName;
+                        MeshDropDown.Items.Clear();
+                        foreach (string _MeshFileName in ResourceLoader.Get_AllFiles("Models"))
+                        {
+                            List<string> _temp = ResourceLoader.Split(_MeshFileName, '\\');
+                            MeshDropDown.Items.Add(_temp[_temp.Count - 1]);
+                        }
+                        MeshDropDown.SelectedItem = EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().MeshFileName;
 
-                    TextureDropDown.Items.Clear();
-                    foreach (string _MeshFileName in ResourceLoader.Get_AllFiles("Textures"))
+                        TextureDropDown.Items.Clear();
+                        foreach (string _MeshFileName in ResourceLoader.Get_AllFiles("Textures"))
+                        {
+                            List<string> _temp = ResourceLoader.Split(_MeshFileName, '\\');
+                            TextureDropDown.Items.Add(_temp[_temp.Count - 1]);
+                        }
+                        TextureDropDown.SelectedItem = EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().TextureFileName;
+                        GuiUtility.Find_Control("OffSetx", MeshRendererGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.x;
+                        GuiUtility.Find_Control("OffSety", MeshRendererGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.y;
+                        GuiUtility.Find_Control("OffSetz", MeshRendererGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.z;
+                    }  
+                    break;
+                case "BoxCollider":
+                    if (!User_Typing_Num && !GuiUtility.Is_Focused(BoxColliderGroupBox.Controls))
                     {
-                        List<string> _temp = ResourceLoader.Split(_MeshFileName, '\\');
-                        TextureDropDown.Items.Add(_temp[_temp.Count - 1]);
+                        GuiUtility.Find_Control("OffSet2x", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.x;
+                        GuiUtility.Find_Control("OffSet2y", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.y;
+                        GuiUtility.Find_Control("OffSet2z", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.z;
+                        GuiUtility.Find_Control("HalfSizex", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.x;
+                        GuiUtility.Find_Control("HalfSizey", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.y;
+                        GuiUtility.Find_Control("HalfSizez", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.z;
                     }
-                    TextureDropDown.SelectedItem = EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().TextureFileName;
-                    GuiUtility.Find_Control("OffSetx", MeshRendererGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.x;
-                    GuiUtility.Find_Control("OffSety", MeshRendererGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.y;
-                    GuiUtility.Find_Control("OffSetz", MeshRendererGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.z;
                     break;
             }
         }
@@ -410,6 +486,17 @@ namespace LittleWorm
                                 GuiUtility.Find_Control("OffSetz", MeshRendererGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.z;
                             }
                             break;
+                    }
+                    break;
+                case "BoxCollider":
+                    if (!User_Typing_Num && !GuiUtility.Is_Focused(BoxColliderGroupBox.Controls))
+                    {
+                        GuiUtility.Find_Control("OffSet2x", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.x;
+                        GuiUtility.Find_Control("OffSet2y", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.y;
+                        GuiUtility.Find_Control("OffSet2z", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.z;
+                        GuiUtility.Find_Control("HalfSizex", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.x;
+                        GuiUtility.Find_Control("HalfSizey", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.y;
+                        GuiUtility.Find_Control("HalfSizez", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.z;
                     }
                     break;
             }
@@ -468,6 +555,38 @@ namespace LittleWorm
                 try
                 {
                     (EditorCore.SelectingComponent as MeshRenderer).OffSet = new Vector3(float.Parse(OffSetx.Text), float.Parse(OffSety.Text), float.Parse(OffSetz.Text));
+                    User_Typing_Num = false;
+                }
+                catch
+                {
+                    User_Typing_Num = true;
+                }
+            }
+        }
+
+        private void OffSet2_TextChanged(object sender, EventArgs e)
+        {
+            if (EditorCore.SelectingComponent.GetType().Name == "BoxCollider" && !Changing_Component)
+            {
+                try
+                {
+                    (EditorCore.SelectingComponent as BoxCollider).OffSet = new Vector3(float.Parse(OffSet2x.Text), float.Parse(OffSet2y.Text), float.Parse(OffSet2z.Text));
+                    User_Typing_Num = false;
+                }
+                catch
+                {
+                    User_Typing_Num = true;
+                }
+            }
+        }
+
+        private void HalfSize_TextChanged(object sender, EventArgs e)
+        {
+            if (EditorCore.SelectingComponent.GetType().Name == "BoxCollider" && !Changing_Component)
+            {
+                try
+                {
+                    (EditorCore.SelectingComponent as BoxCollider).Set_ColliderSize(new Vector3(float.Parse(HalfSizex.Text), float.Parse(HalfSizey.Text), float.Parse(HalfSizez.Text)));
                     User_Typing_Num = false;
                 }
                 catch

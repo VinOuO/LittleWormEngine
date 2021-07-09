@@ -42,5 +42,17 @@ namespace LittleWorm
             }
             return null;
         }
+
+        public static string Captured_Label(Control.ControlCollection _Controls, int a)
+        {
+            foreach (Control _Control in _Controls)
+            {
+                if (_Control.Capture)
+                {
+                    return _Control.Name;
+                }
+            }
+            return null;
+        }
     }
 }

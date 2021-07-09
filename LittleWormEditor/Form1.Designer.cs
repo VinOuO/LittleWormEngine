@@ -84,7 +84,7 @@ namespace LittleWorm
             this.GameObjectDropDown.Name = "GameObjectDropDown";
             this.GameObjectDropDown.Size = new System.Drawing.Size(159, 23);
             this.GameObjectDropDown.TabIndex = 0;
-            this.GameObjectDropDown.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.GameObjectDropDown.SelectedIndexChanged += new System.EventHandler(this.GameObjectDropDown_SelectedIndexChanged);
             // 
             // GameObjectLabel
             // 
@@ -115,7 +115,7 @@ namespace LittleWorm
             this.ComponentDropDown.Name = "ComponentDropDown";
             this.ComponentDropDown.Size = new System.Drawing.Size(159, 23);
             this.ComponentDropDown.TabIndex = 3;
-            this.ComponentDropDown.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            this.ComponentDropDown.SelectedIndexChanged += new System.EventHandler(this.ComponentDropDown_SelectedIndexChanged);
             // 
             // TransformGroupBox
             // 
@@ -681,8 +681,24 @@ namespace LittleWorm
             this.RemoveGObjBut = new System.Windows.Forms.Button();
             this.SetPrefabBut = new System.Windows.Forms.Button();
             this.RemoveCmpBut = new System.Windows.Forms.Button();
+            this.HalfSizezLabel = new System.Windows.Forms.Label();
+            this.HalfSizeyLabel = new System.Windows.Forms.Label();
+            this.HalfSizexLabel = new System.Windows.Forms.Label();
+            this.OffSet2zLabel = new System.Windows.Forms.Label();
+            this.OffSet2yLabel = new System.Windows.Forms.Label();
+            this.OffSet2xLabel = new System.Windows.Forms.Label();
+            this.HalfSizez = new System.Windows.Forms.TextBox();
+            this.HalfSizey = new System.Windows.Forms.TextBox();
+            this.HalfSizex = new System.Windows.Forms.TextBox();
+            this.OffSet2z = new System.Windows.Forms.TextBox();
+            this.OffSet2y = new System.Windows.Forms.TextBox();
+            this.HalfSizeLabel = new System.Windows.Forms.Label();
+            this.OffSetLabel2 = new System.Windows.Forms.Label();
+            this.OffSet2x = new System.Windows.Forms.TextBox();
+            this.BoxColliderGroupBox = new System.Windows.Forms.GroupBox();
             this.TransformGroupBox.SuspendLayout();
             this.MeshRendererGroupBox.SuspendLayout();
+            this.BoxColliderGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // GameObjectDropDown
@@ -694,7 +710,7 @@ namespace LittleWorm
             this.GameObjectDropDown.Name = "GameObjectDropDown";
             this.GameObjectDropDown.Size = new System.Drawing.Size(159, 23);
             this.GameObjectDropDown.TabIndex = 0;
-            this.GameObjectDropDown.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.GameObjectDropDown.SelectedIndexChanged += new System.EventHandler(this.GameObjectDropDown_SelectedIndexChanged);
             // 
             // GameObjectLabel
             // 
@@ -725,7 +741,7 @@ namespace LittleWorm
             this.ComponentDropDown.Name = "ComponentDropDown";
             this.ComponentDropDown.Size = new System.Drawing.Size(159, 23);
             this.ComponentDropDown.TabIndex = 3;
-            this.ComponentDropDown.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            this.ComponentDropDown.SelectedIndexChanged += new System.EventHandler(this.ComponentDropDown_SelectedIndexChanged);
             // 
             // TransformGroupBox
             // 
@@ -982,7 +998,7 @@ namespace LittleWorm
             this.MeshRendererGroupBox.Controls.Add(this.MeshDropDown);
             this.MeshRendererGroupBox.Controls.Add(this.TextureLabel);
             this.MeshRendererGroupBox.Controls.Add(this.MeshLabel);
-            this.MeshRendererGroupBox.Location = new System.Drawing.Point(412, 125);
+            this.MeshRendererGroupBox.Location = new System.Drawing.Point(412, 442);
             this.MeshRendererGroupBox.Margin = new System.Windows.Forms.Padding(2);
             this.MeshRendererGroupBox.Name = "MeshRendererGroupBox";
             this.MeshRendererGroupBox.Padding = new System.Windows.Forms.Padding(2);
@@ -1202,11 +1218,177 @@ namespace LittleWorm
             this.RemoveCmpBut.UseVisualStyleBackColor = true;
             this.RemoveCmpBut.Click += new System.EventHandler(this.RemoveCmpBut_Click);
             // 
+            // HalfSizezLabel
+            // 
+            this.HalfSizezLabel.AutoSize = true;
+            this.HalfSizezLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.HalfSizezLabel.Location = new System.Drawing.Point(243, 79);
+            this.HalfSizezLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.HalfSizezLabel.Name = "HalfSizezLabel";
+            this.HalfSizezLabel.Size = new System.Drawing.Size(17, 20);
+            this.HalfSizezLabel.TabIndex = 20;
+            this.HalfSizezLabel.Text = "z";
+            // 
+            // HalfSizeyLabel
+            // 
+            this.HalfSizeyLabel.AutoSize = true;
+            this.HalfSizeyLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.HalfSizeyLabel.Location = new System.Drawing.Point(153, 79);
+            this.HalfSizeyLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.HalfSizeyLabel.Name = "HalfSizeyLabel";
+            this.HalfSizeyLabel.Size = new System.Drawing.Size(17, 20);
+            this.HalfSizeyLabel.TabIndex = 19;
+            this.HalfSizeyLabel.Text = "y";
+            // 
+            // HalfSizexLabel
+            // 
+            this.HalfSizexLabel.AutoSize = true;
+            this.HalfSizexLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.HalfSizexLabel.Location = new System.Drawing.Point(66, 79);
+            this.HalfSizexLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.HalfSizexLabel.Name = "HalfSizexLabel";
+            this.HalfSizexLabel.Size = new System.Drawing.Size(17, 20);
+            this.HalfSizexLabel.TabIndex = 18;
+            this.HalfSizexLabel.Text = "x";
+            // 
+            // OffSet2zLabel
+            // 
+            this.OffSet2zLabel.AutoSize = true;
+            this.OffSet2zLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.OffSet2zLabel.Location = new System.Drawing.Point(243, 39);
+            this.OffSet2zLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.OffSet2zLabel.Name = "OffSet2zLabel";
+            this.OffSet2zLabel.Size = new System.Drawing.Size(17, 20);
+            this.OffSet2zLabel.TabIndex = 14;
+            this.OffSet2zLabel.Text = "z";
+            // 
+            // OffSet2yLabel
+            // 
+            this.OffSet2yLabel.AutoSize = true;
+            this.OffSet2yLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.OffSet2yLabel.Location = new System.Drawing.Point(153, 39);
+            this.OffSet2yLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.OffSet2yLabel.Name = "OffSet2yLabel";
+            this.OffSet2yLabel.Size = new System.Drawing.Size(17, 20);
+            this.OffSet2yLabel.TabIndex = 13;
+            this.OffSet2yLabel.Text = "y";
+            // 
+            // OffSet2xLabel
+            // 
+            this.OffSet2xLabel.AutoSize = true;
+            this.OffSet2xLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.OffSet2xLabel.Location = new System.Drawing.Point(66, 39);
+            this.OffSet2xLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.OffSet2xLabel.Name = "OffSet2xLabel";
+            this.OffSet2xLabel.Size = new System.Drawing.Size(17, 20);
+            this.OffSet2xLabel.TabIndex = 12;
+            this.OffSet2xLabel.Text = "x";
+            // 
+            // HalfSizez
+            // 
+            this.HalfSizez.Location = new System.Drawing.Point(265, 77);
+            this.HalfSizez.Margin = new System.Windows.Forms.Padding(2);
+            this.HalfSizez.Name = "HalfSizez";
+            this.HalfSizez.Size = new System.Drawing.Size(49, 23);
+            this.HalfSizez.TabIndex = 11;
+            this.HalfSizez.TextChanged += new System.EventHandler(this.HalfSize_TextChanged);
+            // 
+            // HalfSizey
+            // 
+            this.HalfSizey.Location = new System.Drawing.Point(175, 77);
+            this.HalfSizey.Margin = new System.Windows.Forms.Padding(2);
+            this.HalfSizey.Name = "HalfSizey";
+            this.HalfSizey.Size = new System.Drawing.Size(49, 23);
+            this.HalfSizey.TabIndex = 10;
+            this.HalfSizey.TextChanged += new System.EventHandler(this.HalfSize_TextChanged);
+            // 
+            // HalfSizex
+            // 
+            this.HalfSizex.Location = new System.Drawing.Point(88, 77);
+            this.HalfSizex.Margin = new System.Windows.Forms.Padding(2);
+            this.HalfSizex.Name = "HalfSizex";
+            this.HalfSizex.Size = new System.Drawing.Size(49, 23);
+            this.HalfSizex.TabIndex = 9;
+            this.HalfSizex.TextChanged += new System.EventHandler(this.HalfSize_TextChanged);
+            // 
+            // OffSet2z
+            // 
+            this.OffSet2z.Location = new System.Drawing.Point(265, 38);
+            this.OffSet2z.Margin = new System.Windows.Forms.Padding(2);
+            this.OffSet2z.Name = "OffSet2z";
+            this.OffSet2z.Size = new System.Drawing.Size(49, 23);
+            this.OffSet2z.TabIndex = 5;
+            this.OffSet2z.TextChanged += new System.EventHandler(this.OffSet2_TextChanged);
+            // 
+            // OffSet2y
+            // 
+            this.OffSet2y.Location = new System.Drawing.Point(175, 38);
+            this.OffSet2y.Margin = new System.Windows.Forms.Padding(2);
+            this.OffSet2y.Name = "OffSet2y";
+            this.OffSet2y.Size = new System.Drawing.Size(49, 23);
+            this.OffSet2y.TabIndex = 4;
+            this.OffSet2y.TextChanged += new System.EventHandler(this.OffSet2_TextChanged);
+            // 
+            // HalfSizeLabel
+            // 
+            this.HalfSizeLabel.AutoSize = true;
+            this.HalfSizeLabel.Location = new System.Drawing.Point(11, 80);
+            this.HalfSizeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.HalfSizeLabel.Name = "HalfSizeLabel";
+            this.HalfSizeLabel.Size = new System.Drawing.Size(53, 15);
+            this.HalfSizeLabel.TabIndex = 3;
+            this.HalfSizeLabel.Text = "HalfSize";
+            // 
+            // OffSetLabel2
+            // 
+            this.OffSetLabel2.AutoSize = true;
+            this.OffSetLabel2.Location = new System.Drawing.Point(11, 43);
+            this.OffSetLabel2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.OffSetLabel2.Name = "OffSetLabel2";
+            this.OffSetLabel2.Size = new System.Drawing.Size(43, 15);
+            this.OffSetLabel2.TabIndex = 1;
+            this.OffSetLabel2.Text = "OffSet";
+            // 
+            // OffSet2x
+            // 
+            this.OffSet2x.Location = new System.Drawing.Point(88, 38);
+            this.OffSet2x.Margin = new System.Windows.Forms.Padding(2);
+            this.OffSet2x.Name = "OffSet2x";
+            this.OffSet2x.Size = new System.Drawing.Size(49, 23);
+            this.OffSet2x.TabIndex = 0;
+            this.OffSet2x.TextChanged += new System.EventHandler(this.OffSet2_TextChanged);
+            // 
+            // BoxColliderGroupBox
+            // 
+            this.BoxColliderGroupBox.Controls.Add(this.HalfSizezLabel);
+            this.BoxColliderGroupBox.Controls.Add(this.HalfSizeyLabel);
+            this.BoxColliderGroupBox.Controls.Add(this.HalfSizexLabel);
+            this.BoxColliderGroupBox.Controls.Add(this.OffSet2zLabel);
+            this.BoxColliderGroupBox.Controls.Add(this.OffSet2yLabel);
+            this.BoxColliderGroupBox.Controls.Add(this.OffSet2xLabel);
+            this.BoxColliderGroupBox.Controls.Add(this.HalfSizez);
+            this.BoxColliderGroupBox.Controls.Add(this.HalfSizey);
+            this.BoxColliderGroupBox.Controls.Add(this.HalfSizex);
+            this.BoxColliderGroupBox.Controls.Add(this.OffSet2z);
+            this.BoxColliderGroupBox.Controls.Add(this.OffSet2y);
+            this.BoxColliderGroupBox.Controls.Add(this.HalfSizeLabel);
+            this.BoxColliderGroupBox.Controls.Add(this.OffSetLabel2);
+            this.BoxColliderGroupBox.Controls.Add(this.OffSet2x);
+            this.BoxColliderGroupBox.Location = new System.Drawing.Point(915, 125);
+            this.BoxColliderGroupBox.Margin = new System.Windows.Forms.Padding(2);
+            this.BoxColliderGroupBox.Name = "BoxColliderGroupBox";
+            this.BoxColliderGroupBox.Padding = new System.Windows.Forms.Padding(2);
+            this.BoxColliderGroupBox.Size = new System.Drawing.Size(506, 313);
+            this.BoxColliderGroupBox.TabIndex = 4;
+            this.BoxColliderGroupBox.TabStop = false;
+            this.BoxColliderGroupBox.Text = "BoxCollider";
+            // 
             // Inspector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(922, 457);
+            this.ClientSize = new System.Drawing.Size(1489, 770);
+            this.Controls.Add(this.BoxColliderGroupBox);
             this.Controls.Add(this.RemoveCmpBut);
             this.Controls.Add(this.SetPrefabBut);
             this.Controls.Add(this.RemoveGObjBut);
@@ -1231,6 +1413,8 @@ namespace LittleWorm
             this.TransformGroupBox.PerformLayout();
             this.MeshRendererGroupBox.ResumeLayout(false);
             this.MeshRendererGroupBox.PerformLayout();
+            this.BoxColliderGroupBox.ResumeLayout(false);
+            this.BoxColliderGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1247,7 +1431,7 @@ namespace LittleWorm
         private System.Windows.Forms.Label RotationLabel;
         private System.Windows.Forms.Label PositionLabel;
         private System.Windows.Forms.TextBox Positionx;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox OffSet2z;
         private System.Windows.Forms.TextBox Scaley;
         private System.Windows.Forms.TextBox Scalex;
         private System.Windows.Forms.TextBox Rotationz;
@@ -1289,6 +1473,20 @@ namespace LittleWorm
         private System.Windows.Forms.Button RemoveGObjBut;
         private System.Windows.Forms.Button SetPrefabBut;
         private System.Windows.Forms.Button RemoveCmpBut;
+        private System.Windows.Forms.Label HalfSizezLabel;
+        private System.Windows.Forms.Label HalfSizeyLabel;
+        private System.Windows.Forms.Label HalfSizexLabel;
+        private System.Windows.Forms.Label OffSet2zLabel;
+        private System.Windows.Forms.Label OffSet2yLabel;
+        private System.Windows.Forms.Label OffSet2xLabel;
+        private System.Windows.Forms.TextBox HalfSizez;
+        private System.Windows.Forms.TextBox HalfSizey;
+        private System.Windows.Forms.TextBox HalfSizex;
+        private System.Windows.Forms.TextBox OffSet2y;
+        private System.Windows.Forms.Label HalfSizeLabel;
+        private System.Windows.Forms.Label OffSetLabel2;
+        private System.Windows.Forms.TextBox OffSet2x;
+        private System.Windows.Forms.GroupBox BoxColliderGroupBox;
     }
 
 

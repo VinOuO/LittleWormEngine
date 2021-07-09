@@ -14,7 +14,7 @@ namespace LittleWormEngine
         public string Tag { get; set; }
         public bool Started = false;
         public Vector3 OffSet { get; set; }
-        public Vector3 HalfSize { get; set; }
+        public Vector3 HalfSize { get; private set; }
         public RigiBody Attaching_Rigibody {get;set;}
 
         public void Start()
@@ -44,6 +44,13 @@ namespace LittleWormEngine
             {
                 Start();
             }
+
+            if (HalfSize_Changed)
+            {
+                HalfSize_Changed = false;
+                Modify_Collider();
+            }
+
             switch (_Type)
             {
                 case "Rendering":
@@ -53,7 +60,7 @@ namespace LittleWormEngine
                     Draw();
                     break;
             }
-        }
+        } 
 
         public unsafe void Draw()
         {
@@ -64,12 +71,18 @@ namespace LittleWormEngine
             glDisableVertexAttribArray(0);
         }
 
+        bool HalfSize_Changed = false;
         public void Set_ColliderSize(Vector3 _HalfSize)
         {
             HalfSize = _HalfSize;
-            HalfSize.x *= Attaching_GameObject.transform.Scale.x;
-            HalfSize.y *= Attaching_GameObject.transform.Scale.y;
-            HalfSize.z *= Attaching_GameObject.transform.Scale.z;
+            _HalfSize.x *= Attaching_GameObject.transform.Scale.x;
+            _HalfSize.y *= Attaching_GameObject.transform.Scale.y;
+            _HalfSize.z *= Attaching_GameObject.transform.Scale.z;
+            HalfSize_Changed = true;
+        }
+
+        void Modify_Collider()
+        {
             switch (Core.Mode)
             {
                 case "Editor":
