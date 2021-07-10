@@ -89,7 +89,14 @@ namespace LittleWormEngine
                     Set_Mesh(BoxColliderMesh(), new Shader("ColliderVertex.vs", "", "ColliderFragment.fs"));
                     break;
                 case "Game":
-                    PhysicWorld.Get_Rigibody(Attaching_GameObject).CollisionShape = PhysicWorld.Create_Box_Shape(HalfSize);
+                    if(PhysicWorld.Get_Rigibody(Attaching_GameObject)!= null)
+                    {
+                        PhysicWorld.Get_Rigibody(Attaching_GameObject).CollisionShape = PhysicWorld.Create_Box_Shape(HalfSize);
+                    }
+                    else
+                    {
+                        //PhysicWorld.Get_Rigibody(Attaching_GameObject).CollisionShape = PhysicWorld.Create_Box_Shape(HalfSize);
+                    }
                     break;
             }
         }

@@ -24,6 +24,7 @@ class Test_Mesh2 : DesignerProgram
     public int _x = 5;
     override public void Update()
     {
+        //Debug.Log("??");
         //Console.WriteLine("Name: " + (PhysicWorld.Get_Rigibody(Attaching_GameObject).UserObject as GameObject).Name);
 
         //Console.WriteLine("_x: " + PhysicWorld._x);

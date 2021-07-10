@@ -56,7 +56,14 @@ namespace LittleWormEngine
                     switch (_Component.GetType().Name)
                     {
                         case "BoxCollider":
-                            Create_Box(_Gameobject, (_Component as BoxCollider).HalfSize);
+                            if(_Gameobject.Name == "Box" || _Gameobject.Name == "Ashe")
+                            {
+                                Create_Box(_Gameobject, (_Component as BoxCollider).HalfSize);
+                            }
+                            else
+                            {
+                                Create_Ghost_Box(_Gameobject, (_Component as BoxCollider).HalfSize);
+                            }
                             break;
                     }
                 }
@@ -73,6 +80,8 @@ namespace LittleWormEngine
             solver = new SequentialImpulseConstraintSolver();
             dynamicsWorld = new DiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
             collisionShapes = new List<CollisionShape>();
+            //dynamicsWorld.Broadphase.OverlappingPairCache.SetInternalGhostPairCallback(new GhostPairCallback());
+            dynamicsWorld.PairCache.SetInternalGhostPairCallback(new GhostPairCallback());
             //---init
             dynamicsWorld.Gravity = new BulletSharp.Math.Vector3(0, -5, 0);
 
@@ -187,6 +196,25 @@ namespace LittleWormEngine
             //---create a dynamic rigidbody
         }
 
+        public static void Create_Ghost_Box(GameObject _GameObject, LittleWormEngine.Utility.Vector3 _HalfSize) //Use this to design collider component
+        {
+            CollisionShape colShape = Create_Box_Shape(_HalfSize);
+            collisionShapes.Add(colShape);
+
+            //---create a Ghost
+            BulletSharp.Math.Matrix startTransform;
+            startTransform = BulletSharp.Math.Matrix.Identity;
+            startTransform.Origin = new BulletSharp.Math.Vector3(_GameObject.transform.Position.x, _GameObject.transform.Position.y, _GameObject.transform.Position.z) * btWorldtoLWWorldScale;
+            GhostObject GObj = new GhostObject();
+            GObj.CollisionShape = colShape;
+            GObj.WorldTransform = startTransform;
+            GObj.UserObject = _GameObject;
+            GObj.CollisionFlags = CollisionFlags.NoContactResponse;
+            dynamicsWorld.AddCollisionObject(GObj, CollisionFilterGroups.SensorTrigger, CollisionFilterGroups.AllFilter & ~CollisionFilterGroups.SensorTrigger);
+            //dynamicsWorld.AddCollisionObject(GObj);
+            //---create a Ghost
+        }
+
         public static CollisionObject Get_CollisionObject(GameObject _GameObject)
         {
             foreach (CollisionObject _Cobj in dynamicsWorld.CollisionObjectArray)
@@ -231,20 +259,35 @@ namespace LittleWormEngine
                 {
                     CollisionObject obj = dynamicsWorld.CollisionObjectArray[i];
                     RigidBody body = RigidBody.Upcast(obj);
+                    GhostObject ghost = GhostObject.Upcast(obj);
                     BulletSharp.Math.Matrix trans;
                     if (body != null && body.MotionState != null)
                     {
                         trans = body.MotionState.WorldTransform;
+                        GameObject _Temp = (obj.UserObject as GameObject);
+                        if (obj.UserObject != null)
+                        {
+                            _Temp.transform.Position = new Vector3(trans.Origin.X, trans.Origin.Y, trans.Origin.Z) / btWorldtoLWWorldScale;
+                        }
                     }
-                    else
+                    else if(ghost != null)
                     {
-                        trans = obj.WorldTransform;
+                        if((ghost.UserObject as GameObject).Name == "TestObj")
+                        {
+                            foreach (CollisionObject _Obj in ghost.OverlappingPairs)
+                            {
+                                if (_Obj.UserObject != null)
+                                {
+                                    if((_Obj.UserObject as GameObject).Name == "Box")
+                                    {
+                                        //Debug.Log("Hit! : " + (_Obj.UserObject as GameObject).Name);
+                                    }
+                                    //Debug.Log("Trigger: " + (_Obj.UserObject as GameObject).Name);
+                                }
+                            }
+                        } 
                     }
-                    GameObject _Temp = (obj.UserObject as GameObject);
-                    if (obj.UserObject != null)
-                    {
-                        _Temp.transform.Position = new Vector3(trans.Origin.X, trans.Origin.Y, trans.Origin.Z) / btWorldtoLWWorldScale;
-                    }
+
                 }
 
             }

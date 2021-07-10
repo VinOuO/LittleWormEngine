@@ -58,7 +58,7 @@ namespace LittleWormEngine
         public MeshRenderer()
         {
             Tag = "Renderer";
-            OffSet = new Vector3(Vector3.Zero);
+            OffSet = Vector3.Zero;
         }
 
         public void Set(Mesh _RenderMesh, Texture _RenderTexture, Shader _RenderShader)

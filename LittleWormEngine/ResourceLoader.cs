@@ -69,7 +69,11 @@ namespace LittleWormEngine
                 }
             }
 
-            
+            foreach (CustomComponent _Component in _GameObject.CustomComponents)
+            {
+                _FileInfo.Add("Custom " + _Component.GetType().Name);
+            }
+
             using (StreamWriter File = new StreamWriter(Directory.GetCurrentDirectory() + @"\Save\GameObject\GameObject_" + _GameObject.Name + ".lwobj", false))
             {
                 for (int i = 0; i < _FileInfo.Count; i++)
