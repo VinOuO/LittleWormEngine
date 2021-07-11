@@ -23,7 +23,8 @@ namespace LittleWormEngine
         public static List<GameObject> GameObjects = new List<GameObject>();
         public static uint Mesh_Num = 0;
         public static long Frame_Num = 0;
-        static Thread Editor_Thread, Physic_Thread;
+        static Thread Editor_Thread, Physics_Thread;
+        static int Physics_Simulation = 0;
         public static List<ModifyingGameObjectInfo> ModifyingGameObjectInfos = new List<ModifyingGameObjectInfo>();
 
         public static void Start()
@@ -32,8 +33,8 @@ namespace LittleWormEngine
             Game.Start();
             Glfw.SetCursorPositionCallback(The_GameWindow,Input.Check_Cursor_Position);
             The_Camera = Get_Camera();
-            PhysicWorld.Set_PhysicWorld();
-            while (!PhysicWorld.InisReady)
+            PhysicsWorld.Set_PhysicWorld();
+            while (!PhysicsWorld.InisReady)
             {
                 Thread.Sleep(1);
             }
@@ -44,8 +45,8 @@ namespace LittleWormEngine
                     Editor_Thread.Start();
                     break;
                 case "Game":
-                    Physic_Thread = new Thread(PhysicWorld.Start_Simulation);
-                    Physic_Thread.Start();
+                    Physics_Thread = new Thread(PhysicsWorld.Start_Simulation);
+                    Physics_Thread.Start();
                     break;
             }
 

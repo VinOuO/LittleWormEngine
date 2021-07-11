@@ -33,5 +33,14 @@ class Test : DesignerProgram
             GetComponent<Transform>().Position.x += 20f * Time.DeltaTime;
         }
     }
+
+    public override void OnCollitionEnter(GameObject _Other)
+    {
+        Debug.Log(_Other.Name + " Entered");
+    }
+    public override void OnCollitionExit(GameObject _Other)
+    {
+        Debug.Log(_Other.Name + " Exited");
+    }
 }
 

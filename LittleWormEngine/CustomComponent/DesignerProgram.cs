@@ -9,6 +9,9 @@ namespace LittleWormEngine
         public GameObject Attaching_GameObject { get; set; }
         public abstract void Start();
         public abstract void Update();
+        public virtual void OnCollitionEnter(GameObject _Other) { }
+        public virtual void OnCollitionStay(GameObject _Other) { }
+        public virtual void OnCollitionExit(GameObject _Other) { }
 
 
         public T GetComponent<T>() where T : Component

@@ -2,3 +2,5 @@ Transform 6.9843016 0 0 0 0 0 1 1 1
 MeshRenderer Cube3.obj Crate.jpg 0 0 0
 BoxCollider 0 0 0 1 1 1
 Custom Test_Mesh2
+Custom Test
+Custom Test

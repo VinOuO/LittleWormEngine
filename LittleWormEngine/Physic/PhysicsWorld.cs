@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using BulletSharp;
 using System.IO;
 using LittleWormEngine.Utility;
 
 namespace LittleWormEngine
 {
-    class PhysicWorld
+    class PhysicsWorld
     {
         public static bool InisReady = false;
         //public static List<Component> Colliders; 
@@ -70,6 +69,23 @@ namespace LittleWormEngine
             }
         }
 
+        static void Add_PairTests()
+        {
+            //dynamicsWorld.ContactPairTest(Get_Rigibody(GameObject.Find("Ashe")), Get_Rigibody(GameObject.Find("Box")), new ContactSensorCallback());
+            List<CollisionObject> _Used = new List<CollisionObject>();
+            foreach (CollisionObject _objA in dynamicsWorld.CollisionObjectArray)
+            {
+                _Used.Add(_objA);
+                foreach (CollisionObject _objB in dynamicsWorld.CollisionObjectArray)
+                {
+                    if (!_Used.Contains(_objB) && _objA != _objB)
+                    {
+                        //dynamicsWorld.ContactPairTest(_objA, _objB, new ContactSensorCallback());
+                    }
+                }
+            }
+        }
+
         static void Init_Physic_World()
         {
             //---init
@@ -92,7 +108,6 @@ namespace LittleWormEngine
             groundTransform.Origin = new BulletSharp.Math.Vector3(0, -60, 0);
 
             float mass = 0;
-
             //rigidbody is dynamic if and only if mass is non zero, otherwise static
             bool isDynamic = (mass == 0 ? true : false);
 
@@ -142,6 +157,7 @@ namespace LittleWormEngine
             RigidBody body = new RigidBody(rbInfo);
             body.UserObject = _Obj;
             dynamicsWorld.AddRigidBody(body);
+            Rigidbodys.Add(body);
             //---create a dynamic rigidbody
         }
         /*
@@ -165,6 +181,7 @@ namespace LittleWormEngine
             return new BoxShape(_HalfSize.x * btWorldtoLWWorldScale, _HalfSize.y * btWorldtoLWWorldScale, _HalfSize.z * btWorldtoLWWorldScale);
         }
 
+        static List<BulletSharp.RigidBody> Rigidbodys = new List<RigidBody>();
         public static void Create_Box(GameObject _GameObject, LittleWormEngine.Utility.Vector3 _HalfSize) //Use this to design collider component
         {
             CollisionShape colShape = Create_Box_Shape(_HalfSize);
@@ -193,6 +210,7 @@ namespace LittleWormEngine
             RigidBody body = new RigidBody(rbInfo);
             body.UserObject = _GameObject;
             dynamicsWorld.AddRigidBody(body);
+            Rigidbodys.Add(body);
             //---create a dynamic rigidbody
         }
 
@@ -247,6 +265,7 @@ namespace LittleWormEngine
             return null;
         }
 
+        static ContactSensorCallback CallisionCallBack;
         static void Simulation()
         {
             bool _r = false;
@@ -254,40 +273,60 @@ namespace LittleWormEngine
             while (true)
             {
                 dynamicsWorld.StepSimulation(Time.DeltaTime, 10);
-                //print positions of all objects
-                for (int i = dynamicsWorld.NumCollisionObjects - 1; i >= 0; i--)
+                for (int i = dynamicsWorld.NumCollisionObjects - 1; i >= 1; i--)
                 {
                     CollisionObject obj = dynamicsWorld.CollisionObjectArray[i];
                     RigidBody body = RigidBody.Upcast(obj);
-                    GhostObject ghost = GhostObject.Upcast(obj);
                     BulletSharp.Math.Matrix trans;
+                    GhostObject ghost = GhostObject.Upcast(obj);
                     if (body != null && body.MotionState != null)
                     {
                         trans = body.MotionState.WorldTransform;
-                        GameObject _Temp = (obj.UserObject as GameObject);
-                        if (obj.UserObject != null)
+                        GameObject _Temp = (body.UserObject as GameObject);
+                        if (body.UserObject != null)
                         {
                             _Temp.transform.Position = new Vector3(trans.Origin.X, trans.Origin.Y, trans.Origin.Z) / btWorldtoLWWorldScale;
                         }
                     }
                     else if(ghost != null)
                     {
-                        if((ghost.UserObject as GameObject).Name == "TestObj")
+                        lock((ghost.UserObject as GameObject).CollidingGameObjects)
                         {
+                            List<GameObject> _TempGameObjects = (ghost.UserObject as GameObject).CollidingGameObjects;
+                            _TempGameObjects.Clear();
                             foreach (CollisionObject _Obj in ghost.OverlappingPairs)
                             {
                                 if (_Obj.UserObject != null)
                                 {
-                                    if((_Obj.UserObject as GameObject).Name == "Box")
-                                    {
-                                        //Debug.Log("Hit! : " + (_Obj.UserObject as GameObject).Name);
-                                    }
-                                    //Debug.Log("Trigger: " + (_Obj.UserObject as GameObject).Name);
+                                    _TempGameObjects.Add(_Obj.UserObject as GameObject);
                                 }
                             }
                         } 
                     }
+                }
+                List<CollisionObject> _Objs = new List<CollisionObject>();
+                foreach(BulletSharp.RigidBody _RigA in Rigidbodys)
+                {
+                    foreach (BulletSharp.RigidBody _RigB in Rigidbodys)
+                    {
+                        if(_RigA != _RigB)
+                        {
+                            dynamicsWorld.ContactPairTest(_RigA, _RigB, new ContactSensorCallback(_Objs));
+                        }
+                    }
 
+                    lock ((_RigA.UserObject as GameObject).CollidingGameObjects)
+                    {
+                        List<GameObject> _TempGameObjects = (_RigA.UserObject as GameObject).CollidingGameObjects;
+                        _TempGameObjects.Clear();
+                        foreach (CollisionObject _Obj in _Objs)
+                        {
+                            if (_Obj.UserObject != null)
+                            {
+                                _TempGameObjects.Add(_Obj.UserObject as GameObject);
+                            }
+                        }
+                    }
                 }
 
             }

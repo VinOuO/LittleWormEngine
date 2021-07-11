@@ -10,5 +10,8 @@ namespace LittleWormEngine
 
         void Start();
         void Update();
+        void OnCollitionEnter(GameObject _Other);
+        void OnCollitionStay(GameObject _Other);
+        void OnCollitionExit(GameObject _Other);
     }
 }

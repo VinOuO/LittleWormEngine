@@ -11,6 +11,8 @@ class Game
 {
     public static void Start()
     {
+        GameObject.Find("TestObj").AddCustomComponent<Test>();
+        GameObject.Find("Box").AddCustomComponent<Test>();
         /*
         GameObject Collider_Mesh = new GameObject("TestObj");
         Collider_Mesh.AddComponent<Transform>();

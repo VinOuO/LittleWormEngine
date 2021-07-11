@@ -9,6 +9,8 @@ namespace LittleWormEngine
     {
         public string Name;
         public List<Component> RenderComponents = new List<Component>();
+        public List<GameObject> CollidingGameObjects = new List<GameObject>();
+        public List<GameObject> CollidingGameObjectsForPhysicsThread = new List<GameObject>();
         public List<Component> Components = new List<Component>();
         public List<CustomComponent> CustomComponents = new List<CustomComponent>();
 

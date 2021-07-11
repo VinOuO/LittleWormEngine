@@ -16,6 +16,7 @@ namespace LittleWormEngine
         public Vector3 OffSet { get; set; }
         public Vector3 HalfSize { get; private set; }
         public RigiBody Attaching_Rigibody {get;set;}
+        public List<GameObject> CollidingGameObjects = new List<GameObject>();
 
         public void Start()
         {
@@ -25,7 +26,7 @@ namespace LittleWormEngine
                     Set_Mesh(BoxColliderMesh(), new Shader("ColliderVertex.vs", "", "ColliderFragment.fs"));
                     break;
                 case "Game":
-                    Attaching_Rigibody = new RigiBody(PhysicWorld.Get_Rigibody(Attaching_GameObject));
+                    Attaching_Rigibody = new RigiBody(PhysicsWorld.Get_Rigibody(Attaching_GameObject));
                     if (Attaching_Rigibody.Is_Static)
                     {
                         Attaching_Rigibody.Set_Static();
@@ -60,6 +61,47 @@ namespace LittleWormEngine
                     Draw();
                     break;
             }
+
+            lock (Attaching_GameObject.CollidingGameObjects)
+            {
+                foreach (GameObject _GameObject in Attaching_GameObject.CollidingGameObjects)
+                {
+                    if (!CollidingGameObjects.Contains(_GameObject))
+                    {
+                        CollidingGameObjects.Add(_GameObject);
+                        foreach (CustomComponent _CustomComponent in Attaching_GameObject.CustomComponents)
+                        {
+                            _CustomComponent.OnCollitionEnter(_GameObject);
+                        }
+                    }
+                }
+
+                List<GameObject> _To_be_Remove = new List<GameObject>();
+                foreach (GameObject _GameObject in CollidingGameObjects)
+                {
+                    if (Attaching_GameObject.CollidingGameObjects.Contains(_GameObject))
+                    {
+                        foreach (CustomComponent _CustomComponent in Attaching_GameObject.CustomComponents)
+                        {
+                            _CustomComponent.OnCollitionStay(_GameObject);
+                        }
+                    }
+                    else
+                    {
+                        _To_be_Remove.Add(_GameObject);
+                        foreach (CustomComponent _CustomComponent in Attaching_GameObject.CustomComponents)
+                        {
+                            _CustomComponent.OnCollitionExit(_GameObject);
+                        }
+                    }
+                }
+
+                foreach (GameObject _GameObject in _To_be_Remove)
+                {
+                    CollidingGameObjects.Remove(_GameObject);
+                }
+            }
+            
         } 
 
         public unsafe void Draw()
@@ -74,10 +116,12 @@ namespace LittleWormEngine
         bool HalfSize_Changed = false;
         public void Set_ColliderSize(Vector3 _HalfSize)
         {
-            HalfSize = _HalfSize;
+            /*
             _HalfSize.x *= Attaching_GameObject.transform.Scale.x;
             _HalfSize.y *= Attaching_GameObject.transform.Scale.y;
             _HalfSize.z *= Attaching_GameObject.transform.Scale.z;
+            */
+            HalfSize = _HalfSize;
             HalfSize_Changed = true;
         }
 
@@ -89,9 +133,9 @@ namespace LittleWormEngine
                     Set_Mesh(BoxColliderMesh(), new Shader("ColliderVertex.vs", "", "ColliderFragment.fs"));
                     break;
                 case "Game":
-                    if(PhysicWorld.Get_Rigibody(Attaching_GameObject)!= null)
+                    if(PhysicsWorld.Get_Rigibody(Attaching_GameObject)!= null)
                     {
-                        PhysicWorld.Get_Rigibody(Attaching_GameObject).CollisionShape = PhysicWorld.Create_Box_Shape(HalfSize);
+                        PhysicsWorld.Get_Rigibody(Attaching_GameObject).CollisionShape = PhysicsWorld.Create_Box_Shape(HalfSize);
                     }
                     else
                     {
