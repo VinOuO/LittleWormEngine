@@ -36,10 +36,7 @@ class Test_Mesh2 : DesignerProgram
         {
             _x = -5;
         }
-        else if (Input.GetKeyDown(KeyCode.Space))
-        {
-            GetComponent<BoxCollider>().Set_ColliderSize(new Vector3(5, 1, 1));
-        }
+
         GetComponent<BoxCollider>().Attaching_Rigibody.Set_LinearVelocity(Vector3.Right * _x);
         /*
         if (Input.GetKey(KeyCode.T))

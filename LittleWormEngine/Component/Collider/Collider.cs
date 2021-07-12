@@ -8,22 +8,16 @@ using static OpenGL.GL;
 
 namespace LittleWormEngine
 {
-    class BoxCollider : Collider
+    abstract class Collider : Component
     {
-        #region Old Parameter
-        /*
         public GameObject Attaching_GameObject { get; set; }
         public string Tag { get; set; }
         public bool Started = false;
         public Vector3 OffSet { get; set; }
         public RigiBody Attaching_Rigibody { get; set; }
         public List<GameObject> CollidingGameObjects = new List<GameObject>();
-        */
-        #endregion
-        public Vector3 HalfSize { get; private set; }
-        #region Old Start
-        /*
-        public override void Start()
+
+        public void Start()
         {
             switch (Core.Mode)
             {
@@ -40,10 +34,7 @@ namespace LittleWormEngine
             }
             Started = true;
         }
-        */
-        #endregion
-        #region Old Update
-        /*
+
         public void Update(string _Type)
         {
             if (!Started)
@@ -106,10 +97,8 @@ namespace LittleWormEngine
                     CollidingGameObjects.Remove(_GameObject);
                 }
             }
-            
+
         }
-        */
-        #endregion
 
         public unsafe void Draw()
         {
@@ -120,26 +109,10 @@ namespace LittleWormEngine
             glDisableVertexAttribArray(0);
         }
 
-        public void Set_BoxColiiderSize(Vector3 _HalfSize)
-        {
-            List<object> _Parameters = new List<object>();
-            _Parameters.Add(_HalfSize);
-            Set_ColliderSize(_Parameters);
-        }
+        public bool ColliderSize_Changed = false;
+        public abstract void Set_ColliderSize(List<object> _Size_Parameters);
 
-        /// <summary>
-        /// _Size_Parameters[0] = HalfSize
-        /// </summary>
-        /// <param name="_Size_Parameters"></param>
-        public override void Set_ColliderSize(List<object> _Size_Parameters)
-        {
-            HalfSize = (Vector3)_Size_Parameters[0];
-            ColliderSize_Changed = true;
-        }
-
-        #region Old Midify_Collider
-        /*
-        void Modify_Collider()
+        protected void Modify_Collider()
         {
             switch (Core.Mode)
             {
@@ -149,13 +122,11 @@ namespace LittleWormEngine
                 case "Game":
                     if (PhysicsWorld.Get_Rigibody(Attaching_GameObject) != null)
                     {
-                        PhysicsWorld.Get_Rigibody(Attaching_GameObject).CollisionShape = PhysicsWorld.Create_Box_Shape(HalfSize);
+                        PhysicsWorld.Get_Rigibody(Attaching_GameObject).CollisionShape = Create_Shape();
                     }
                     break;
             }
         }
-        */
-        #endregion
 
         public string MeshFileName;
         public string TextureFileName;
@@ -163,20 +134,6 @@ namespace LittleWormEngine
         public Texture RenderTexture { get; set; }
         public Shader RenderShader { get; set; }
         bool Mesh_Changed = false;
-        public BoxCollider()
-        {
-            switch (Core.Mode)
-            {
-                case "Editor":
-                    Tag = "Renderer";
-                    break;
-                case "Game":
-                    Tag = "Collider";
-                    break;
-            }
-            OffSet = Vector3.Zero;
-            HalfSize = Vector3.One;
-        }
 
         public void Set_Mesh(Mesh _RenderMesh, Shader _RenderShader)
         {
@@ -185,33 +142,7 @@ namespace LittleWormEngine
             RenderShader.AddUniform("transform");
         }
 
-        protected override BulletSharp.CollisionShape Create_Shape()
-        {
-            return PhysicsWorld.Create_Box_Shape(HalfSize);
-        }
-
-        protected override Mesh ColliderMesh()
-        {
-            Mesh _Mesh = new Mesh();
-            RenderUtility.MeshData _Temp = new RenderUtility.MeshData();
-            float _Sacler = 0.05f;
-            for (int i = 0; i <= 1; i++)
-            {
-                for (int j = 0; j <= 1; j++)
-                {
-                    for (int k = 0; k <= 1; k++)
-                    {
-                        Vector3 _Temp_Vec3 = new Vector3((i == 0 ? -1 : 1) * HalfSize.x, (j == 0 ? -1 : 1) * HalfSize.y, (k == 0 ? -1 : 1) * HalfSize.z);
-
-                        _Temp.Add_MeshData(RenderUtility.Get_LineMesh(_Temp_Vec3, new Vector3(-_Temp_Vec3.x * 0.5f, 0, 0) + _Temp_Vec3, 1f * _Sacler));
-                        _Temp.Add_MeshData(RenderUtility.Get_LineMesh(_Temp_Vec3, new Vector3(0, -_Temp_Vec3.y * 0.5f, 0) + _Temp_Vec3, 1f * _Sacler));
-                        _Temp.Add_MeshData(RenderUtility.Get_LineMesh(_Temp_Vec3, new Vector3(0, 0, -_Temp_Vec3.z * 0.5f) + _Temp_Vec3, 1f * _Sacler));
-                    }
-                }
-            }
-            _Mesh.AddVertices(_Temp.Vertices, _Temp.Indices);
-
-            return _Mesh;
-        }
+        protected abstract Mesh ColliderMesh();
+        protected abstract BulletSharp.CollisionShape Create_Shape();
     }
 }

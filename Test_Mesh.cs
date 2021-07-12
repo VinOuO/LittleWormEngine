@@ -10,8 +10,6 @@ class Test_Mesh : DesignerProgram
 {
     override public void Start()
     {
-        GetComponent<BoxCollider>().Set_ColliderSize(new Vector3(40, 80, 40));
-        Console.WriteLine("8787");
         /*
         GetComponent<MeshRenderer>().Set(ResourceLoader.Load_Mesh("Ashe2.obj"), ResourceLoader.Load_Texture("T_Ashe.png"));
         GetComponent<Transform>().Scale *= 0.03f;

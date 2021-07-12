@@ -302,7 +302,7 @@ namespace LittleWormEngine
                                 case "BoxCollider":
                                     _GameObject.AddComponent<BoxCollider>();
                                     _GameObject.GetComponent<BoxCollider>().OffSet = new Vector3(float.Parse(_LineInfos[1]), float.Parse(_LineInfos[2]), float.Parse(_LineInfos[3]));
-                                    _GameObject.GetComponent<BoxCollider>().Set_ColliderSize(new Vector3(float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5]), float.Parse(_LineInfos[6])));
+                                    _GameObject.GetComponent<BoxCollider>().Set_BoxColiiderSize(new Vector3(float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5]), float.Parse(_LineInfos[6])));
                                     break;
                                 case "Custom":
                                     _GameObject.AddCustomComponent(Type.GetType(_LineInfos[1]));

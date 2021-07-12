@@ -586,7 +586,7 @@ namespace LittleWorm
             {
                 try
                 {
-                    (EditorCore.SelectingComponent as BoxCollider).Set_ColliderSize(new Vector3(float.Parse(HalfSizex.Text), float.Parse(HalfSizey.Text), float.Parse(HalfSizez.Text)));
+                    (EditorCore.SelectingComponent as BoxCollider).Set_BoxColiiderSize(new Vector3(float.Parse(HalfSizex.Text), float.Parse(HalfSizey.Text), float.Parse(HalfSizez.Text)));
                     User_Typing_Num = false;
                 }
                 catch
