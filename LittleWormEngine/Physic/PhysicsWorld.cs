@@ -268,67 +268,69 @@ namespace LittleWormEngine
         static ContactSensorCallback CallisionCallBack;
         static void Simulation()
         {
-            bool _r = false;
-
             while (true)
             {
-                dynamicsWorld.StepSimulation(Time.DeltaTime, 10);
-                for (int i = dynamicsWorld.NumCollisionObjects - 1; i >= 1; i--)
+                if(Core.Physics_Simulation_Time != 0)
                 {
-                    CollisionObject obj = dynamicsWorld.CollisionObjectArray[i];
-                    RigidBody body = RigidBody.Upcast(obj);
-                    BulletSharp.Math.Matrix trans;
-                    GhostObject ghost = GhostObject.Upcast(obj);
-                    if (body != null && body.MotionState != null)
+                    Core.Physics_Simulation_Time = 0;
+                    dynamicsWorld.StepSimulation(Time.DeltaTime * 1000);
+                    for (int i = dynamicsWorld.NumCollisionObjects - 1; i >= 1; i--)
                     {
-                        trans = body.MotionState.WorldTransform;
-                        GameObject _Temp = (body.UserObject as GameObject);
-                        if (body.UserObject != null)
+                        CollisionObject obj = dynamicsWorld.CollisionObjectArray[i];
+                        RigidBody body = RigidBody.Upcast(obj);
+                        BulletSharp.Math.Matrix trans;
+                        GhostObject ghost = GhostObject.Upcast(obj);
+                        if (body != null && body.MotionState != null)
                         {
-                            _Temp.transform.Position = new Vector3(trans.Origin.X, trans.Origin.Y, trans.Origin.Z) / btWorldtoLWWorldScale;
+                            trans = body.MotionState.WorldTransform;
+                            GameObject _Temp = (body.UserObject as GameObject);
+                            if (body.UserObject != null)
+                            {
+                                _Temp.transform.Position = new Vector3(trans.Origin.X, trans.Origin.Y, trans.Origin.Z) / btWorldtoLWWorldScale;
+                            }
+                        }
+                        else if (ghost != null)
+                        {
+                            lock ((ghost.UserObject as GameObject).CollidingGameObjects)
+                            {
+                                List<GameObject> _TempGameObjects = (ghost.UserObject as GameObject).CollidingGameObjects;
+                                _TempGameObjects.Clear();
+                                foreach (CollisionObject _Obj in ghost.OverlappingPairs)
+                                {
+                                    if (_Obj.UserObject != null)
+                                    {
+                                        _TempGameObjects.Add(_Obj.UserObject as GameObject);
+                                    }
+                                }
+                            }
                         }
                     }
-                    else if(ghost != null)
+
+                    List<CollisionObject> _Objs = new List<CollisionObject>();
+                    foreach (BulletSharp.RigidBody _RigA in Rigidbodys)
                     {
-                        lock((ghost.UserObject as GameObject).CollidingGameObjects)
+                        foreach (BulletSharp.RigidBody _RigB in Rigidbodys)
                         {
-                            List<GameObject> _TempGameObjects = (ghost.UserObject as GameObject).CollidingGameObjects;
+                            if (_RigA != _RigB)
+                            {
+                                dynamicsWorld.ContactPairTest(_RigA, _RigB, new ContactSensorCallback(_Objs));
+                            }
+                        }
+
+                        lock ((_RigA.UserObject as GameObject).CollidingGameObjects)
+                        {
+                            List<GameObject> _TempGameObjects = (_RigA.UserObject as GameObject).CollidingGameObjects;
                             _TempGameObjects.Clear();
-                            foreach (CollisionObject _Obj in ghost.OverlappingPairs)
+                            foreach (CollisionObject _Obj in _Objs)
                             {
                                 if (_Obj.UserObject != null)
                                 {
                                     _TempGameObjects.Add(_Obj.UserObject as GameObject);
                                 }
                             }
-                        } 
-                    }
-                }
-                List<CollisionObject> _Objs = new List<CollisionObject>();
-                foreach(BulletSharp.RigidBody _RigA in Rigidbodys)
-                {
-                    foreach (BulletSharp.RigidBody _RigB in Rigidbodys)
-                    {
-                        if(_RigA != _RigB)
-                        {
-                            dynamicsWorld.ContactPairTest(_RigA, _RigB, new ContactSensorCallback(_Objs));
-                        }
-                    }
-
-                    lock ((_RigA.UserObject as GameObject).CollidingGameObjects)
-                    {
-                        List<GameObject> _TempGameObjects = (_RigA.UserObject as GameObject).CollidingGameObjects;
-                        _TempGameObjects.Clear();
-                        foreach (CollisionObject _Obj in _Objs)
-                        {
-                            if (_Obj.UserObject != null)
-                            {
-                                _TempGameObjects.Add(_Obj.UserObject as GameObject);
-                            }
                         }
                     }
                 }
-
             }
         }
 

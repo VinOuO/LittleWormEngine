@@ -24,7 +24,7 @@ namespace LittleWormEngine
         public static uint Mesh_Num = 0;
         public static long Frame_Num = 0;
         static Thread Editor_Thread, Physics_Thread;
-        static int Physics_Simulation = 0;
+        public static float Physics_Simulation_Time = 0;
         public static List<ModifyingGameObjectInfo> ModifyingGameObjectInfos = new List<ModifyingGameObjectInfo>();
 
         public static void Start()
@@ -85,6 +85,7 @@ namespace LittleWormEngine
                     This_Frame_nTime = Time.Get_Time();
                     Time.PersiceDeltaTime = Time.nano_to_Scend(This_Frame_nTime - Last_Frame_nTime);
                     Time.DeltaTime = (float)Time.PersiceDeltaTime;
+                    Physics_Simulation_Time = Time.DeltaTime;
                     Last_Frame_nTime = Time.Get_Time();
                     Start_Rendering = true;
                     Unprossed_Time -= Min_Elapsed_Frame_Time;
@@ -92,7 +93,7 @@ namespace LittleWormEngine
                     if (Time.nano_to_Scend(FPS_Passed_nTime) > 0.5f)
                     {
                         //**********************************FPS
-                        //Console.WriteLine(FPS_Frame_Num * 2);
+                        Console.WriteLine(FPS_Frame_Num * 2);
                         //**********************************FPS
                         FPS_Passed_nTime = 0;
                         FPS_Frame_Num = 0;
