@@ -86,6 +86,8 @@ namespace LittleWormEngine.Renderer
             }
         }
 
+        #region Old LineMesh
+        /*
         public static MeshData Get_LineMesh(Vector3 _StartPos, Vector3 _EndPos, float _Radius)
         {
             int _SectorCount = 100;
@@ -101,16 +103,10 @@ namespace LittleWormEngine.Renderer
                 _SectorAngle = i * _SectorStep;
                 Vector3 _Temp_Vec3 = new Vector3((float)Math.Cos(_SectorAngle) * _Radius, (float)Math.Sin(_SectorAngle) * _Radius, 0);
                 float _Temp_Angle;
-                //if (_Temp.x == 0 && _Temp.y == 0 && _Temp.z > 0)
-                    //Console.WriteLine((int)Mathematics.Math_of_Rotation.ZAngle_between(_Temp, Vector3.Backward));
                 _Temp_Angle = (float)Mathematics.Math_of_Rotation.ZAngle_between(_Temp, Vector3.Backward);
                 _Temp_Vec3 *= Matrix3.RotateZ(_Temp_Angle);
-                //if (_Temp.x == 0 && _Temp.y == 0 && _Temp.z > 0)
-                    //Console.WriteLine((int)Mathematics.Math_of_Rotation.YAngle_between(Matrix3.RotateZ(_Temp_Angle) * (_Temp), Vector3.Backward));
                 _Temp_Angle = (float)Mathematics.Math_of_Rotation.YAngle_between(Matrix3.RotateZ(_Temp_Angle) * (_Temp), Vector3.Backward);
                 _Temp_Vec3 *= Matrix3.RotateY(_Temp_Angle);
-                //if (_Temp.x == 0 && _Temp.y == 0 && _Temp.z > 0)
-                    //Console.WriteLine((int)Mathematics.Math_of_Rotation.XAngle_between(Matrix3.RotateY(_Temp_Angle) * (Matrix3.RotateZ(_Temp_Angle) * (_Temp)), Vector3.Backward));
                 _Temp_Angle = (float)Mathematics.Math_of_Rotation.XAngle_between(Matrix3.RotateY(_Temp_Angle) * (Matrix3.RotateZ(_Temp_Angle) * (_Temp)), Vector3.Backward);
                 _Temp_Vec3 *= Matrix3.RotateX(_Temp_Angle);
                 _Vertices.Add(new Vertex(_Temp_Vec3 + _StartPos));
@@ -134,16 +130,11 @@ namespace LittleWormEngine.Renderer
                 _SectorAngle = i * _SectorStep;
                 Vector3 _Temp_Vec3 = new Vector3((float)Math.Cos(_SectorAngle) * _Radius, (float)Math.Sin(_SectorAngle) * _Radius, 0);
                 float _Temp_Angle;
-                //if (_Temp.x == 0 && _Temp.y == 0 && _Temp.z > 0)
-                    //Console.WriteLine((int)Mathematics.Math_of_Rotation.ZAngle_between(_Temp, Vector3.Backward));
+
                 _Temp_Angle = (float)Mathematics.Math_of_Rotation.ZAngle_between(_Temp, Vector3.Backward);
                 _Temp_Vec3 *= Matrix3.RotateZ(_Temp_Angle);
-                //if (_Temp.x == 0 && _Temp.y == 0 && _Temp.z > 0)
-                    //Console.WriteLine((int)Mathematics.Math_of_Rotation.YAngle_between(Matrix3.RotateZ(_Temp_Angle) * _Temp, Vector3.Backward, 0));
                 _Temp_Angle = (float)Mathematics.Math_of_Rotation.YAngle_between(Matrix3.RotateZ(_Temp_Angle) * _Temp, Vector3.Backward);
                 _Temp_Vec3 *= Matrix3.RotateY(_Temp_Angle);
-                //if (_Temp.x == 0 && _Temp.y == 0 && _Temp.z > 0)
-                    //Console.WriteLine((int)Mathematics.Math_of_Rotation.XAngle_between(Matrix3.RotateY(_Temp_Angle) * (Matrix3.RotateZ(_Temp_Angle) * _Temp), Vector3.Backward, 0));
                 _Temp_Angle = (float)Mathematics.Math_of_Rotation.XAngle_between(Matrix3.RotateY(_Temp_Angle) * (Matrix3.RotateZ(_Temp_Angle) * _Temp), Vector3.Backward);
                 _Temp_Vec3 *= Matrix3.RotateX(_Temp_Angle);
                 _Vertices.Add(new Vertex(_Temp_Vec3 + _EndPos));
@@ -164,13 +155,125 @@ namespace LittleWormEngine.Renderer
             {
                 _Indices.Add((uint)i); _Indices.Add((uint)j - 1); _Indices.Add((uint)j);    
                 _Indices.Add((uint)j - 1); _Indices.Add((uint)i); _Indices.Add((uint)i - 1);
-
-                //_Indices.Add((uint)i); _Indices.Add((uint)j); _Indices.Add((uint)j - 1);
-                //_Indices.Add((uint)j - 1);  _Indices.Add((uint)i - 1); _Indices.Add((uint)i);
             }
             
+            return new MeshData(_Vertices, _Indices);
+        }
+        */
+        #endregion
+
+        public static MeshData Get_LineMesh(Vector3 _StartPos, Vector3 _EndPos, float _Radius)
+        {
+            int _SectorCount = 100;
+            float _SectorStep = 2 * (float)Math.PI / _SectorCount;
+            float _SectorAngle;
+
+            List<Vertex> _Vertices = new List<Vertex>();
+            List<uint> _Indices = new List<uint>();
+            Vector3 _Temp = _EndPos - _StartPos;
+            _Vertices.Add(new Vertex(new Vector3(_StartPos)));
+            for (int i = 1; i <= _SectorCount + 1; i++)
+            {
+                _SectorAngle = i * _SectorStep;
+                Vector3 _Temp_Vec3 = new Vector3((float)Math.Cos(_SectorAngle) * _Radius, (float)Math.Sin(_SectorAngle) * _Radius, 0);
+                float _Temp_AngleZ, _Temp_AngleY, _Temp_AngleZ2;
+                
+                _Temp_AngleZ = (float)Mathematics.Math_of_Rotation.ZAngle_between(_Temp, Vector3.Backward);
+                _Temp_Vec3 *= Matrix3.RotateZ(_Temp_AngleZ);
+                _Temp_AngleY = (float)Mathematics.Math_of_Rotation.YAngle_between(_Temp, Matrix3.RotateZ(_Temp_AngleZ) * Vector3.Backward);
+                _Temp_Vec3 *= Matrix3.RotateY(_Temp_AngleY);
+                _Temp_AngleZ2 = (float)Mathematics.Math_of_Rotation.ZAngle_between(_Temp, Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateZ(_Temp_AngleZ) * Vector3.Backward);
+                _Temp_Vec3 *= Matrix3.RotateZ(_Temp_AngleZ2);
+                
+                _Vertices.Add(new Vertex(_Temp_Vec3 + _StartPos));
+                if (i >= 2)
+                {
+                    if (Mathematics.Math_of_Rotation.RoundAngle(Mathematics.Math_of_Rotation.Angle_between(Mathematics.Math_of_Rotation.Cross(_Vertices[i].Position, _Vertices[i - 1].Position), _Temp)) < 180)
+                    {
+                        _Indices.Add(0); _Indices.Add((uint)i - 1); _Indices.Add((uint)i);
+                    }
+                    else
+                    {
+                        _Indices.Add(0); _Indices.Add((uint)i); _Indices.Add((uint)i - 1);
+                    }
+                }
+            }
+
+            _Vertices.Add(new Vertex(new Vector3(_EndPos)));
+            int _Temp_Vertices_Num = _Vertices.Count;
+            for (int i = _Temp_Vertices_Num, _Origin_Index = _Temp_Vertices_Num - 1; i <= _SectorCount + _Temp_Vertices_Num; i++)
+            {
+                _SectorAngle = i * _SectorStep;
+                Vector3 _Temp_Vec3 = new Vector3((float)Math.Cos(_SectorAngle) * _Radius, (float)Math.Sin(_SectorAngle) * _Radius, 0);
+                float _Temp_AngleZ, _Temp_AngleY, _Temp_AngleZ2;
+
+                _Temp_AngleZ = (float)Mathematics.Math_of_Rotation.ZAngle_between(_Temp, Vector3.Backward);
+                _Temp_Vec3 *= Matrix3.RotateZ(_Temp_AngleZ);
+                _Temp_AngleY = (float)Mathematics.Math_of_Rotation.YAngle_between(_Temp, Matrix3.RotateZ(_Temp_AngleZ) * Vector3.Backward);
+                _Temp_Vec3 *= Matrix3.RotateY(_Temp_AngleY);
+                _Temp_AngleZ2 = (float)Mathematics.Math_of_Rotation.ZAngle_between(_Temp, Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateZ(_Temp_AngleZ) * Vector3.Backward);
+                _Temp_Vec3 *= Matrix3.RotateZ(_Temp_AngleZ2);
+
+                _Vertices.Add(new Vertex(_Temp_Vec3 + _EndPos));
+                if (i >= 2)
+                {
+                    if (Mathematics.Math_of_Rotation.RoundAngle(Mathematics.Math_of_Rotation.Angle_between(Mathematics.Math_of_Rotation.Cross(_Vertices[i].Position, _Vertices[i - 1].Position), _Temp)) < 180)
+                    {
+                        _Indices.Add((uint)_Origin_Index); _Indices.Add((uint)i); _Indices.Add((uint)i - 1);
+                    }
+                    else
+                    {
+                        _Indices.Add((uint)_Origin_Index); _Indices.Add((uint)i - 1); _Indices.Add((uint)i);
+                    }
+                }
+            }
+
+            for (int i = 2, j = _Temp_Vertices_Num + 1; i <= _SectorCount + 1; i++, j++)
+            {
+                _Indices.Add((uint)i); _Indices.Add((uint)j - 1); _Indices.Add((uint)j);
+                _Indices.Add((uint)j - 1); _Indices.Add((uint)i); _Indices.Add((uint)i - 1);
+            }
 
             return new MeshData(_Vertices, _Indices);
         }
+
+        public static MeshData Get_RingMesh(Vector3 _Center, Vector3 _Direction, float _Radius, int _Slices, float _Scaler, float _RoundNum)
+        {
+            MeshData _Temp = new MeshData();
+            Vector3 _StartPoint, _EndPoint, _InisPoint;
+            Vector3 _OffSet = _Center + Vector3.Up * _Radius;
+            _InisPoint = _OffSet;
+            float _Temp_Angle;
+
+            _Temp_Angle = (float)Mathematics.Math_of_Rotation.ZAngle_between(_Direction, Vector3.Backward);
+            _InisPoint *= Matrix3.RotateZ(_Temp_Angle);
+            _Temp_Angle = (float)Mathematics.Math_of_Rotation.YAngle_between(Matrix3.RotateZ(_Temp_Angle) * _Direction, Vector3.Backward);
+            _InisPoint *= Matrix3.RotateY(_Temp_Angle);
+            _Temp_Angle = (float)Mathematics.Math_of_Rotation.XAngle_between(Matrix3.RotateY(_Temp_Angle) * (Matrix3.RotateZ(_Temp_Angle) * _Direction), Vector3.Backward);
+            _InisPoint *= Matrix3.RotateX(_Temp_Angle);
+            _StartPoint = _InisPoint;
+
+            for (int i = 0; i < _Slices * _RoundNum; i++)
+            {
+                if(i == _Slices - 1)
+                {
+                    _EndPoint = _InisPoint;
+                }
+                else
+                {
+                    _EndPoint = Matrix3.RotateZ(360 / _Slices * (i + 1)) * _OffSet;
+                    _Temp_Angle = (float)Mathematics.Math_of_Rotation.ZAngle_between(_Direction, Vector3.Backward);
+                    _EndPoint *= Matrix3.RotateZ(_Temp_Angle);
+                    _Temp_Angle = (float)Mathematics.Math_of_Rotation.YAngle_between(Matrix3.RotateZ(_Temp_Angle) * _Direction, Vector3.Backward);
+                    _EndPoint *= Matrix3.RotateY(_Temp_Angle);
+                    _Temp_Angle = (float)Mathematics.Math_of_Rotation.XAngle_between(Matrix3.RotateY(_Temp_Angle) * (Matrix3.RotateZ(_Temp_Angle) * _Direction), Vector3.Backward);
+                    _EndPoint *= Matrix3.RotateX(_Temp_Angle);
+                }
+                _Temp.Add_MeshData(Get_LineMesh(_StartPoint, _EndPoint, _Scaler));
+                _StartPoint = _EndPoint;
+            }
+            return _Temp;
+        }
+
     }
 }

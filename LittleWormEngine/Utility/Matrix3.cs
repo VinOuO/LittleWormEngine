@@ -50,11 +50,24 @@ namespace LittleWormEngine.Utility
         {
             double _Radians = Math_of_Rotation.Radians_of(_Angle);
             return new Matrix3(new Vector3((float)Math.Cos(_Radians), -(float)Math.Sin(_Radians), 0), 
-                   new Vector3((float)Math.Sin(_Radians), (float)Math.Cos(Math_of_Rotation.Radians_of(_Angle)), 0), 
-                   new Vector3(0, 0, 1));
+                               new Vector3((float)Math.Sin(_Radians), (float)Math.Cos(Math_of_Rotation.Radians_of(_Angle)), 0), 
+                               new Vector3(0, 0, 1));
         }
-
+        
+        public static Matrix3 RotateZYZ(float _AngleX, float _AngleY, float _AngleZ)
+        {
+            double _RadiansX = Math_of_Rotation.Radians_of(_AngleX);
+            double _RadiansY = Math_of_Rotation.Radians_of(_AngleY);
+            double _RadiansZ = Math_of_Rotation.Radians_of(_AngleZ);
+            return new Matrix3(new Vector3((float)Math.Cos(_RadiansX) * (float)Math.Cos(_RadiansY) * (float)Math.Cos(_RadiansZ) - (float)Math.Sin(_RadiansX) * (float)Math.Sin(_RadiansZ), (float)Math.Cos(_RadiansX) * (float)Math.Cos(_RadiansY) * (float)Math.Sin(_RadiansZ) + (float)Math.Sin(_RadiansX) * (float)Math.Cos(_RadiansZ), -(float)Math.Cos(_RadiansX) * (float)Math.Sin(_RadiansY)),
+                               new Vector3(-(float)Math.Sin(_RadiansX) * (float)Math.Cos(_RadiansY) * (float)Math.Cos(_RadiansZ) - (float)Math.Cos(_RadiansX) * (float)Math.Sin(_RadiansZ), -(float)Math.Sin(_RadiansX) * (float)Math.Cos(_RadiansY) * (float)Math.Sin(_RadiansZ) + (float)Math.Cos(_RadiansX) * (float)Math.Cos(_RadiansZ), (float)Math.Sin(_RadiansX) * (float)Math.Sin(_RadiansY)),
+                               new Vector3((float)Math.Sin(_RadiansY) * (float)Math.Cos(_RadiansZ), (float)Math.Sin(_RadiansY) * (float)Math.Sin(_RadiansZ), (float)Math.Cos(_RadiansY)));
+        }
+        
         public static Vector3 operator *(Vector3 _a, Matrix3 _b) => new Vector3(_a * _b.Get_Vector3("Col", 0), _a * _b.Get_Vector3("Col", 1), _a * _b.Get_Vector3("Col", 2));
         public static Vector3 operator *(Matrix3 _a, Vector3 _b) => new Vector3(_a.Get_Vector3("Row", 0) * _b, _a.Get_Vector3("Row", 1) * _b, _a.Get_Vector3("Row", 2) * _b);
+        public static Matrix3 operator *(Matrix3 _a, Matrix3 _b) => new Matrix3(new Vector3(_a.Get_Vector3("Row", 0) * _b.Get_Vector3("Col", 0), _a.Get_Vector3("Row", 0) * _b.Get_Vector3("Col", 1), _a.Get_Vector3("Row", 0) * _b.Get_Vector3("Col", 2)),
+                                                                                new Vector3(_a.Get_Vector3("Row", 1) * _b.Get_Vector3("Col", 0), _a.Get_Vector3("Row", 1) * _b.Get_Vector3("Col", 1), _a.Get_Vector3("Row", 1) * _b.Get_Vector3("Col", 2)),
+                                                                                new Vector3(_a.Get_Vector3("Row", 2) * _b.Get_Vector3("Col", 0), _a.Get_Vector3("Row", 2) * _b.Get_Vector3("Col", 1), _a.Get_Vector3("Row", 2) * _b.Get_Vector3("Col", 2)));
     }
 }

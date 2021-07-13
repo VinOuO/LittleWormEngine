@@ -14,8 +14,9 @@ namespace LittleWormEngine
         public string Tag { get; set; }
         public bool Started = false;
         public Vector3 OffSet { get; set; }
-        public RigiBody Attaching_Rigibody { get; set; }
+        public RigidBody Attaching_Rigibody { get; set; }
         public List<GameObject> CollidingGameObjects = new List<GameObject>();
+        public bool Is_Trigger { get; set; }
 
         public void Start()
         {
@@ -25,7 +26,7 @@ namespace LittleWormEngine
                     Set_Mesh(ColliderMesh(), new Shader("ColliderVertex.vs", "", "ColliderFragment.fs"));
                     break;
                 case "Game":
-                    Attaching_Rigibody = new RigiBody(PhysicsWorld.Get_Rigibody(Attaching_GameObject));
+                    Attaching_Rigibody = new RigidBody(PhysicsWorld.Get_Rigibody(Attaching_GameObject));
                     if (Attaching_Rigibody.Is_Static)
                     {
                         Attaching_Rigibody.Set_Static();
@@ -133,7 +134,6 @@ namespace LittleWormEngine
         public Mesh RenderMesh { get; set; }
         public Texture RenderTexture { get; set; }
         public Shader RenderShader { get; set; }
-        bool Mesh_Changed = false;
 
         public void Set_Mesh(Mesh _RenderMesh, Shader _RenderShader)
         {

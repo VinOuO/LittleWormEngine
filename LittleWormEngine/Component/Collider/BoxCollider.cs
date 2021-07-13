@@ -162,7 +162,7 @@ namespace LittleWormEngine
         public Mesh RenderMesh { get; set; }
         public Texture RenderTexture { get; set; }
         public Shader RenderShader { get; set; }
-        bool Mesh_Changed = false;
+
         public BoxCollider()
         {
             switch (Core.Mode)
@@ -176,6 +176,7 @@ namespace LittleWormEngine
             }
             OffSet = Vector3.Zero;
             HalfSize = Vector3.One;
+            Is_Trigger = false;
         }
 
         public void Set_Mesh(Mesh _RenderMesh, Shader _RenderShader)
@@ -187,14 +188,14 @@ namespace LittleWormEngine
 
         protected override BulletSharp.CollisionShape Create_Shape()
         {
-            return PhysicsWorld.Create_Box_Shape(HalfSize);
+            return PhysicsWorld.Create_BoxShape(HalfSize);
         }
 
         protected override Mesh ColliderMesh()
         {
             Mesh _Mesh = new Mesh();
             RenderUtility.MeshData _Temp = new RenderUtility.MeshData();
-            float _Sacler = 0.05f;
+            float _Scaler = 0.05f;
             for (int i = 0; i <= 1; i++)
             {
                 for (int j = 0; j <= 1; j++)
@@ -203,12 +204,13 @@ namespace LittleWormEngine
                     {
                         Vector3 _Temp_Vec3 = new Vector3((i == 0 ? -1 : 1) * HalfSize.x, (j == 0 ? -1 : 1) * HalfSize.y, (k == 0 ? -1 : 1) * HalfSize.z);
 
-                        _Temp.Add_MeshData(RenderUtility.Get_LineMesh(_Temp_Vec3, new Vector3(-_Temp_Vec3.x * 0.5f, 0, 0) + _Temp_Vec3, 1f * _Sacler));
-                        _Temp.Add_MeshData(RenderUtility.Get_LineMesh(_Temp_Vec3, new Vector3(0, -_Temp_Vec3.y * 0.5f, 0) + _Temp_Vec3, 1f * _Sacler));
-                        _Temp.Add_MeshData(RenderUtility.Get_LineMesh(_Temp_Vec3, new Vector3(0, 0, -_Temp_Vec3.z * 0.5f) + _Temp_Vec3, 1f * _Sacler));
+                        _Temp.Add_MeshData(RenderUtility.Get_LineMesh(_Temp_Vec3, new Vector3(-_Temp_Vec3.x * 0.5f, 0, 0) + _Temp_Vec3, 1f * _Scaler));
+                        _Temp.Add_MeshData(RenderUtility.Get_LineMesh(_Temp_Vec3, new Vector3(0, -_Temp_Vec3.y * 0.5f, 0) + _Temp_Vec3, 1f * _Scaler));
+                        _Temp.Add_MeshData(RenderUtility.Get_LineMesh(_Temp_Vec3, new Vector3(0, 0, -_Temp_Vec3.z * 0.5f) + _Temp_Vec3, 1f * _Scaler));
                     }
                 }
             }
+            _Temp.Add_MeshData(RenderUtility.Get_RingMesh(Vector3.Zero, Vector3.Backward, 1, 36, _Scaler * 2, 1f));
             _Mesh.AddVertices(_Temp.Vertices, _Temp.Indices);
 
             return _Mesh;

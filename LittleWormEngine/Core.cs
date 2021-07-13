@@ -12,7 +12,7 @@ namespace LittleWormEngine
 {
     class Core
     {
-        public static string Mode = "Game";
+        public static string Mode = "Editor";
         public static string SceneName = "Scene";
         public static int Width = 800;
         public static int Height = 640;
@@ -93,7 +93,7 @@ namespace LittleWormEngine
                     if (Time.nano_to_Scend(FPS_Passed_nTime) > 0.5f)
                     {
                         //**********************************FPS
-                        Console.WriteLine(FPS_Frame_Num * 2);
+                        //Console.WriteLine(FPS_Frame_Num * 2);
                         //**********************************FPS
                         FPS_Passed_nTime = 0;
                         FPS_Frame_Num = 0;

@@ -119,5 +119,6 @@ namespace LittleWormEngine.Mathematics
             }
             return -((Math.Atan2(_VectorA.y, _VectorA.x) - Math.Atan2(_VectorB.y, _VectorB.x)) * (180 / Math.PI));
         }
+
     }
 }

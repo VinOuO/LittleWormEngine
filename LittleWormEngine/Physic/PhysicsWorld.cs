@@ -61,7 +61,7 @@ namespace LittleWormEngine
                             }
                             else
                             {
-                                Create_Ghost_Box(_Gameobject, (_Component as BoxCollider).HalfSize);
+                                Create_GhostBox(_Gameobject, (_Component as BoxCollider).HalfSize);
                             }
                             break;
                     }
@@ -118,73 +118,28 @@ namespace LittleWormEngine
             //using motionstate is optional, it provides interpolation capabilities, and only synchronizes 'active' objects
             DefaultMotionState myMotionState = new DefaultMotionState(groundTransform);
             RigidBodyConstructionInfo rbInfo = new RigidBodyConstructionInfo(mass, myMotionState, groundShape, localInertia);
-            RigidBody body = new RigidBody(rbInfo);
+            BulletSharp.RigidBody body = new BulletSharp.RigidBody(rbInfo);
 
             //add the body to the dynamics world
             dynamicsWorld.AddRigidBody(body);
             //---create the ground
         }
 
-        static void Create_Box(GameObject _Obj) //Use this to design collider component
+
+        public static CollisionShape Create_CapsuleShape(LittleWormEngine.Utility.Vector2 _RadiusHeight)
         {
-            Console.WriteLine(_Obj.Name);
-            //---create a dynamic rigidbody
-            CollisionShape colShape = new BoxShape(1 * 100, 1 * 100, 1 * 100);
-            //CollisionShape colShape = new SphereShape(1);
-            collisionShapes.Add(colShape);
-
-            /// Create Dynamic Objects
-            BulletSharp.Math.Matrix startTransform;
-            startTransform = BulletSharp.Math.Matrix.Identity;
-
-            float mass = 1;
-
-            //rigidbody is dynamic if and only if mass is non zero, otherwise static
-            bool isDynamic = (mass == 0 ? true : false);
-
-            BulletSharp.Math.Vector3 localInertia = new BulletSharp.Math.Vector3(0, 0, 0);
-            if (isDynamic)
-            {
-                colShape.CalculateLocalInertia(mass, out localInertia);
-            }
-
-
-            startTransform.Origin = new BulletSharp.Math.Vector3(_Obj.transform.Position.x, _Obj.transform.Position.y, _Obj.transform.Position.z) * 100;
-
-            //using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
-            DefaultMotionState myMotionState = new DefaultMotionState(startTransform);
-            RigidBodyConstructionInfo rbInfo = new RigidBodyConstructionInfo(mass, myMotionState, colShape, localInertia);
-            RigidBody body = new RigidBody(rbInfo);
-            body.UserObject = _Obj;
-            dynamicsWorld.AddRigidBody(body);
-            Rigidbodys.Add(body);
-            //---create a dynamic rigidbody
+            return new CapsuleShape(_RadiusHeight.x * btWorldtoLWWorldScale, _RadiusHeight.y * btWorldtoLWWorldScale);
         }
-        /*
-        public static BulletSharp.RigidBody ReCreate_Rigibody(BulletSharp.RigidBody _OldRig)
-        {
-            BulletSharp.Math.Matrix startTransform;
-            startTransform = BulletSharp.Math.Matrix.Identity;
-            //using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
-            DefaultMotionState myMotionState = new DefaultMotionState();
-            RigidBodyConstructionInfo rbInfo = new RigidBodyConstructionInfo(1, _OldRig.MotionState, _OldRig.CollisionShape, _OldRig.LocalInertia);
-            RigidBody body = new RigidBody(rbInfo);
-            body.UserObject = _OldRig.UserObject;
-            dynamicsWorld.AddRigidBody(body);
-            dynamicsWorld.RemoveRigidBody(_OldRig);
-            return body;
-            //---create a dynamic rigidbody
-        }
-        */
-        public static CollisionShape Create_Box_Shape(LittleWormEngine.Utility.Vector3 _HalfSize)
+
+        public static CollisionShape Create_BoxShape(LittleWormEngine.Utility.Vector3 _HalfSize)
         {
             return new BoxShape(_HalfSize.x * btWorldtoLWWorldScale, _HalfSize.y * btWorldtoLWWorldScale, _HalfSize.z * btWorldtoLWWorldScale);
         }
 
-        static List<BulletSharp.RigidBody> Rigidbodys = new List<RigidBody>();
+        static List<BulletSharp.RigidBody> Rigidbodys = new List<BulletSharp.RigidBody>();
         public static void Create_Box(GameObject _GameObject, LittleWormEngine.Utility.Vector3 _HalfSize) //Use this to design collider component
         {
-            CollisionShape colShape = Create_Box_Shape(_HalfSize);
+            CollisionShape colShape = Create_BoxShape(_HalfSize);
             collisionShapes.Add(colShape);
 
             //---create a dynamic rigidbody
@@ -207,16 +162,67 @@ namespace LittleWormEngine
             //using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
             DefaultMotionState myMotionState = new DefaultMotionState(startTransform);
             RigidBodyConstructionInfo rbInfo = new RigidBodyConstructionInfo(mass, myMotionState, colShape, localInertia);
-            RigidBody body = new RigidBody(rbInfo);
+            BulletSharp.RigidBody body = new BulletSharp.RigidBody(rbInfo);
             body.UserObject = _GameObject;
             dynamicsWorld.AddRigidBody(body);
             Rigidbodys.Add(body);
             //---create a dynamic rigidbody
         }
 
-        public static void Create_Ghost_Box(GameObject _GameObject, LittleWormEngine.Utility.Vector3 _HalfSize) //Use this to design collider component
+        public static void Create_GhostBox(GameObject _GameObject, LittleWormEngine.Utility.Vector3 _HalfSize) //Use this to design collider component
         {
-            CollisionShape colShape = Create_Box_Shape(_HalfSize);
+            CollisionShape colShape = Create_BoxShape(_HalfSize);
+            collisionShapes.Add(colShape);
+
+            //---create a Ghost
+            BulletSharp.Math.Matrix startTransform;
+            startTransform = BulletSharp.Math.Matrix.Identity;
+            startTransform.Origin = new BulletSharp.Math.Vector3(_GameObject.transform.Position.x, _GameObject.transform.Position.y, _GameObject.transform.Position.z) * btWorldtoLWWorldScale;
+            GhostObject GObj = new GhostObject();
+            GObj.CollisionShape = colShape;
+            GObj.WorldTransform = startTransform;
+            GObj.UserObject = _GameObject;
+            GObj.CollisionFlags = CollisionFlags.NoContactResponse;
+            dynamicsWorld.AddCollisionObject(GObj, CollisionFilterGroups.SensorTrigger, CollisionFilterGroups.AllFilter & ~CollisionFilterGroups.SensorTrigger);
+            //dynamicsWorld.AddCollisionObject(GObj);
+            //---create a Ghost
+        }
+
+        public static void Create_Capsule(GameObject _GameObject, LittleWormEngine.Utility.Vector2 _RadiusHeight) //Use this to design collider component
+        {
+            CollisionShape colShape = Create_CapsuleShape(_RadiusHeight);
+            collisionShapes.Add(colShape);
+
+            //---create a dynamic rigidbody
+            BulletSharp.Math.Matrix startTransform;
+            startTransform = BulletSharp.Math.Matrix.Identity;
+
+            float mass = 1;
+
+            //rigidbody is dynamic if and only if mass is non zero, otherwise static
+            bool isDynamic = (mass == 0 ? true : false);
+
+            BulletSharp.Math.Vector3 localInertia = new BulletSharp.Math.Vector3(0, 0, 0);
+            if (isDynamic)
+            {
+                colShape.CalculateLocalInertia(mass, out localInertia);
+            }
+
+            startTransform.Origin = new BulletSharp.Math.Vector3(_GameObject.transform.Position.x, _GameObject.transform.Position.y, _GameObject.transform.Position.z) * btWorldtoLWWorldScale;
+
+            //using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
+            DefaultMotionState myMotionState = new DefaultMotionState(startTransform);
+            RigidBodyConstructionInfo rbInfo = new RigidBodyConstructionInfo(mass, myMotionState, colShape, localInertia);
+            BulletSharp.RigidBody body = new BulletSharp.RigidBody(rbInfo);
+            body.UserObject = _GameObject;
+            dynamicsWorld.AddRigidBody(body);
+            Rigidbodys.Add(body);
+            //---create a dynamic rigidbody
+        }
+
+        public static void Create_CapsuleBox(GameObject _GameObject, LittleWormEngine.Utility.Vector2 _RadiusHeight) //Use this to design collider component
+        {
+            CollisionShape colShape = Create_CapsuleShape(_RadiusHeight);
             collisionShapes.Add(colShape);
 
             //---create a Ghost
@@ -249,7 +255,7 @@ namespace LittleWormEngine
             return null;
         }
 
-        public static RigidBody Get_Rigibody(GameObject _GameObject)
+        public static BulletSharp.RigidBody Get_Rigibody(GameObject _GameObject)
         {
             foreach(CollisionObject _Cobj in dynamicsWorld.CollisionObjectArray)
             {
@@ -259,7 +265,7 @@ namespace LittleWormEngine
                 }
                 if((_Cobj.UserObject as GameObject) == _GameObject)
                 {
-                    return RigidBody.Upcast(_Cobj);
+                    return BulletSharp.RigidBody.Upcast(_Cobj);
                 }
             }
             return null;
@@ -277,7 +283,7 @@ namespace LittleWormEngine
                     for (int i = dynamicsWorld.NumCollisionObjects - 1; i >= 1; i--)
                     {
                         CollisionObject obj = dynamicsWorld.CollisionObjectArray[i];
-                        RigidBody body = RigidBody.Upcast(obj);
+                        BulletSharp.RigidBody body = BulletSharp.RigidBody.Upcast(obj);
                         BulletSharp.Math.Matrix trans;
                         GhostObject ghost = GhostObject.Upcast(obj);
                         if (body != null && body.MotionState != null)
@@ -340,7 +346,7 @@ namespace LittleWormEngine
             for (int i = dynamicsWorld.NumCollisionObjects - 1; i >= 0; i--)
             {
                 CollisionObject obj = dynamicsWorld.CollisionObjectArray[i];
-                RigidBody body = RigidBody.Upcast(obj);
+                BulletSharp.RigidBody body = BulletSharp.RigidBody.Upcast(obj);
                 if (body != null && body.MotionState != null)
                 {
                     body.MotionState.Dispose();

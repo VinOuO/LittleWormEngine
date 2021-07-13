@@ -4,12 +4,12 @@ using System.Text;
 using LittleWormEngine.Utility;
 namespace LittleWormEngine
 {
-    class RigiBody
+    class RigidBody
     {
         BulletSharp.RigidBody Rig;
         public bool Is_Static = false;
 
-        public RigiBody(BulletSharp.RigidBody _Rig)
+        public RigidBody(BulletSharp.RigidBody _Rig)
         {
             Rig = _Rig;
         }
