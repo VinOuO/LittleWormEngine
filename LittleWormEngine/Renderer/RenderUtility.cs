@@ -177,7 +177,7 @@ namespace LittleWormEngine.Renderer
                 _SectorAngle = i * _SectorStep;
                 Vector3 _Temp_Vec3 = new Vector3((float)Math.Cos(_SectorAngle) * _Radius, (float)Math.Sin(_SectorAngle) * _Radius, 0);
 
-                _Vertices.Add(new Vertex(Mathematics.Math_of_Rotation.EulerRotate(_Temp_Vec3, Vector3.Backward, _Temp) + _StartPos));
+                _Vertices.Add(new Vertex(Mathematics.Math_of_Rotation.BackwardBasedRotate(_Temp_Vec3, _Temp) + _StartPos));
                 if (i >= 2)
                 {
                     _Indices.Add(0); _Indices.Add((uint)i - 1); _Indices.Add((uint)i);
@@ -199,7 +199,7 @@ namespace LittleWormEngine.Renderer
                 _SectorAngle = i * _SectorStep;
                 Vector3 _Temp_Vec3 = new Vector3((float)Math.Cos(_SectorAngle) * _Radius, (float)Math.Sin(_SectorAngle) * _Radius, 0);
 
-                _Vertices.Add(new Vertex(Mathematics.Math_of_Rotation.EulerRotate(_Temp_Vec3, Vector3.Backward, _Temp) + _EndPos));
+                _Vertices.Add(new Vertex(Mathematics.Math_of_Rotation.BackwardBasedRotate(_Temp_Vec3, _Temp) + _EndPos));
                 if (i >= 2)
                 {
                     _Indices.Add((uint)_Origin_Index); _Indices.Add((uint)i); _Indices.Add((uint)i - 1);
@@ -238,7 +238,7 @@ namespace LittleWormEngine.Renderer
             Vector3 _OffSet =  Vector3.Up * _Radius;
             _InisPoint = _OffSet;
 
-            _InisPoint = Mathematics.Math_of_Rotation.EulerRotate(_InisPoint, Vector3.Backward, _Direction);
+            _InisPoint = Mathematics.Math_of_Rotation.BackwardBasedRotate(_InisPoint, _Direction);
             _StartPoint = _InisPoint;
 
             for (int i = 0; i < _Slices * _RoundNum; i++)
@@ -251,7 +251,7 @@ namespace LittleWormEngine.Renderer
                 {
                     _EndPoint = Matrix3.RotateZ(360 / _Slices * (i + 1)) * _OffSet;
 
-                    _EndPoint = Mathematics.Math_of_Rotation.EulerRotate(_EndPoint, Vector3.Backward, _Direction);
+                    _EndPoint = Mathematics.Math_of_Rotation.BackwardBasedRotate(_EndPoint, _Direction);
                 }
                 /*
                 if(i == 0)

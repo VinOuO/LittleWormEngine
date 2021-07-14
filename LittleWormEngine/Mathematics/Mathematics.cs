@@ -44,9 +44,37 @@ namespace LittleWormEngine.Mathematics
         {
             _VectorA = _VectorA.Normalize();
             _VectorB = _VectorB.Normalize();
-
-            return (float)(Math.Acos(_VectorA * _VectorB));
+            float _Radians = (float)(Math.Acos(_VectorA * _VectorB));
+            return _Radians;
         }
+
+        public static float BackwardBased_Radiansof(Vector3 _VectorTo)
+        {
+            float _Angle = Radians_between(Vector3.Backward, _VectorTo);
+            if (_VectorTo.z >= 0)
+            {
+                return (float)(2 * Math.PI - _Angle);
+            }
+            return _Angle;
+        }
+
+        public static Vector3 BackwardBasedRotate(Vector3 _Vector, Vector3 _AxisTo)
+        {
+            float _RotateRadians = Radians_between(_AxisTo, Vector3.Backward);
+            _AxisTo = _AxisTo.Normalize();
+
+            if (Math.Round(Angle_of(_RotateRadians)) == 0)
+            {
+                return _Vector;
+            }
+            else if (Math.Round(Angle_of(_RotateRadians)) == 180)
+            {
+                return -_Vector;
+            }
+
+            return Matrix3.Rotate(Cross(Vector3.Backward, _AxisTo).Normalize(), _RotateRadians) * _Vector;
+        }
+
 
 
         public static Vector3 Cross(Vector3 _VectorA, Vector3 _VectorB)
@@ -58,23 +86,18 @@ namespace LittleWormEngine.Mathematics
             return new Vector3(_x, _y, _z);
         }
 
+        public static float CrossProduct(Vector3 _VectorA, Vector3 _VectorB)
+        {
+            float _x, _y, _z;
+            _x = _VectorA.y * _VectorB.z - _VectorB.y * _VectorA.z;
+            _y = _VectorB.x * _VectorA.z - _VectorA.x * _VectorB.z;
+            _z = _VectorA.x * _VectorB.y - _VectorB.x * _VectorA.y;
+            return _x + _y + _z;
+        }
+
         public static float RoundAngle(float _Angle)
         {
-            if(_Angle >= 0)
-            {
-                while (_Angle >= 360)
-                {
-                    _Angle -= 360;
-                }
-            }
-            else
-            {
-                while (_Angle < 0)
-                {
-                    _Angle += 360;
-                }
-            }
-            return _Angle;
+            return _Angle % 360;
         }
 
         public static double XAngle_between(Vector3 _VectorA, Vector3 _VectorB)
@@ -141,26 +164,6 @@ namespace LittleWormEngine.Mathematics
                 return Matrix3.RotateZ(_Temp_AngleZ2) * Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateZ(_Temp_AngleZ) * _Vector;
             }
             return Matrix3.RotateX(_Temp_AngleX) * Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateZ(_Temp_AngleZ) * _Vector;
-        }
-
-        public static Vector3 EulerRotate(Vector3 _Vector, Vector3 _AxisFrom, Vector3 _AxisTo)
-        {
-            float _RotateAngle = Radians_between(_AxisTo, _AxisFrom);
-            _AxisTo = _AxisTo.Normalize();
-            _AxisFrom = _AxisFrom.Normalize();
-
-            if (Math.Round(Angle_of(_RotateAngle)) == 0 || Math.Round(Angle_of(_RotateAngle)) == 180)
-            {
-                if(_AxisTo.x * _AxisFrom.x >= 0 && _AxisTo.y * _AxisFrom.y >= 0 && _AxisTo.z * _AxisFrom.z >= 0)
-                {
-                    return _Vector;
-                }
-                else
-                {
-                    return -_Vector;
-                }
-            }
-            return Matrix3.Rotate(Cross(_AxisFrom, _AxisTo).Normalize(), _RotateAngle) * _Vector;
         }
 
         public static  Vector3 EulerAngle(Vector3 _AxisTo)

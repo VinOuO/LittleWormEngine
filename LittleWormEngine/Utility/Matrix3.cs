@@ -54,10 +54,10 @@ namespace LittleWormEngine.Utility
                                new Vector3(0, 0, 1));
         }
         
-        public static Matrix3 Rotate(Vector3 _Axis, float _Angle)
+        public static Matrix3 Rotate(Vector3 _Axis, float _Radians)
         {
-            float _Sin = (float)Math.Sin(_Angle);
-            float _Cos = (float)Math.Cos(_Angle);
+            float _Sin = (float)Math.Sin(_Radians);
+            float _Cos = (float)Math.Cos(_Radians);
             return new Matrix3(new Vector3(_Cos + _Axis.x * _Axis.x * (1 - _Cos)            , _Axis.x * _Axis.y * (1 - _Cos) - _Axis.z * _Sin   , _Axis.x * _Axis.z * (1 - _Cos) + _Axis.y * _Sin   ),
                                new Vector3(_Axis.y * _Axis.x * (1 - _Cos) + _Axis.z * _Sin  , _Cos + _Axis.y * _Axis.y * (1 - _Cos)             , _Axis.y * _Axis.z * (1 - _Cos) - _Axis.x * _Sin   ),
                                new Vector3(_Axis.z * _Axis.x * (1 - _Cos) - _Axis.y * _Sin  , _Axis.z * _Axis.y * (1 - _Cos) + _Axis.x * _Sin   , _Cos + _Axis.z * _Axis.z * (1 - _Cos))            );
