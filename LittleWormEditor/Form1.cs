@@ -242,6 +242,7 @@ namespace LittleWorm
         static Vector2 MouseMovement = new Vector2(Vector2.Zero);
         static Vector2 LastMousePos = new Vector2(Vector2.Zero);
         static Vector2 NowMousePos = new Vector2(Vector2.Zero);
+        static float Scaler = 100;
         void Check_Mouse()
         {
             Label _temp = new Label();
@@ -278,109 +279,109 @@ namespace LittleWorm
                     case "PosxLabel":
                         if (float.TryParse(Positionx.Text, out _Output))
                         {
-                            Positionx.Text = "" + (_Output + MouseMovement.x * 10);
+                            Positionx.Text = "" + (_Output + MouseMovement.x * Scaler);
                         }
                         break;
                     case "PosyLabel":
                         if (float.TryParse(Positiony.Text, out _Output))
                         {
-                            Positiony.Text = "" + (_Output + MouseMovement.x * 10);
+                            Positiony.Text = "" + (_Output + MouseMovement.x * Scaler);
                         }
                         break;
                     case "PoszLabel":
                         if (float.TryParse(Positionz.Text, out _Output))
                         {
-                            Positionz.Text = "" + (_Output + MouseMovement.x * 10);
+                            Positionz.Text = "" + (_Output + MouseMovement.x * Scaler);
                         }
                         break;
                     case "RotxLabel":
                         if (float.TryParse(Rotationx.Text, out _Output))
                         {
-                            Rotationx.Text = "" + (_Output + MouseMovement.x * 10);
+                            Rotationx.Text = "" + (_Output + MouseMovement.x * Scaler);
                         }
                         break;
                     case "RotyLabel":
                         if (float.TryParse(Rotationy.Text, out _Output))
                         {
-                            Rotationy.Text = "" + (_Output + MouseMovement.x * 10);
+                            Rotationy.Text = "" + (_Output + MouseMovement.x * Scaler);
                         }
                         break;
                     case "RotzLabel":
                         if (float.TryParse(Rotationz.Text, out _Output))
                         {
-                            Rotationz.Text = "" + (_Output + MouseMovement.x * 10);
+                            Rotationz.Text = "" + (_Output + MouseMovement.x * Scaler);
                         }
                         break;
                     case "ScaxLabel":
                         if (float.TryParse(Scalex.Text, out _Output))
                         {
-                            Scalex.Text = "" + (_Output + MouseMovement.x * 10);
+                            Scalex.Text = "" + (_Output + MouseMovement.x * Scaler);
                         }
                         break;
                     case "ScayLabel":
                         if (float.TryParse(Scaley.Text, out _Output))
                         {
-                            Scaley.Text = "" + (_Output + MouseMovement.x * 10);
+                            Scaley.Text = "" + (_Output + MouseMovement.x * Scaler);
                         }
                         break;
                     case "ScazLabel":
                         if (float.TryParse(Scalez.Text, out _Output))
                         {
-                            Scalez.Text = "" + (_Output + MouseMovement.x * 10);
+                            Scalez.Text = "" + (_Output + MouseMovement.x * Scaler);
                         }
                         break;
                     case "OffSetxLabel":
                         if (float.TryParse(OffSetx.Text, out _Output))
                         {
-                            OffSetx.Text = "" + (_Output + MouseMovement.x * 10);
+                            OffSetx.Text = "" + (_Output + MouseMovement.x * Scaler);
                         }
                         break;
                     case "OffSetyLabel":
                         if (float.TryParse(OffSety.Text, out _Output))
                         {
-                            OffSety.Text = "" + (_Output + MouseMovement.x * 10);
+                            OffSety.Text = "" + (_Output + MouseMovement.x * Scaler);
                         }
                         break;
                     case "OffSetzLabel":
                         if (float.TryParse(OffSetz.Text, out _Output))
                         {
-                            OffSetz.Text = "" + (_Output + MouseMovement.x * 10);
+                            OffSetz.Text = "" + (_Output + MouseMovement.x * Scaler);
                         }
                         break;
                     case "OffSet2xLabel":
                         if (float.TryParse(OffSet2x.Text, out _Output))
                         {
-                            OffSet2x.Text = "" + (_Output + MouseMovement.x * 10);
+                            OffSet2x.Text = "" + (_Output + MouseMovement.x * Scaler);
                         }
                         break;
                     case "OffSet2yLabel":
                         if (float.TryParse(OffSet2y.Text, out _Output))
                         {
-                            OffSet2y.Text = "" + (_Output + MouseMovement.x * 10);
+                            OffSet2y.Text = "" + (_Output + MouseMovement.x * Scaler);
                         }
                         break;
                     case "OffSet2zLabel":
                         if (float.TryParse(OffSet2z.Text, out _Output))
                         {
-                            OffSet2z.Text = "" + (_Output + MouseMovement.x * 10);
+                            OffSet2z.Text = "" + (_Output + MouseMovement.x * Scaler);
                         }
                         break;
                     case "HalfSizexLabel":
                         if (float.TryParse(HalfSizex.Text, out _Output))
                         {
-                            HalfSizex.Text = "" + (_Output + MouseMovement.x * 10);
+                            HalfSizex.Text = "" + (_Output + MouseMovement.x * Scaler);
                         }
                         break;
                     case "HalfSizeyLabel":
                         if (float.TryParse(HalfSizey.Text, out _Output))
                         {
-                            HalfSizey.Text = "" + (_Output + MouseMovement.x * 10);
+                            HalfSizey.Text = "" + (_Output + MouseMovement.x * Scaler);
                         }
                         break;
                     case "HalfSizezLabel":
                         if (float.TryParse(HalfSizez.Text, out _Output))
                         {
-                            HalfSizez.Text = "" + (_Output + MouseMovement.x * 10);
+                            HalfSizez.Text = "" + (_Output + MouseMovement.x * Scaler);
                         }
                         break;
                 }

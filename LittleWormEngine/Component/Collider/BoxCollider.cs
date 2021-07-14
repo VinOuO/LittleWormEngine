@@ -210,7 +210,9 @@ namespace LittleWormEngine
                     }
                 }
             }
-            _Temp.Add_MeshData(RenderUtility.Get_RingMesh(Vector3.Zero, Vector3.Backward, 1, 36, _Scaler * 2, 1f));
+            _Temp.Add_MeshData(RenderUtility.Get_RingMesh(Vector3.Up * 2, new Vector3(0,0,1), 2, 30, _Scaler * 3, 1f));
+            _Temp.Add_MeshData(RenderUtility.Get_RingMesh(Vector3.Up, new Vector3(0,1,0), 2, 30, _Scaler * 3, 1f));
+            _Temp.Add_MeshData(RenderUtility.Get_RingMesh(Vector3.Zero, new Vector3(1,0,0), 2, 30, _Scaler * 3, 1f));
             _Mesh.AddVertices(_Temp.Vertices, _Temp.Indices);
 
             return _Mesh;

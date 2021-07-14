@@ -40,9 +40,12 @@ namespace LittleWormEngine.Mathematics
         }
         */
 
-        public static float Angle_between(Vector3 _VectorA, Vector3 _VectorB)
+        public static float Radians_between(Vector3 _VectorA, Vector3 _VectorB)
         {
-            return (float)Math.Acos(_VectorA * _VectorB / (_VectorA.Length() * _VectorB.Length()));
+            _VectorA = _VectorA.Normalize();
+            _VectorB = _VectorB.Normalize();
+
+            return (float)(Math.Acos(_VectorA * _VectorB));
         }
 
 
@@ -50,7 +53,7 @@ namespace LittleWormEngine.Mathematics
         {
             float _x, _y, _z;
             _x = _VectorA.y * _VectorB.z - _VectorB.y * _VectorA.z;
-            _y = (_VectorA.x * _VectorB.z - _VectorB.x * _VectorA.z) * -1;
+            _y = _VectorB.x * _VectorA.z - _VectorA.x * _VectorB.z;
             _z = _VectorA.x * _VectorB.y - _VectorB.x * _VectorA.y;
             return new Vector3(_x, _y, _z);
         }
@@ -76,49 +79,162 @@ namespace LittleWormEngine.Mathematics
 
         public static double XAngle_between(Vector3 _VectorA, Vector3 _VectorB)
         {
-            if (_VectorA.y == 0 && _VectorA.z == 0 || _VectorB.y == 0 && _VectorB.z == 0)
+            if (Math.Round(_VectorA.y, 3) == 0 && Math.Round(_VectorA.z, 3) == 0 || Math.Round(_VectorB.y, 3) == 0 && Math.Round(_VectorB.z, 3) == 0)
             {
                 return 0;
             }
-            return ((Math.Atan2(_VectorA.y, _VectorA.z) - Math.Atan2(_VectorB.y, _VectorB.z)) * (180 / Math.PI));
+            return ((Math.Atan2(_VectorA.y, -_VectorA.z) - Math.Atan2(_VectorB.y, -_VectorB.z)) * (180 / Math.PI));
         }
-        public static double XAngle_between(Vector3 _VectorA, Vector3 _VectorB, int a)
-        {
-            Console.WriteLine("VecA: " + (int)_VectorA.x + ", " + (int)_VectorA.y + ", " + (int)_VectorA.z);
-            Console.WriteLine("VecB: " + (int)_VectorB.x + ", " + (int)_VectorB.y + ", " + (int)_VectorB.z);
-            if (_VectorA.y == 0 && _VectorA.z == 0 || _VectorB.y == 0 && _VectorB.z == 0)
-            {
-                return 0;
-            }
-            return ((Math.Atan2(_VectorA.y, _VectorA.z) - Math.Atan2(_VectorB.y, _VectorB.z)) * (180 / Math.PI));
-        }
-        public static double YAngle_between(Vector3 _VectorA, Vector3 _VectorB, int a)
-        {
-            Console.WriteLine("VecA: " + (int)_VectorA.x + ", " + (int)_VectorA.y + ", " + (int)_VectorA.z);
-            Console.WriteLine("VecB: " + (int)_VectorB.x + ", " + (int)_VectorB.y + ", " + (int)_VectorB.z);
-            if (_VectorA.z == 0 && _VectorA.x == 0 || _VectorB.z == 0 && _VectorB.x == 0)
-            {
-                return 0;
-            }
-            return ((Math.Atan2(_VectorA.z, _VectorA.x) - Math.Atan2(_VectorB.z, _VectorB.x)) * (180 / Math.PI));
-        }
+       
         public static double YAngle_between(Vector3 _VectorA, Vector3 _VectorB)
         {
-            if (_VectorA.z == 0 && _VectorA.x == 0 || _VectorB.z == 0 && _VectorB.x == 0)
+            if (Math.Round(_VectorA.z, 3) == 0 && Math.Round(_VectorA.x, 3) == 0 || Math.Round(_VectorB.z, 3) == 0 && Math.Round(_VectorB.x, 3) == 0)
             {
                 return 0;
             }
-            return ((Math.Atan2(_VectorA.z, _VectorA.x) - Math.Atan2(_VectorB.z, _VectorB.x)) * (180 / Math.PI));
+            return ((Math.Atan2(_VectorA.z, -_VectorA.x) - Math.Atan2(_VectorB.z, -_VectorB.x)) * (180 / Math.PI));
         }
 
         public static double ZAngle_between(Vector3 _VectorA, Vector3 _VectorB)
         {
-            if(_VectorA.y == 0 && _VectorA.x == 0 || _VectorB.y == 0 && _VectorB.x == 0)
+            if(Math.Round(_VectorA.y, 3) == 0 && Math.Round(_VectorA.x, 3) == 0 || Math.Round(_VectorB.y, 3) == 0 && Math.Round(_VectorB.x, 3) == 0)
             {
                 return 0;
             }
-            return -((Math.Atan2(_VectorA.y, _VectorA.x) - Math.Atan2(_VectorB.y, _VectorB.x)) * (180 / Math.PI));
+            return ((Math.Atan2(_VectorA.y, _VectorA.x) - Math.Atan2(_VectorB.y, _VectorB.x)) * (180 / Math.PI));
         }
 
+        public static Vector3 EulerRotateZYZ(Vector3 _Vector, Vector3 _AxisFrom, Vector3 _AxisTo)
+        {
+            float _Temp_AngleZ, _Temp_AngleY, _Temp_AngleZ2;
+
+            _Temp_AngleZ = (float)ZAngle_between(_AxisTo, _AxisFrom);
+            _Temp_AngleY = (float)YAngle_between(_AxisTo, Matrix3.RotateZ(_Temp_AngleZ) * _AxisFrom);
+            _Temp_AngleZ2 = (float)ZAngle_between(_AxisTo, Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateZ(_Temp_AngleZ) * _AxisFrom);
+            _Vector = Matrix3.RotateZ(_Temp_AngleZ2) * Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateZ(_Temp_AngleZ) * _Vector;
+            _AxisFrom = Matrix3.RotateZ(_Temp_AngleZ2) * Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateZ(_Temp_AngleZ) * _AxisFrom;
+
+            return _Vector;
+        }
+
+        public static Vector3 EulerRotateR(Vector3 _Vector, Vector3 _AxisFrom, Vector3 _AxisTo)
+        {
+            float _Temp_AngleZ, _Temp_AngleY, _Temp_AngleX,_Temp_AngleZ2;
+
+            _Temp_AngleZ = (float)ZAngle_between(_AxisTo, _AxisFrom);
+            _Temp_AngleY = (float)YAngle_between(_AxisTo, Matrix3.RotateZ(_Temp_AngleZ) * _AxisFrom);
+            _Temp_AngleZ2 = (float)ZAngle_between(_AxisTo, Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateZ(_Temp_AngleZ) * _AxisFrom);
+            _Temp_AngleX = (float)XAngle_between(_AxisTo, Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateZ(_Temp_AngleZ) * _AxisFrom);
+
+            Vector3 _VecZYX, _VecZYZ;
+            _VecZYX = Matrix3.RotateX(_Temp_AngleX) * Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateZ(_Temp_AngleZ) * _AxisFrom;
+            _VecZYZ = Matrix3.RotateZ(_Temp_AngleZ2) * Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateZ(_Temp_AngleZ) * _AxisFrom;
+
+            float _AngleZYX = Radians_between(_VecZYX, _AxisTo), _AngleZYZ = Radians_between(_VecZYZ, _AxisTo);
+            if (_AngleZYX > 0.1f)
+            {
+                if(_AngleZYZ > 0.1f)
+                {
+                    //Debug.Log("Rotate Failed => AngleZYX: " + _AngleZYX + " AngleZYZ: " + _AngleZYZ);
+                    return (_AngleZYX > _AngleZYZ? Matrix3.RotateZ(_Temp_AngleZ2) * Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateZ(_Temp_AngleZ) * _Vector : Matrix3.RotateX(_Temp_AngleX) * Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateZ(_Temp_AngleZ) * _Vector);
+                }
+                return Matrix3.RotateZ(_Temp_AngleZ2) * Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateZ(_Temp_AngleZ) * _Vector;
+            }
+            return Matrix3.RotateX(_Temp_AngleX) * Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateZ(_Temp_AngleZ) * _Vector;
+        }
+
+        public static Vector3 EulerRotate(Vector3 _Vector, Vector3 _AxisFrom, Vector3 _AxisTo)
+        {
+            float _RotateAngle = Radians_between(_AxisTo, _AxisFrom);
+            _AxisTo = _AxisTo.Normalize();
+            _AxisFrom = _AxisFrom.Normalize();
+
+            if (Math.Round(Angle_of(_RotateAngle)) == 0 || Math.Round(Angle_of(_RotateAngle)) == 180)
+            {
+                if(_AxisTo.x * _AxisFrom.x >= 0 && _AxisTo.y * _AxisFrom.y >= 0 && _AxisTo.z * _AxisFrom.z >= 0)
+                {
+                    return _Vector;
+                }
+                else
+                {
+                    return -_Vector;
+                }
+            }
+            return Matrix3.Rotate(Cross(_AxisFrom, _AxisTo).Normalize(), _RotateAngle) * _Vector;
+        }
+
+        public static  Vector3 EulerAngle(Vector3 _AxisTo)
+        {
+            Vector3 _Rot = Vector3.Zero;
+            _Rot.x = (float)Math.Atan2(_AxisTo.y, _AxisTo.z);
+            if (_AxisTo.z >= 0)
+            {
+                _Rot.y = -(float)Math.Atan2(_AxisTo.x * (float)Math.Cos(_Rot.x), _AxisTo.z);
+            }
+            else
+            {
+                _Rot.y = (float)Math.Atan2(_AxisTo.x * (float)Math.Cos(_Rot.x), -_AxisTo.z);
+            }
+            _Rot.z = (float)Math.Atan2(Math.Cos(_Rot.x), Math.Sin(_Rot.x) * Math.Sin(_Rot.y));
+            return _Rot;
+        }
+
+        public static Vector3 EulerRotateZYZ0(Vector3 _Vector, Vector3 _AxisFrom, Vector3 _AxisTo)
+        {
+            Vector3 _Rot = EulerAngle(_AxisTo);
+            _Vector = Matrix3.RotateZ(_Rot.z) * Matrix3.RotateY(_Rot.y) * Matrix3.RotateX(_Rot.x) * _Vector;
+
+            return _Vector;
+        }
+
+        public static Vector3 EulerRotateZYZ4(Vector3 _Vector, Vector3 _AxisFrom, Vector3 _AxisTo)
+        {
+            int Try = 100;
+            float _Temp_AngleX, _Temp_AngleY, _Temp_AngleZ;
+
+            while(Try > 0)
+            {
+                _Temp_AngleZ = (float)ZAngle_between(_AxisTo, _AxisFrom);
+                _Vector *= Matrix3.RotateZ(_Temp_AngleZ);
+                _AxisFrom *= Matrix3.RotateZ(_Temp_AngleZ);
+                _Temp_AngleZ = (float)YAngle_between(_AxisTo, _AxisFrom);
+                _Vector *= Matrix3.RotateY(_Temp_AngleZ);
+                _AxisFrom *= Matrix3.RotateY(_Temp_AngleZ);
+                _Temp_AngleZ = (float)XAngle_between(_AxisTo, _AxisFrom);
+                _Vector *= Matrix3.RotateX(_Temp_AngleZ);
+                _AxisFrom *= Matrix3.RotateX(_Temp_AngleZ);
+
+                if (Math.Abs((float)ZAngle_between(_AxisTo, _AxisFrom)) < 3 && Math.Abs((float)YAngle_between(_AxisTo, _AxisFrom)) < 3 && Math.Abs((float)XAngle_between(_AxisTo, _AxisFrom)) < 3)
+                    break;
+            }
+            return _Vector;
+        }
+
+
+        public static Vector3 EulerRotateZYZ1(Vector3 _Vector, Vector3 _AxisFrom, Vector3 _AxisTo)
+        {
+            float _Temp_AngleZ, _Temp_AngleY, _Temp_AngleZ2;
+
+            _Temp_AngleZ = (float)ZAngle_between(_AxisTo, _AxisFrom);
+            _Temp_AngleY = (float)YAngle_between(_AxisTo, Matrix3.RotateZ(_Temp_AngleZ) * _AxisFrom);
+            _Temp_AngleZ2 = (float)ZAngle_between(_AxisTo, Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateZ(_Temp_AngleZ) * Matrix3.RotateZ(_Temp_AngleZ) * _AxisFrom);
+            _Vector = Matrix3.RotateX(_Temp_AngleZ2) * Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateZ(_Temp_AngleZ) * Matrix3.RotateZ(_Temp_AngleZ) * Matrix3.RotateZ(_Temp_AngleZ) * _Vector;
+            _AxisFrom = Matrix3.RotateX(_Temp_AngleZ2) * Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateZ(_Temp_AngleZ) * _AxisFrom;
+
+            return _Vector;
+        }
+
+        public static Vector3 EulerZXZRotate(Vector3 _VectorFrom, Vector3 _VectorTo)
+        {
+            float _Temp_AngleZ, _Temp_AngleX, _Temp_AngleZ2;
+
+            _Temp_AngleZ = (float)ZAngle_between(_VectorTo, Vector3.Backward);
+            _VectorFrom *= Matrix3.RotateZ(_Temp_AngleZ);
+            _Temp_AngleX = (float)XAngle_between(_VectorTo, Matrix3.RotateZ(_Temp_AngleZ) * Vector3.Backward);
+            _VectorFrom *= Matrix3.RotateX(_Temp_AngleX);
+            _Temp_AngleZ2 = (float)ZAngle_between(_VectorTo, Matrix3.RotateX(_Temp_AngleX) * Matrix3.RotateZ(_Temp_AngleZ) * Vector3.Backward);
+            _VectorFrom *= Matrix3.RotateZ(_Temp_AngleZ2);
+            return _VectorFrom;
+        }
     }
 }

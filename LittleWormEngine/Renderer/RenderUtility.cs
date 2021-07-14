@@ -176,25 +176,18 @@ namespace LittleWormEngine.Renderer
             {
                 _SectorAngle = i * _SectorStep;
                 Vector3 _Temp_Vec3 = new Vector3((float)Math.Cos(_SectorAngle) * _Radius, (float)Math.Sin(_SectorAngle) * _Radius, 0);
-                float _Temp_AngleZ, _Temp_AngleY, _Temp_AngleZ2;
-                
-                _Temp_AngleZ = (float)Mathematics.Math_of_Rotation.ZAngle_between(_Temp, Vector3.Backward);
-                _Temp_Vec3 *= Matrix3.RotateZ(_Temp_AngleZ);
-                _Temp_AngleY = (float)Mathematics.Math_of_Rotation.YAngle_between(_Temp, Matrix3.RotateZ(_Temp_AngleZ) * Vector3.Backward);
-                _Temp_Vec3 *= Matrix3.RotateY(_Temp_AngleY);
-                _Temp_AngleZ2 = (float)Mathematics.Math_of_Rotation.ZAngle_between(_Temp, Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateZ(_Temp_AngleZ) * Vector3.Backward);
-                _Temp_Vec3 *= Matrix3.RotateZ(_Temp_AngleZ2);
-                
-                _Vertices.Add(new Vertex(_Temp_Vec3 + _StartPos));
+
+                _Vertices.Add(new Vertex(Mathematics.Math_of_Rotation.EulerRotate(_Temp_Vec3, Vector3.Backward, _Temp) + _StartPos));
                 if (i >= 2)
                 {
-                    if (Mathematics.Math_of_Rotation.RoundAngle(Mathematics.Math_of_Rotation.Angle_between(Mathematics.Math_of_Rotation.Cross(_Vertices[i].Position, _Vertices[i - 1].Position), _Temp)) < 180)
+                    _Indices.Add(0); _Indices.Add((uint)i - 1); _Indices.Add((uint)i);
+                    if (Mathematics.Math_of_Rotation.RoundAngle(Mathematics.Math_of_Rotation.Radians_between(Mathematics.Math_of_Rotation.Cross(_Vertices[i].Position - _StartPos, _Vertices[i - 1].Position - _StartPos), _Temp)) <= 180)
                     {
-                        _Indices.Add(0); _Indices.Add((uint)i - 1); _Indices.Add((uint)i);
+                        
                     }
                     else
                     {
-                        _Indices.Add(0); _Indices.Add((uint)i); _Indices.Add((uint)i - 1);
+                        //_Indices.Add(0); _Indices.Add((uint)i); _Indices.Add((uint)i - 1);
                     }
                 }
             }
@@ -205,25 +198,18 @@ namespace LittleWormEngine.Renderer
             {
                 _SectorAngle = i * _SectorStep;
                 Vector3 _Temp_Vec3 = new Vector3((float)Math.Cos(_SectorAngle) * _Radius, (float)Math.Sin(_SectorAngle) * _Radius, 0);
-                float _Temp_AngleZ, _Temp_AngleY, _Temp_AngleZ2;
 
-                _Temp_AngleZ = (float)Mathematics.Math_of_Rotation.ZAngle_between(_Temp, Vector3.Backward);
-                _Temp_Vec3 *= Matrix3.RotateZ(_Temp_AngleZ);
-                _Temp_AngleY = (float)Mathematics.Math_of_Rotation.YAngle_between(_Temp, Matrix3.RotateZ(_Temp_AngleZ) * Vector3.Backward);
-                _Temp_Vec3 *= Matrix3.RotateY(_Temp_AngleY);
-                _Temp_AngleZ2 = (float)Mathematics.Math_of_Rotation.ZAngle_between(_Temp, Matrix3.RotateY(_Temp_AngleY) * Matrix3.RotateZ(_Temp_AngleZ) * Vector3.Backward);
-                _Temp_Vec3 *= Matrix3.RotateZ(_Temp_AngleZ2);
-
-                _Vertices.Add(new Vertex(_Temp_Vec3 + _EndPos));
+                _Vertices.Add(new Vertex(Mathematics.Math_of_Rotation.EulerRotate(_Temp_Vec3, Vector3.Backward, _Temp) + _EndPos));
                 if (i >= 2)
                 {
-                    if (Mathematics.Math_of_Rotation.RoundAngle(Mathematics.Math_of_Rotation.Angle_between(Mathematics.Math_of_Rotation.Cross(_Vertices[i].Position, _Vertices[i - 1].Position), _Temp)) < 180)
+                    _Indices.Add((uint)_Origin_Index); _Indices.Add((uint)i); _Indices.Add((uint)i - 1);
+                    if (Mathematics.Math_of_Rotation.RoundAngle(Mathematics.Math_of_Rotation.Radians_between(Mathematics.Math_of_Rotation.Cross(_Vertices[i].Position - _EndPos, _Vertices[i - 1].Position - _EndPos), _Temp)) <= 180)
                     {
-                        _Indices.Add((uint)_Origin_Index); _Indices.Add((uint)i); _Indices.Add((uint)i - 1);
+                        
                     }
                     else
                     {
-                        _Indices.Add((uint)_Origin_Index); _Indices.Add((uint)i - 1); _Indices.Add((uint)i);
+                        //_Indices.Add((uint)_Origin_Index); _Indices.Add((uint)i - 1); _Indices.Add((uint)i);
                     }
                 }
             }
@@ -234,6 +220,14 @@ namespace LittleWormEngine.Renderer
                 _Indices.Add((uint)j - 1); _Indices.Add((uint)i); _Indices.Add((uint)i - 1);
             }
 
+            /*
+            for (int i = 2, j = _Temp_Vertices_Num + 1; i <= _SectorCount + 1; i++, j++)
+            {
+                _Indices.Add((uint)i); _Indices.Add((uint)j - 1); _Indices.Add((uint)j);
+                _Indices.Add((uint)j - 1); _Indices.Add((uint)i); _Indices.Add((uint)i - 1);
+            }
+            */
+
             return new MeshData(_Vertices, _Indices);
         }
 
@@ -241,16 +235,10 @@ namespace LittleWormEngine.Renderer
         {
             MeshData _Temp = new MeshData();
             Vector3 _StartPoint, _EndPoint, _InisPoint;
-            Vector3 _OffSet = _Center + Vector3.Up * _Radius;
+            Vector3 _OffSet =  Vector3.Up * _Radius;
             _InisPoint = _OffSet;
-            float _Temp_Angle;
 
-            _Temp_Angle = (float)Mathematics.Math_of_Rotation.ZAngle_between(_Direction, Vector3.Backward);
-            _InisPoint *= Matrix3.RotateZ(_Temp_Angle);
-            _Temp_Angle = (float)Mathematics.Math_of_Rotation.YAngle_between(Matrix3.RotateZ(_Temp_Angle) * _Direction, Vector3.Backward);
-            _InisPoint *= Matrix3.RotateY(_Temp_Angle);
-            _Temp_Angle = (float)Mathematics.Math_of_Rotation.XAngle_between(Matrix3.RotateY(_Temp_Angle) * (Matrix3.RotateZ(_Temp_Angle) * _Direction), Vector3.Backward);
-            _InisPoint *= Matrix3.RotateX(_Temp_Angle);
+            _InisPoint = Mathematics.Math_of_Rotation.EulerRotate(_InisPoint, Vector3.Backward, _Direction);
             _StartPoint = _InisPoint;
 
             for (int i = 0; i < _Slices * _RoundNum; i++)
@@ -262,18 +250,22 @@ namespace LittleWormEngine.Renderer
                 else
                 {
                     _EndPoint = Matrix3.RotateZ(360 / _Slices * (i + 1)) * _OffSet;
-                    _Temp_Angle = (float)Mathematics.Math_of_Rotation.ZAngle_between(_Direction, Vector3.Backward);
-                    _EndPoint *= Matrix3.RotateZ(_Temp_Angle);
-                    _Temp_Angle = (float)Mathematics.Math_of_Rotation.YAngle_between(Matrix3.RotateZ(_Temp_Angle) * _Direction, Vector3.Backward);
-                    _EndPoint *= Matrix3.RotateY(_Temp_Angle);
-                    _Temp_Angle = (float)Mathematics.Math_of_Rotation.XAngle_between(Matrix3.RotateY(_Temp_Angle) * (Matrix3.RotateZ(_Temp_Angle) * _Direction), Vector3.Backward);
-                    _EndPoint *= Matrix3.RotateX(_Temp_Angle);
+
+                    _EndPoint = Mathematics.Math_of_Rotation.EulerRotate(_EndPoint, Vector3.Backward, _Direction);
                 }
-                _Temp.Add_MeshData(Get_LineMesh(_StartPoint, _EndPoint, _Scaler));
+                /*
+                if(i == 0)
+                {
+                    De = true;
+                    _Temp.Add_MeshData(Get_LineMesh(new Vector3(0,0,0), new Vector3(-2, -1, -1), _Scaler * 3));
+                }
+                */
+                _Temp.Add_MeshData(Get_LineMesh(_StartPoint + _Center, _EndPoint + _Center, _Scaler));
                 _StartPoint = _EndPoint;
             }
             return _Temp;
         }
+        //public static bool De = false;
 
     }
 }
