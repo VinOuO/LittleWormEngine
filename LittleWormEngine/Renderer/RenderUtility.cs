@@ -181,14 +181,6 @@ namespace LittleWormEngine.Renderer
                 if (i >= 2)
                 {
                     _Indices.Add(0); _Indices.Add((uint)i - 1); _Indices.Add((uint)i);
-                    if (Mathematics.Math_of_Rotation.RoundAngle(Mathematics.Math_of_Rotation.Radians_between(Mathematics.Math_of_Rotation.Cross(_Vertices[i].Position - _StartPos, _Vertices[i - 1].Position - _StartPos), _Temp)) <= 180)
-                    {
-                        
-                    }
-                    else
-                    {
-                        //_Indices.Add(0); _Indices.Add((uint)i); _Indices.Add((uint)i - 1);
-                    }
                 }
             }
 
@@ -203,14 +195,7 @@ namespace LittleWormEngine.Renderer
                 if (i >= 2)
                 {
                     _Indices.Add((uint)_Origin_Index); _Indices.Add((uint)i); _Indices.Add((uint)i - 1);
-                    if (Mathematics.Math_of_Rotation.RoundAngle(Mathematics.Math_of_Rotation.Radians_between(Mathematics.Math_of_Rotation.Cross(_Vertices[i].Position - _EndPos, _Vertices[i - 1].Position - _EndPos), _Temp)) <= 180)
-                    {
-                        
-                    }
-                    else
-                    {
-                        //_Indices.Add((uint)_Origin_Index); _Indices.Add((uint)i - 1); _Indices.Add((uint)i);
-                    }
+
                 }
             }
 
@@ -220,18 +205,137 @@ namespace LittleWormEngine.Renderer
                 _Indices.Add((uint)j - 1); _Indices.Add((uint)i); _Indices.Add((uint)i - 1);
             }
 
-            /*
-            for (int i = 2, j = _Temp_Vertices_Num + 1; i <= _SectorCount + 1; i++, j++)
+            return new MeshData(_Vertices, _Indices);
+        }
+
+        public static MeshData Get_PipeMesh(List<Vector3> _Points, float _Radius)
+        {
+            int _SectorCount = 100;
+            float _SectorStep = 2 * (float)Math.PI / _SectorCount;
+            float _SectorAngle;
+
+            List<Vertex> _Vertices = new List<Vertex>();
+            List<uint> _Indices = new List<uint>();
+
+            int _Temp_Vertices_Num1 = 0;
+            int _Temp_Vertices_Num2 = 0;
+            for (int p = 0; p < _Points.Count; p++)
             {
-                _Indices.Add((uint)i); _Indices.Add((uint)j - 1); _Indices.Add((uint)j);
-                _Indices.Add((uint)j - 1); _Indices.Add((uint)i); _Indices.Add((uint)i - 1);
+                Vector3 _Temp;
+                if (p == 0)
+                {
+                    _Temp = (_Points[p + 1] - _Points[_Points.Count - 1]) / 2;
+                }
+                else if(p == _Points.Count - 1)
+                {
+                    _Temp = (_Points[0] - _Points[p - 1]) / 2;
+                }
+                else
+                {
+                    _Temp = (_Points[p + 1] - _Points[p - 1]) /2;
+                }
+                
+                _Vertices.Add(new Vertex(new Vector3(_Points[p])));
+
+                int _Temp_Vertices_Num = _Vertices.Count;
+
+                if (p % 2 == 0)
+                {
+                    _Temp_Vertices_Num1 = _Vertices.Count;
+                }
+                else
+                {
+                    _Temp_Vertices_Num2 = _Vertices.Count;
+                }
+
+                for (int i = _Temp_Vertices_Num, _Origin_Index = _Temp_Vertices_Num - 1; i <= _SectorCount + _Temp_Vertices_Num; i++)
+                {
+                    _SectorAngle = i * _SectorStep;
+                    Vector3 _Temp_Vec3 = new Vector3((float)Math.Cos(_SectorAngle) * _Radius, (float)Math.Sin(_SectorAngle) * _Radius, 0);
+
+                    _Vertices.Add(new Vertex(Mathematics.Math_of_Rotation.BackwardBasedRotate(_Temp_Vec3, _Temp) + _Points[p]));
+                }
+
+                if (p > 0)
+                {
+                    if(p % 2 == 0)
+                    {
+                        for (int i = _Temp_Vertices_Num1, j = _Temp_Vertices_Num2; i < _Temp_Vertices_Num1 + _SectorCount; i++, j++)
+                        {
+                            _Indices.Add((uint)j); _Indices.Add((uint)i); _Indices.Add((uint)i + 1);
+                            _Indices.Add((uint)i + 1); _Indices.Add((uint)j + 1); _Indices.Add((uint)j);
+                        }
+                    }
+                    else
+                    {
+                        for (int i = _Temp_Vertices_Num1, j = _Temp_Vertices_Num2; i < _Temp_Vertices_Num1 + _SectorCount; i++, j++)
+                        {
+                            _Indices.Add((uint)i); _Indices.Add((uint)j); _Indices.Add((uint)j + 1);
+                            _Indices.Add((uint)j + 1); _Indices.Add((uint)i + 1); _Indices.Add((uint)i);
+                        }
+                    }
+                    if (p == _Points.Count - 2)
+                    {
+                        if ((p + 1) % 2 == 0)
+                        {
+                            int i = _Temp_Vertices_Num2, j = 61;
+                            bool _Finished = false;
+                            while (!_Finished)
+                            {
+                                if (i + 1 >= _Vertices.Count)
+                                {
+                                    i = _Temp_Vertices_Num1;
+                                }
+                                if (j >= 101)
+                                {
+                                    j = 1;
+                                }
+                                _Indices.Add((uint)j); _Indices.Add((uint)i + 1); _Indices.Add((uint)i);
+                                _Indices.Add((uint)i + 1); _Indices.Add((uint)j); _Indices.Add((uint)j + 1);
+
+                                j++;
+                                i++;
+
+                                if (j == 61)
+                                {
+                                    _Finished = true;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            int i = _Temp_Vertices_Num1, j = 61;
+                            bool _Finished = false;
+                            while (!_Finished)
+                            {
+                                if (i + 1 >= _Vertices.Count)
+                                {
+                                    i = _Temp_Vertices_Num1;
+                                }
+                                if (j >= 101)
+                                {
+                                    j = 1;
+                                }
+                                _Indices.Add((uint)j);  _Indices.Add((uint)i + 1); _Indices.Add((uint)i);
+                                _Indices.Add((uint)i + 1); _Indices.Add((uint)j); _Indices.Add((uint)j + 1);
+
+                                j++;
+                                i++;
+                                
+                                if(j == 61)
+                                {
+                                    _Finished = true;
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            */
 
             return new MeshData(_Vertices, _Indices);
         }
 
-        public static MeshData Get_RingMesh(Vector3 _Center, Vector3 _Direction, float _Radius, int _Slices, float _Scaler, float _RoundNum)
+        public static MeshData Get_RingMeshL(Vector3 _Center, Vector3 _Direction, float _Radius, int _Slices, float _Scaler, float _RoundNum)
         {
             MeshData _Temp = new MeshData();
             Vector3 _StartPoint, _EndPoint, _InisPoint;
@@ -253,19 +357,47 @@ namespace LittleWormEngine.Renderer
 
                     _EndPoint = Mathematics.Math_of_Rotation.BackwardBasedRotate(_EndPoint, _Direction);
                 }
-                /*
-                if(i == 0)
-                {
-                    De = true;
-                    _Temp.Add_MeshData(Get_LineMesh(new Vector3(0,0,0), new Vector3(-2, -1, -1), _Scaler * 3));
-                }
-                */
                 _Temp.Add_MeshData(Get_LineMesh(_StartPoint + _Center, _EndPoint + _Center, _Scaler));
                 _StartPoint = _EndPoint;
             }
             return _Temp;
         }
-        //public static bool De = false;
+
+        public static MeshData Get_RingMesh(Vector3 _Center, Vector3 _Direction, float _Radius, int _Slices, float _Scaler, float _RoundNum)
+        {
+            List<Vector3> _Points = new List<Vector3>();
+            MeshData _Temp = new MeshData();
+            Vector3 _StartPoint, _EndPoint, _InisPoint;
+            Vector3 _OffSet = Vector3.Up * _Radius;
+            _InisPoint = _OffSet;
+
+            _InisPoint = Mathematics.Math_of_Rotation.BackwardBasedRotate(_InisPoint, _Direction);
+            _StartPoint = _InisPoint;
+            
+            for (int i = 0; i < _Slices * _RoundNum; i++)
+            {
+                if (i == _Slices - 1)
+                {
+                    _EndPoint = _InisPoint;
+                }
+                else
+                {
+                    _EndPoint = Matrix3.RotateZ(360 / _Slices * i) * _OffSet;
+
+                    _EndPoint = Mathematics.Math_of_Rotation.BackwardBasedRotate(_EndPoint, _Direction);
+                }
+                //_Points.Add(_StartPoint + _Center);
+                _Points.Add(_EndPoint + _Center);
+            }
+            /*
+            Debug.Log(_Points[0]);
+            Debug.Log(_Points[1]);
+            Debug.Log(_Points[2]);
+            Debug.Log(_Points[3]);
+            */
+            _Temp.Add_MeshData(Get_PipeMesh(_Points, _Scaler)); 
+            return _Temp;
+        }
 
     }
 }
