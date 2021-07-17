@@ -189,8 +189,7 @@ namespace LittleWormEngine
         protected override BulletSharp.CollisionShape Create_Shape()
         {
             return PhysicsWorld.Create_BoxShape(HalfSize);
-        }
-
+        }        
         protected override Mesh ColliderMesh()
         {
             Mesh _Mesh = new Mesh();
@@ -210,10 +209,9 @@ namespace LittleWormEngine
                     }
                 }
             }
-            _Temp.Add_MeshData(RenderUtility.Get_RingMesh(Vector3.Up * 2, new Vector3(0,0,-1), 2, 20, _Scaler * 3, 1f));
             _Mesh.AddVertices(_Temp.Vertices, _Temp.Indices);
-
             return _Mesh;
         }
+        
     }
 }

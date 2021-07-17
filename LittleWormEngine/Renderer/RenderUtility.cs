@@ -227,15 +227,15 @@ namespace LittleWormEngine.Renderer
                     Vector3 _Temp;
                     if (p == 0)
                     {
-                        _Temp = (_Points[1] - _Points[_Points.Count - 1]) / 2;
+                        _Temp = _Points[1] - _Points[_Points.Count - 1];
                     }
                     else if(p == _Points.Count - 1)
                     {
-                        _Temp = (_Points[0] - _Points[_Points.Count - 2]) / 2;
+                        _Temp = _Points[0] - _Points[_Points.Count - 2];
                     }
                     else
                     {
-                        _Temp = (_Points[p + 1] - _Points[p - 1]) / 2;
+                        _Temp = _Points[p + 1] - _Points[p - 1];
                     }
                     _Vertices.Add(new Vertex(new Vector3(_Points[p])));
                     int _Temp_Vertices_Num = _Vertices.Count;
@@ -365,6 +365,79 @@ namespace LittleWormEngine.Renderer
 
             return new MeshData(_Vertices, _Indices);
         }
+
+        public static MeshData Get_OpenedPipeMesh(List<Vector3> _Points, float _Radius, bool _HaveCap)
+        {
+            int _SectorCount = 100;
+            float _SectorStep = 2 * (float)Math.PI / _SectorCount;
+            float _SectorAngle;
+
+            List<Vertex> _Vertices = new List<Vertex>();
+            List<uint> _Indices = new List<uint>();
+
+            int _Temp_Vertices_Num1 = 0;
+            int _Temp_Vertices_Num2 = 0;
+
+            for (int p = 0; p < _Points.Count - 1; p++)
+            {
+                if (p < _Points.Count)
+                {
+                    Vector3 _Temp;
+                    if (p == 0)
+                    {
+                        _Temp = _Points[1] - _Points[0];
+                    }
+                    else if (p == _Points.Count - 2)
+                    {
+                        _Temp = _Points[_Points.Count - 1] - _Points[_Points.Count - 2];
+                    }
+                    else
+                    {
+                        _Temp = _Points[p + 1] - _Points[p - 1];
+                    }
+                                    
+                    if (p > 1 )
+                    {
+                        _Vertices.Add(new Vertex(new Vector3(_Points[p])));
+                        int _Temp_Vertices_Num = _Vertices.Count;
+
+                        if (p % 2 == 0)
+                        {
+                            _Temp_Vertices_Num1 = _Vertices.Count;
+                        }
+                        else
+                        {
+                            _Temp_Vertices_Num2 = _Vertices.Count;
+                        }
+                        for (int i = _Temp_Vertices_Num; i <= _SectorCount + _Temp_Vertices_Num; i++)
+                        {
+                            _SectorAngle = i * _SectorStep;
+                            Vector3 _Temp_Vec3 = new Vector3((float)Math.Cos(_SectorAngle) * _Radius, (float)Math.Sin(_SectorAngle) * _Radius, 0);
+
+                            _Vertices.Add(new Vertex(Mathematics.Math_of_Rotation.BackwardBasedRotate(_Temp_Vec3, _Temp) + _Points[p]));
+                        }
+                        if (p % 2 == 0)
+                        {
+                            for (int i = _Temp_Vertices_Num1, j = _Temp_Vertices_Num2; i < _Temp_Vertices_Num1 + _SectorCount; i++, j++)
+                            {
+                                _Indices.Add((uint)j); _Indices.Add((uint)i); _Indices.Add((uint)i + 1);
+                                _Indices.Add((uint)i + 1); _Indices.Add((uint)j + 1); _Indices.Add((uint)j);
+                            }
+                        }
+                        else
+                        {
+                            for (int i = _Temp_Vertices_Num1, j = _Temp_Vertices_Num2; i < _Temp_Vertices_Num1 + _SectorCount; i++, j++)
+                            {
+                                _Indices.Add((uint)i); _Indices.Add((uint)j); _Indices.Add((uint)j + 1);
+                                _Indices.Add((uint)j + 1); _Indices.Add((uint)i + 1); _Indices.Add((uint)i);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return new MeshData(_Vertices, _Indices);
+        }
         #region Old Method, Use Lines to form a Ring.
         public static MeshData __Old__Get_RingMesh(Vector3 _Center, Vector3 _Direction, float _Radius, int _Slices, float _Scaler, float _RoundNum)
         {
@@ -400,15 +473,33 @@ namespace LittleWormEngine.Renderer
             List<Vector3> _Points = new List<Vector3>();
             MeshData _Temp = new MeshData();
             Vector3 _Point;
-            Vector3 _OffSet = Vector3.Up * _Radius;
+            Vector3 _OffSet = Vector3.Right * _Radius;
 
-            for (int i = 0; i < _Slices * _RoundNum; i++)
+            for (int i = -2; i <= _Slices * _RoundNum + 1; i++)
             {
                 _Point = Matrix3.RotateZ(360 / _Slices * i) * _OffSet;
                 _Point = Mathematics.Math_of_Rotation.BackwardBasedRotate(_Point, _Direction);
                 _Points.Add(_Point + _Center);
             }
-            _Temp.Add_MeshData(Get_ClosedPipeMesh(_Points, _Scaler)); 
+            _Temp.Add_MeshData(Get_OpenedPipeMesh(_Points, _Scaler, false)); 
+            return _Temp;
+        }
+
+        public static MeshData Get_HalfRingMesh(Vector3 _Center, Vector3 _Direction, float _Radius, int _Slices, float _Scaler, bool _Flip)
+        {
+            List<Vector3> _Points = new List<Vector3>();
+            MeshData _Temp = new MeshData();
+            Vector3 _Point;
+            Vector3 _OffSet = (_Flip ? Vector3.Left : Vector3.Right) * _Radius;
+
+            for (int i = -2; i <= _Slices * 0.5f + 1; i++)
+            {
+                _Point = Matrix3.RotateZ(360 / _Slices * i) * _OffSet;
+                _Point = Mathematics.Math_of_Rotation.BackwardBasedRotate(_Point, _Direction);
+                _Points.Add(_Point + _Center);
+            }
+
+            _Temp.Add_MeshData(Get_OpenedPipeMesh(_Points, _Scaler, false));
             return _Temp;
         }
 
