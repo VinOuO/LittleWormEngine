@@ -47,15 +47,26 @@ namespace LittleWormEngine.Mathematics
             float _Radians = (float)(Math.Acos(_VectorA * _VectorB));
             return _Radians;
         }
-
+        /*
         public static float BackwardBased_Radiansof(Vector3 _VectorTo)
         {
-            float _Angle = Radians_between(Vector3.Backward, _VectorTo);
+            float _Radians = Radians_between(Vector3.Backward, _VectorTo);
             if (_VectorTo.z >= 0)
             {
-                return (float)(2 * Math.PI - _Angle);
+                return (float)(2 * Math.PI - _Radians);
             }
-            return _Angle;
+            return _Radians;
+        }
+        */
+        public static Vector3 BackwardBasedRotate(Vector3 _Vector, Vector3 _AxisTo, Vector3 _SupportAxis)
+        {
+            float _RotateRadians = Radians_between(_AxisTo, Vector3.Backward);
+            _AxisTo = _AxisTo.Normalize();
+            if (Math.Round(Angle_of(_RotateRadians)) == 0 || Math.Round(Angle_of(_RotateRadians)) == 180)
+            {
+                return Matrix3.Rotate(_SupportAxis, _RotateRadians) * _Vector;
+            }
+            return Matrix3.Rotate(Cross(Vector3.Backward, _AxisTo).Normalize(), _RotateRadians) * _Vector;
         }
 
         public static Vector3 BackwardBasedRotate(Vector3 _Vector, Vector3 _AxisTo)
@@ -63,13 +74,16 @@ namespace LittleWormEngine.Mathematics
             float _RotateRadians = Radians_between(_AxisTo, Vector3.Backward);
             _AxisTo = _AxisTo.Normalize();
 
-            if (Math.Round(Angle_of(_RotateRadians)) == 0)
+            if (Math.Round(Angle_of(_RotateRadians)) == 0 || Math.Round(Angle_of(_RotateRadians)) == 180)
             {
-                return _Vector;
-            }
-            else if (Math.Round(Angle_of(_RotateRadians)) == 180)
-            {
-                return -_Vector;
+                if(_AxisTo.z == Vector3.Backward.z)
+                {
+                    return _Vector;
+                }
+                else
+                {
+                    return -_Vector;
+                }
             }
 
             return Matrix3.Rotate(Cross(Vector3.Backward, _AxisTo).Normalize(), _RotateRadians) * _Vector;

@@ -207,8 +207,8 @@ namespace LittleWormEngine.Renderer
 
             return new MeshData(_Vertices, _Indices);
         }
-
-        public static MeshData Get_ClosedPipeMesh(List<Vector3> _Points, float _Radius)
+        public static bool De = false;
+        public static MeshData Get_ClosedCirclePipeMesh(List<Vector3> _Points, float _Radius, Vector3 _SuppoutAxis)
         {
             int _SectorCount = 100;
             float _SectorStep = 2 * (float)Math.PI / _SectorCount;
@@ -253,10 +253,10 @@ namespace LittleWormEngine.Renderer
                     {
                         _SectorAngle = i * _SectorStep;
                         Vector3 _Temp_Vec3 = new Vector3((float)Math.Cos(_SectorAngle) * _Radius, (float)Math.Sin(_SectorAngle) * _Radius, 0);
-
-                        _Vertices.Add(new Vertex(Mathematics.Math_of_Rotation.BackwardBasedRotate(_Temp_Vec3, _Temp) + _Points[p]));
+                        _Vertices.Add(new Vertex(Mathematics.Math_of_Rotation.BackwardBasedRotate(_Temp_Vec3, _Temp, _SuppoutAxis) + _Points[p]));
                     }
-                    if(p > 0)
+
+                    if (p > 0)
                     {
                         if (p % 2 == 0)
                         {
@@ -293,7 +293,7 @@ namespace LittleWormEngine.Renderer
                                 _MinIndex = _i;
                             }
                         }
-                        Debug.Log("Index: " + _MinIndex);
+
                         i = _MinIndex;
 
                         bool _Finished = false;
@@ -366,7 +366,7 @@ namespace LittleWormEngine.Renderer
             return new MeshData(_Vertices, _Indices);
         }
 
-        public static MeshData Get_OpenedPipeMesh(List<Vector3> _Points, float _Radius, bool _HaveCap)
+        public static MeshData Get_OpenedPipeMesh(List<Vector3> _Points, float _Radius, Vector3 _SuppoutAxis, bool _HaveCap)
         {
             int _SectorCount = 100;
             float _SectorStep = 2 * (float)Math.PI / _SectorCount;
@@ -396,7 +396,7 @@ namespace LittleWormEngine.Renderer
                         _Temp = _Points[p + 1] - _Points[p - 1];
                     }
                                     
-                    if (p > 1 )
+                    if (p > 1)
                     {
                         _Vertices.Add(new Vertex(new Vector3(_Points[p])));
                         int _Temp_Vertices_Num = _Vertices.Count;
@@ -413,8 +413,7 @@ namespace LittleWormEngine.Renderer
                         {
                             _SectorAngle = i * _SectorStep;
                             Vector3 _Temp_Vec3 = new Vector3((float)Math.Cos(_SectorAngle) * _Radius, (float)Math.Sin(_SectorAngle) * _Radius, 0);
-
-                            _Vertices.Add(new Vertex(Mathematics.Math_of_Rotation.BackwardBasedRotate(_Temp_Vec3, _Temp) + _Points[p]));
+                            _Vertices.Add(new Vertex(Mathematics.Math_of_Rotation.BackwardBasedRotate(_Temp_Vec3, _Temp, _SuppoutAxis) + _Points[p]));
                         }
                         if (p % 2 == 0)
                         {
@@ -468,24 +467,24 @@ namespace LittleWormEngine.Renderer
         }
         #endregion
 
-        public static MeshData Get_RingMesh(Vector3 _Center, Vector3 _Direction, float _Radius, int _Slices, float _Scaler, float _RoundNum)
+        public static MeshData Get_RingMesh(Vector3 _Center, Vector3 _Direction, Vector3 _SuppoutAxis, float _Radius, int _Slices, float _Scaler, float _RoundNum)
         {
             List<Vector3> _Points = new List<Vector3>();
             MeshData _Temp = new MeshData();
             Vector3 _Point;
             Vector3 _OffSet = Vector3.Right * _Radius;
 
-            for (int i = -2; i <= _Slices * _RoundNum + 1; i++)
+            for (int i = 0; i < _Slices * _RoundNum; i++)
             {
                 _Point = Matrix3.RotateZ(360 / _Slices * i) * _OffSet;
                 _Point = Mathematics.Math_of_Rotation.BackwardBasedRotate(_Point, _Direction);
                 _Points.Add(_Point + _Center);
             }
-            _Temp.Add_MeshData(Get_OpenedPipeMesh(_Points, _Scaler, false)); 
+            _Temp.Add_MeshData(Get_ClosedCirclePipeMesh(_Points, _Scaler, _SuppoutAxis)); 
             return _Temp;
         }
 
-        public static MeshData Get_HalfRingMesh(Vector3 _Center, Vector3 _Direction, float _Radius, int _Slices, float _Scaler, bool _Flip)
+        public static MeshData Get_HalfRingMesh(Vector3 _Center, Vector3 _Direction, Vector3 _SuppoutAxis, float _Radius, int _Slices, float _Scaler, bool _Flip)
         {
             List<Vector3> _Points = new List<Vector3>();
             MeshData _Temp = new MeshData();
@@ -499,7 +498,7 @@ namespace LittleWormEngine.Renderer
                 _Points.Add(_Point + _Center);
             }
 
-            _Temp.Add_MeshData(Get_OpenedPipeMesh(_Points, _Scaler, false));
+            _Temp.Add_MeshData(Get_OpenedPipeMesh(_Points, _Scaler, _SuppoutAxis, false));
             return _Temp;
         }
 

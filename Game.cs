@@ -11,6 +11,7 @@ class Game
 {
     public static void Start()
     {
+        GameObject.Find("TestObj").AddComponent<CapsuleCollider>();
         /*
         GameObject Collider_Mesh = new GameObject("TestObj");
         Collider_Mesh.AddComponent<Transform>();

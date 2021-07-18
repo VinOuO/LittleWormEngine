@@ -78,18 +78,19 @@ namespace LittleWormEngine
             Mesh _Mesh = new Mesh();
             RenderUtility.MeshData _Temp = new RenderUtility.MeshData();
             float _Scaler = 0.05f;
-            _Temp.Add_MeshData(RenderUtility.Get_HalfRingMesh(Vector3.Up * RadiusHeight.y / 2, Vector3.Backward, RadiusHeight.x, 20, _Scaler, false));
+
+            _Temp.Add_MeshData(RenderUtility.Get_HalfRingMesh(Vector3.Up * RadiusHeight.y / 2, Vector3.Backward, Vector3.Up, RadiusHeight.x, 20, _Scaler, false));
             _Temp.Add_MeshData(RenderUtility.Get_LineMesh(Vector3.Up * RadiusHeight.y / 2 + Vector3.Left * RadiusHeight.x, Vector3.Down * RadiusHeight.y / 2 + Vector3.Left * RadiusHeight.x, 1f * _Scaler));
             _Temp.Add_MeshData(RenderUtility.Get_LineMesh(Vector3.Up * RadiusHeight.y / 2 + Vector3.Right * RadiusHeight.x, Vector3.Down * RadiusHeight.y / 2 + Vector3.Right * RadiusHeight.x, 1f * _Scaler));
-            _Temp.Add_MeshData(RenderUtility.Get_HalfRingMesh(Vector3.Down * RadiusHeight.y / 2, Vector3.Forward, RadiusHeight.x, 20, _Scaler, false));
+            _Temp.Add_MeshData(RenderUtility.Get_HalfRingMesh(Vector3.Down * RadiusHeight.y / 2, Vector3.Forward, Vector3.Up, RadiusHeight.x, 20, _Scaler, false));
 
-            _Temp.Add_MeshData(RenderUtility.Get_HalfRingMesh(Vector3.Up * RadiusHeight.y / 2, Vector3.Left, RadiusHeight.x, 20, _Scaler, false));
+            _Temp.Add_MeshData(RenderUtility.Get_HalfRingMesh(Vector3.Up * RadiusHeight.y / 2, Vector3.Left, Vector3.Right, RadiusHeight.x, 20, _Scaler, false));
             _Temp.Add_MeshData(RenderUtility.Get_LineMesh(Vector3.Up * RadiusHeight.y / 2 + Vector3.Backward * RadiusHeight.x, Vector3.Down * RadiusHeight.y / 2 + Vector3.Backward * RadiusHeight.x, 1f * _Scaler));
             _Temp.Add_MeshData(RenderUtility.Get_LineMesh(Vector3.Up * RadiusHeight.y / 2 + Vector3.Forward * RadiusHeight.x, Vector3.Down * RadiusHeight.y / 2 + Vector3.Forward * RadiusHeight.x, 1f * _Scaler));
-            _Temp.Add_MeshData(RenderUtility.Get_HalfRingMesh(Vector3.Down * RadiusHeight.y / 2, Vector3.Right, RadiusHeight.x, 20, _Scaler, true));
+            _Temp.Add_MeshData(RenderUtility.Get_HalfRingMesh(Vector3.Down * RadiusHeight.y / 2, Vector3.Right, Vector3.Right, RadiusHeight.x, 20, _Scaler, true));
 
-            _Temp.Add_MeshData(RenderUtility.Get_RingMesh(Vector3.Down * RadiusHeight.y / 2, Vector3.Up, RadiusHeight.x, 20, _Scaler, 1f));
-            _Temp.Add_MeshData(RenderUtility.Get_RingMesh(Vector3.Up * RadiusHeight.y / 2, Vector3.Up, RadiusHeight.x, 20, _Scaler, 1f));
+            _Temp.Add_MeshData(RenderUtility.Get_RingMesh(Vector3.Down * RadiusHeight.y / 2, Vector3.Up, Vector3.Up, RadiusHeight.x, 20, _Scaler, 1f));
+            _Temp.Add_MeshData(RenderUtility.Get_RingMesh(Vector3.Up * RadiusHeight.y / 2, Vector3.Up, Vector3.Up, RadiusHeight.x, 20, _Scaler, 1f));
 
             _Mesh.AddVertices(_Temp.Vertices, _Temp.Indices);
 
