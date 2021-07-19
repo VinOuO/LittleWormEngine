@@ -27,16 +27,32 @@ namespace LittleWormEngine
         }
 
 
-
-        public Vector3 Position { get; set; }
+        Vector3 position;
+        public Vector3 Position { get { return position; } set { Set_ColliderPos(value); position = value; } }
         public Vector3 Rotation { get; set; }
         public Vector3 Scale { get; set; }
         public Transform()
         {
             Tag = "Normal";
-            Position = Vector3.Zero;
+            OnlySet_Position(Vector3.Zero);
             Rotation = Vector3.Zero;
             Scale = Vector3.One;
+        }
+
+        public void OnlySet_Position(Vector3 _Pos)
+        {
+            position = _Pos;
+        }
+
+        public void Set_ColliderPos(Vector3 _Pos)
+        {
+            if(Attaching_GameObject != null)
+            {
+                if (Attaching_GameObject.ColliderComponent != null)
+                {
+                    Attaching_GameObject.ColliderComponent.Set_Position(_Pos);
+                }
+            }
         }
 
         public Matrix4 GetTransform(Vector3 _OffSet)

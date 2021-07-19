@@ -13,6 +13,7 @@ namespace LittleWormEngine
         public List<GameObject> CollidingGameObjectsForPhysicsThread = new List<GameObject>();
         public List<Component> Components = new List<Component>();
         public List<CustomComponent> CustomComponents = new List<CustomComponent>();
+        public Collider ColliderComponent;
 
         public Transform transform { get { return GetComponent<Transform>(); } }
 

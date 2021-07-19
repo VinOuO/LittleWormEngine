@@ -19,11 +19,19 @@ class Test_Mesh : DesignerProgram
         GetComponent<Transform>().Position.x = 0;
         */
         //GetComponent<BoxCollider>().Attaching_Rigibody.Set_Static();
+        Attaching_GameObject.transform.Position = Vector3.Zero;
     }
-
+    Vector3 Povit = Vector3.Zero;
     override public void Update()
     {
-        
+        if (Input.GetKey(KeyCode.H))
+        {
+            GameObject _Temp = PhysicsWorld.RayCastHitGameObject(Vector3.Up * 100 + Povit, Vector3.Down * 100 + Povit);
+            if (_Temp != null)
+            {
+                Debug.Log("Has Hit: " + _Temp.Name);
+            }
+        }
         if (Input.GetKey(KeyCode.E))
         {
             GetComponent<Transform>().Position.z -= 2f * Time.DeltaTime;

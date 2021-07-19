@@ -30,7 +30,7 @@ namespace LittleWormEngine
         ///the default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded)
         static SequentialImpulseConstraintSolver solver;// = new SequentialImpulseConstraintSolver();
 
-        static DiscreteDynamicsWorld dynamicsWorld;// = new DiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
+        static DiscreteDynamicsWorld DynamicsWorld;// = new DiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
         static List<CollisionShape> collisionShapes;
 
         public static void Start_Simulation()
@@ -73,10 +73,10 @@ namespace LittleWormEngine
         {
             //dynamicsWorld.ContactPairTest(Get_Rigibody(GameObject.Find("Ashe")), Get_Rigibody(GameObject.Find("Box")), new ContactSensorCallback());
             List<CollisionObject> _Used = new List<CollisionObject>();
-            foreach (CollisionObject _objA in dynamicsWorld.CollisionObjectArray)
+            foreach (CollisionObject _objA in DynamicsWorld.CollisionObjectArray)
             {
                 _Used.Add(_objA);
-                foreach (CollisionObject _objB in dynamicsWorld.CollisionObjectArray)
+                foreach (CollisionObject _objB in DynamicsWorld.CollisionObjectArray)
                 {
                     if (!_Used.Contains(_objB) && _objA != _objB)
                     {
@@ -94,12 +94,12 @@ namespace LittleWormEngine
             dispatcher = new CollisionDispatcher(collisionConfiguration);
             overlappingPairCache = new DbvtBroadphase();
             solver = new SequentialImpulseConstraintSolver();
-            dynamicsWorld = new DiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
+            DynamicsWorld = new DiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
             collisionShapes = new List<CollisionShape>();
             //dynamicsWorld.Broadphase.OverlappingPairCache.SetInternalGhostPairCallback(new GhostPairCallback());
-            dynamicsWorld.PairCache.SetInternalGhostPairCallback(new GhostPairCallback());
+            DynamicsWorld.PairCache.SetInternalGhostPairCallback(new GhostPairCallback());
             //---init
-            dynamicsWorld.Gravity = new BulletSharp.Math.Vector3(0, -5, 0);
+            DynamicsWorld.Gravity = new BulletSharp.Math.Vector3(0, -5, 0);
 
             //---create the ground
             CollisionShape groundShape = new BoxShape(99999999, 10, 10);
@@ -121,7 +121,7 @@ namespace LittleWormEngine
             BulletSharp.RigidBody body = new BulletSharp.RigidBody(rbInfo);
 
             //add the body to the dynamics world
-            dynamicsWorld.AddRigidBody(body);
+            DynamicsWorld.AddRigidBody(body);
             //---create the ground
         }
 
@@ -164,7 +164,7 @@ namespace LittleWormEngine
             RigidBodyConstructionInfo rbInfo = new RigidBodyConstructionInfo(mass, myMotionState, colShape, localInertia);
             BulletSharp.RigidBody body = new BulletSharp.RigidBody(rbInfo);
             body.UserObject = _GameObject;
-            dynamicsWorld.AddRigidBody(body);
+            DynamicsWorld.AddRigidBody(body);
             Rigidbodys.Add(body);
             //---create a dynamic rigidbody
         }
@@ -183,7 +183,7 @@ namespace LittleWormEngine
             GObj.WorldTransform = startTransform;
             GObj.UserObject = _GameObject;
             GObj.CollisionFlags = CollisionFlags.NoContactResponse;
-            dynamicsWorld.AddCollisionObject(GObj, CollisionFilterGroups.SensorTrigger, CollisionFilterGroups.AllFilter & ~CollisionFilterGroups.SensorTrigger);
+            DynamicsWorld.AddCollisionObject(GObj, CollisionFilterGroups.SensorTrigger, CollisionFilterGroups.AllFilter & ~CollisionFilterGroups.SensorTrigger);
             //dynamicsWorld.AddCollisionObject(GObj);
             //---create a Ghost
         }
@@ -215,7 +215,7 @@ namespace LittleWormEngine
             RigidBodyConstructionInfo rbInfo = new RigidBodyConstructionInfo(mass, myMotionState, colShape, localInertia);
             BulletSharp.RigidBody body = new BulletSharp.RigidBody(rbInfo);
             body.UserObject = _GameObject;
-            dynamicsWorld.AddRigidBody(body);
+            DynamicsWorld.AddRigidBody(body);
             Rigidbodys.Add(body);
             //---create a dynamic rigidbody
         }
@@ -234,14 +234,67 @@ namespace LittleWormEngine
             GObj.WorldTransform = startTransform;
             GObj.UserObject = _GameObject;
             GObj.CollisionFlags = CollisionFlags.NoContactResponse;
-            dynamicsWorld.AddCollisionObject(GObj, CollisionFilterGroups.SensorTrigger, CollisionFilterGroups.AllFilter & ~CollisionFilterGroups.SensorTrigger);
+            DynamicsWorld.AddCollisionObject(GObj, CollisionFilterGroups.SensorTrigger, CollisionFilterGroups.AllFilter & ~CollisionFilterGroups.SensorTrigger);
             //dynamicsWorld.AddCollisionObject(GObj);
             //---create a Ghost
         }
 
+        public static GameObject RayCastHitGameObject(Vector3 _From, Vector3 _To)
+        {
+            BulletSharp.Math.Vector3 _TempFrom = Get_Vector(_From * btWorldtoLWWorldScale), _TempTo = Get_Vector(_To * btWorldtoLWWorldScale);
+            ClosestRayResultCallback _Ray = new ClosestRayResultCallback(ref _TempFrom, ref _TempTo);
+            DynamicsWorld.RayTest(_TempFrom, _TempTo, _Ray);
+
+            return _Ray.CollisionObject.UserObject as GameObject;
+        }
+
+        public static bool RayCastHasHit(Vector3 _From, Vector3 _To)
+        {
+            BulletSharp.Math.Vector3 _TempFrom = Get_Vector(_From * btWorldtoLWWorldScale), _TempTo = Get_Vector(_To * btWorldtoLWWorldScale);
+            ClosestRayResultCallback _Ray = new ClosestRayResultCallback(ref _TempFrom, ref _TempTo);
+
+            DynamicsWorld.RayTest(_TempFrom, _TempTo, _Ray);
+            if (_Ray.HasHit)
+            {
+                Debug.Log("From: ", new Vector3(_Ray.HitPointWorld.X, _Ray.HitPointWorld.Y, _Ray.HitPointWorld.Z), 0.0f);
+                if (_Ray.CollisionObject.UserObject != null)
+                    Debug.Log("HasHit: " + (_Ray.CollisionObject.UserObject as GameObject).Name);
+            }
+            return _Ray.HasHit;
+        }
+
+        public static void Set_ObjectPosition(CollisionObject _Obj, Vector3 _Pos)
+        {
+            BulletSharp.Math.Matrix _Transform;
+            _Transform = BulletSharp.Math.Matrix.Identity;
+            _Transform.Origin = Get_Vector(_Pos);
+            _Obj.WorldTransform = _Transform;
+        }
+
+        public static void Set_ObjectPosition(GameObject _Obj, Vector3 _Pos)
+        {
+            BulletSharp.Math.Matrix _Transform;
+            _Transform = BulletSharp.Math.Matrix.Identity;
+            _Transform.Origin = Get_Vector(_Pos * btWorldtoLWWorldScale);
+            Get_CollisionObject(_Obj).WorldTransform = _Transform;
+        }
+        /*
+        public static void Set_ObjectRotation(GameObject _Obj, Vector3 _Rot)
+        {
+            BulletSharp.Math.Matrix _Transform;
+            _Transform = BulletSharp.Math.Matrix.Identity;
+            _Transform.Origin = Get_Vector(_Pos);
+            Get_CollisionObject(_Obj).WorldTransform = _Transform;
+        }
+        */
+        public static BulletSharp.Math.Vector3 Get_Vector(Vector3 _Vec)
+        {
+            return new BulletSharp.Math.Vector3(_Vec.x, _Vec.y, _Vec.z);
+        }
+
         public static CollisionObject Get_CollisionObject(GameObject _GameObject)
         {
-            foreach (CollisionObject _Cobj in dynamicsWorld.CollisionObjectArray)
+            foreach (CollisionObject _Cobj in DynamicsWorld.CollisionObjectArray)
             {
                 if (_Cobj.UserObject == null)
                 {
@@ -257,7 +310,7 @@ namespace LittleWormEngine
 
         public static BulletSharp.RigidBody Get_Rigibody(GameObject _GameObject)
         {
-            foreach(CollisionObject _Cobj in dynamicsWorld.CollisionObjectArray)
+            foreach(CollisionObject _Cobj in DynamicsWorld.CollisionObjectArray)
             {
                 if(_Cobj.UserObject == null)
                 {
@@ -271,7 +324,53 @@ namespace LittleWormEngine
             return null;
         }
 
-        static ContactSensorCallback CallisionCallBack;
+        static void CastRays()
+        {
+            float up = 0.0f;
+            float dir = 1.0f;
+            //add some simple animation
+            //if (!m_idle)
+            {
+                up += 0.01f * dir;
+
+                if (Math.Abs(up) > 2)
+                {
+                    dir *= -1.0f;
+                }
+
+                BulletSharp.Math.Matrix tr = DynamicsWorld.CollisionObjectArray[1].WorldTransform;
+                float angle = 0.0f;
+                angle += 0.01f;
+                //tr.setRotation(btQuaternion(btVector3(0, 1, 0), angle));
+                DynamicsWorld.CollisionObjectArray[1].WorldTransform = tr;
+            }
+
+            ///step the simulation
+            if (DynamicsWorld != null)
+            {
+                DynamicsWorld.UpdateAabbs();
+                DynamicsWorld.ComputeOverlappingPairs();
+                ///first hit
+                {
+                    BulletSharp.Math.Vector3 from = new BulletSharp.Math.Vector3(-30, 1.2f, 0);
+                    BulletSharp.Math.Vector3 to = new BulletSharp.Math.Vector3(30, 1.2f, 0);
+                    /*
+                    btCollisionWorld::ClosestRayResultCallback closestResults(from, to);
+                    closestResults.m_flags |= btTriangleRaycastCallback::kF_FilterBackfaces;
+
+                    m_dynamicsWorld->rayTest(from, to, closestResults);
+
+                    if (closestResults.hasHit())
+                    {
+                        btVector3 p = from.lerp(to, closestResults.m_closestHitFraction);
+                        m_dynamicsWorld->getDebugDrawer()->drawSphere(p, 0.1, blue);
+                        m_dynamicsWorld->getDebugDrawer()->drawLine(p, p + closestResults.m_hitNormalWorld, blue);
+                    }*/
+                }
+            }
+        }
+
+
         static void Simulation()
         {
             while (true)
@@ -279,10 +378,12 @@ namespace LittleWormEngine
                 if(Core.Physics_Simulation_Time != 0)
                 {
                     Core.Physics_Simulation_Time = 0;
-                    dynamicsWorld.StepSimulation(Time.DeltaTime * 1000);
-                    for (int i = dynamicsWorld.NumCollisionObjects - 1; i >= 1; i--)
+                    //DynamicsWorld.UpdateAabbs();
+                    //DynamicsWorld.ComputeOverlappingPairs();
+                    DynamicsWorld.StepSimulation(Time.DeltaTime * 1000);
+                    for (int i = DynamicsWorld.NumCollisionObjects - 1; i >= 1; i--)
                     {
-                        CollisionObject obj = dynamicsWorld.CollisionObjectArray[i];
+                        CollisionObject obj = DynamicsWorld.CollisionObjectArray[i];
                         BulletSharp.RigidBody body = BulletSharp.RigidBody.Upcast(obj);
                         BulletSharp.Math.Matrix trans;
                         GhostObject ghost = GhostObject.Upcast(obj);
@@ -292,7 +393,27 @@ namespace LittleWormEngine
                             GameObject _Temp = (body.UserObject as GameObject);
                             if (body.UserObject != null)
                             {
-                                _Temp.transform.Position = new Vector3(trans.Origin.X, trans.Origin.Y, trans.Origin.Z) / btWorldtoLWWorldScale;
+                                _Temp.transform.OnlySet_Position(new Vector3(trans.Origin.X, trans.Origin.Y, trans.Origin.Z) / btWorldtoLWWorldScale);
+
+                                BulletSharp.Math.Vector3 _From = Get_Vector(Vector3.Up * 1000 + Vector3.Forward * 1000), _To = Get_Vector(Vector3.Down * 1000 + Vector3.Forward * 1000);
+                                ClosestRayResultCallback _Ray1 = new ClosestRayResultCallback(ref _From, ref _To);
+                                /*
+                                RaySensorCallback _Ray = new RaySensorCallback();
+                                DynamicsWorld.RayTest(_From, _To, _Ray);
+                                if (_Ray.HasHit)
+                                {
+                                    Debug.Log("HasHit: " + _Ray.HasHit);
+                                }
+                                
+                                */
+                                DynamicsWorld.RayTest(_From, _To, _Ray1);
+                                if (_Ray1.HasHit)
+                                {
+                                    Debug.Log("From: ", new Vector3(_Ray1.HitPointWorld.X, _Ray1.HitPointWorld.Y, _Ray1.HitPointWorld.Z), 0.0f);
+                                    if (_Ray1.CollisionObject.UserObject!= null)
+                                        Debug.Log("HasHit: " + (_Ray1.CollisionObject.UserObject as GameObject).Name);
+                                }
+                                
                             }
                         }
                         else if (ghost != null)
@@ -311,7 +432,15 @@ namespace LittleWormEngine
                             }
                         }
                     }
-
+                    /*
+                    RaySensorCallback _Ray = new RaySensorCallback();
+                    DynamicsWorld.RayTest(Get_Vector(Vector3.Up * 100), Get_Vector(Vector3.Down * 100), _Ray);
+                    Debug.Log("HasHit: " + _Ray.HasHit);
+                    DynamicsWorld.RayTest(Get_Vector(Vector3.Backward * 100), Get_Vector(Vector3.Forward * 100), _Ray);
+                    Debug.Log("HasHit: " + _Ray.HasHit);
+                    DynamicsWorld.RayTest(Get_Vector(Vector3.Left * 100), Get_Vector(Vector3.Right * 100), _Ray);
+                    Debug.Log("HasHit: " + _Ray.HasHit);
+                    */
                     List<CollisionObject> _Objs = new List<CollisionObject>();
                     foreach (BulletSharp.RigidBody _RigA in Rigidbodys)
                     {
@@ -319,7 +448,7 @@ namespace LittleWormEngine
                         {
                             if (_RigA != _RigB)
                             {
-                                dynamicsWorld.ContactPairTest(_RigA, _RigB, new ContactSensorCallback(_Objs));
+                                DynamicsWorld.ContactPairTest(_RigA, _RigB, new ContactSensorCallback(_Objs));
                             }
                         }
 
@@ -343,15 +472,15 @@ namespace LittleWormEngine
         static void Clean_World()
         {
             //remove the rigidbodies from the dynamics world and delete them
-            for (int i = dynamicsWorld.NumCollisionObjects - 1; i >= 0; i--)
+            for (int i = DynamicsWorld.NumCollisionObjects - 1; i >= 0; i--)
             {
-                CollisionObject obj = dynamicsWorld.CollisionObjectArray[i];
+                CollisionObject obj = DynamicsWorld.CollisionObjectArray[i];
                 BulletSharp.RigidBody body = BulletSharp.RigidBody.Upcast(obj);
                 if (body != null && body.MotionState != null)
                 {
                     body.MotionState.Dispose();
                 }
-                dynamicsWorld.RemoveCollisionObject(obj);
+                DynamicsWorld.RemoveCollisionObject(obj);
                 obj.Dispose();
             }
 
@@ -364,7 +493,7 @@ namespace LittleWormEngine
             }
 
             //delete dynamics world
-            dynamicsWorld.Dispose();
+            DynamicsWorld.Dispose();
 
             //delete solver
             solver.Dispose();

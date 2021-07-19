@@ -27,6 +27,7 @@ namespace LittleWormEngine
                     break;
                 case "Game":
                     Attaching_Rigibody = new RigidBody(PhysicsWorld.Get_Rigibody(Attaching_GameObject));
+                    Attaching_GameObject.ColliderComponent = this;
                     if (Attaching_Rigibody.Is_Static)
                     {
                         Attaching_Rigibody.Set_Static();
@@ -99,6 +100,11 @@ namespace LittleWormEngine
                 }
             }
 
+        }
+
+        public void Set_Position(Vector3 _Pos)
+        {
+            PhysicsWorld.Set_ObjectPosition(Attaching_GameObject, _Pos);
         }
 
         public unsafe void Draw()

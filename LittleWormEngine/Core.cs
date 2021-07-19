@@ -12,7 +12,7 @@ namespace LittleWormEngine
 {
     class Core
     {
-        public static string Mode = "Editor";
+        public static string Mode = "Game";
         public static string SceneName = "Scene";
         public static int Width = 800;
         public static int Height = 640;
