@@ -42,7 +42,7 @@ namespace LittleWormEngine
         public static void Set_PhysicWorld()
         {
             Init_Physic_World();
-            Create_Colliders();
+            //Create_Colliders();
             InisReady = true;
         }
 
@@ -66,6 +66,23 @@ namespace LittleWormEngine
                             break;
                     }
                 }
+            }
+        }
+
+        public static void Create_Collider(Component _Component)
+        {
+            switch (_Component.GetType().Name)
+            {
+                case "BoxCollider":
+                    if (_Component.Attaching_GameObject.Name == "Box" || _Component.Attaching_GameObject.Name == "Ashe")
+                    {
+                        Create_Box(_Component.Attaching_GameObject, (_Component as BoxCollider).HalfSize);
+                    }
+                    else
+                    {
+                        Create_GhostBox(_Component.Attaching_GameObject, (_Component as BoxCollider).HalfSize);
+                    }
+                    break;
             }
         }
 
@@ -276,6 +293,14 @@ namespace LittleWormEngine
             BulletSharp.Math.Matrix _Transform;
             _Transform = BulletSharp.Math.Matrix.Identity;
             _Transform.Origin = Get_Vector(_Pos * btWorldtoLWWorldScale);
+            CollisionObject _CObj = Get_CollisionObject(_Obj);
+            BulletSharp.RigidBody _Body = BulletSharp.RigidBody.Upcast(_CObj);
+            if (_Body != null && _Body.MotionState != null)
+            {
+                _Body.Activate(true);
+                _Obj.transform.OnlySet_Position(new Vector3(_Body.MotionState.WorldTransform.Origin.X, _Body.MotionState.WorldTransform.Origin.Y, _Body.MotionState.WorldTransform.Origin.Z) / btWorldtoLWWorldScale);
+            }
+
             Get_CollisionObject(_Obj).WorldTransform = _Transform;
         }
         /*
@@ -394,26 +419,6 @@ namespace LittleWormEngine
                             if (body.UserObject != null)
                             {
                                 _Temp.transform.OnlySet_Position(new Vector3(trans.Origin.X, trans.Origin.Y, trans.Origin.Z) / btWorldtoLWWorldScale);
-
-                                BulletSharp.Math.Vector3 _From = Get_Vector(Vector3.Up * 1000 + Vector3.Forward * 1000), _To = Get_Vector(Vector3.Down * 1000 + Vector3.Forward * 1000);
-                                ClosestRayResultCallback _Ray1 = new ClosestRayResultCallback(ref _From, ref _To);
-                                /*
-                                RaySensorCallback _Ray = new RaySensorCallback();
-                                DynamicsWorld.RayTest(_From, _To, _Ray);
-                                if (_Ray.HasHit)
-                                {
-                                    Debug.Log("HasHit: " + _Ray.HasHit);
-                                }
-                                
-                                */
-                                DynamicsWorld.RayTest(_From, _To, _Ray1);
-                                if (_Ray1.HasHit)
-                                {
-                                    Debug.Log("From: ", new Vector3(_Ray1.HitPointWorld.X, _Ray1.HitPointWorld.Y, _Ray1.HitPointWorld.Z), 0.0f);
-                                    if (_Ray1.CollisionObject.UserObject!= null)
-                                        Debug.Log("HasHit: " + (_Ray1.CollisionObject.UserObject as GameObject).Name);
-                                }
-                                
                             }
                         }
                         else if (ghost != null)

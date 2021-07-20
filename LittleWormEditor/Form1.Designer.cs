@@ -696,9 +696,22 @@ namespace LittleWorm
             this.OffSetLabel2 = new System.Windows.Forms.Label();
             this.OffSet2x = new System.Windows.Forms.TextBox();
             this.BoxColliderGroupBox = new System.Windows.Forms.GroupBox();
+            this.Height = new System.Windows.Forms.TextBox();
+            this.Radius = new System.Windows.Forms.TextBox();
+            this.CapsuleColliderGroupBox = new System.Windows.Forms.GroupBox();
+            this.HeightLabel = new System.Windows.Forms.Label();
+            this.OffSet3x = new System.Windows.Forms.TextBox();
+            this.OffSetLabel3 = new System.Windows.Forms.Label();
+            this.OffSet3y = new System.Windows.Forms.TextBox();
+            this.OffSet3z = new System.Windows.Forms.TextBox();
+            this.OffSet3xLabel = new System.Windows.Forms.Label();
+            this.OffSet3yLabel = new System.Windows.Forms.Label();
+            this.OffSet3zLabel = new System.Windows.Forms.Label();
+            this.RadiusLabel = new System.Windows.Forms.Label();
             this.TransformGroupBox.SuspendLayout();
             this.MeshRendererGroupBox.SuspendLayout();
             this.BoxColliderGroupBox.SuspendLayout();
+            this.CapsuleColliderGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // GameObjectDropDown
@@ -1383,11 +1396,142 @@ namespace LittleWorm
             this.BoxColliderGroupBox.TabStop = false;
             this.BoxColliderGroupBox.Text = "BoxCollider";
             // 
+            // Height
+            // 
+            this.Height.Location = new System.Drawing.Point(265, 79);
+            this.Height.Margin = new System.Windows.Forms.Padding(2);
+            this.Height.Name = "Height";
+            this.Height.Size = new System.Drawing.Size(49, 23);
+            this.Height.TabIndex = 10;
+            this.Height.TextChanged += new System.EventHandler(this.RadiusHeight_TextChanged);
+            // 
+            // Radius
+            // 
+            this.Radius.Location = new System.Drawing.Point(88, 79);
+            this.Radius.Margin = new System.Windows.Forms.Padding(2);
+            this.Radius.Name = "Radius";
+            this.Radius.Size = new System.Drawing.Size(49, 23);
+            this.Radius.TabIndex = 9;
+            this.Radius.TextChanged += new System.EventHandler(this.RadiusHeight_TextChanged);
+            // 
+            // CapsuleColliderGroupBox
+            // 
+            this.CapsuleColliderGroupBox.Controls.Add(this.HeightLabel);
+            this.CapsuleColliderGroupBox.Controls.Add(this.OffSet3x);
+            this.CapsuleColliderGroupBox.Controls.Add(this.OffSetLabel3);
+            this.CapsuleColliderGroupBox.Controls.Add(this.OffSet3y);
+            this.CapsuleColliderGroupBox.Controls.Add(this.OffSet3z);
+            this.CapsuleColliderGroupBox.Controls.Add(this.OffSet3xLabel);
+            this.CapsuleColliderGroupBox.Controls.Add(this.OffSet3yLabel);
+            this.CapsuleColliderGroupBox.Controls.Add(this.OffSet3zLabel);
+            this.CapsuleColliderGroupBox.Controls.Add(this.RadiusLabel);
+            this.CapsuleColliderGroupBox.Controls.Add(this.Height);
+            this.CapsuleColliderGroupBox.Controls.Add(this.Radius);
+            this.CapsuleColliderGroupBox.Location = new System.Drawing.Point(915, 442);
+            this.CapsuleColliderGroupBox.Margin = new System.Windows.Forms.Padding(2);
+            this.CapsuleColliderGroupBox.Name = "CapsuleColliderGroupBox";
+            this.CapsuleColliderGroupBox.Padding = new System.Windows.Forms.Padding(2);
+            this.CapsuleColliderGroupBox.Size = new System.Drawing.Size(506, 313);
+            this.CapsuleColliderGroupBox.TabIndex = 4;
+            this.CapsuleColliderGroupBox.TabStop = false;
+            this.CapsuleColliderGroupBox.Text = "CapsuleCollider";
+            // 
+            // HeightLabel
+            // 
+            this.HeightLabel.AutoSize = true;
+            this.HeightLabel.Location = new System.Drawing.Point(179, 82);
+            this.HeightLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.HeightLabel.Name = "HeightLabel";
+            this.HeightLabel.Size = new System.Drawing.Size(45, 15);
+            this.HeightLabel.TabIndex = 3;
+            this.HeightLabel.Text = "Height";
+            // 
+            // OffSet3x
+            // 
+            this.OffSet3x.Location = new System.Drawing.Point(88, 35);
+            this.OffSet3x.Margin = new System.Windows.Forms.Padding(2);
+            this.OffSet3x.Name = "OffSet3x";
+            this.OffSet3x.Size = new System.Drawing.Size(49, 23);
+            this.OffSet3x.TabIndex = 0;
+            this.OffSet3x.TextChanged += new System.EventHandler(this.OffSet3_TextChanged);
+            // 
+            // OffSetLabel3
+            // 
+            this.OffSetLabel3.AutoSize = true;
+            this.OffSetLabel3.Location = new System.Drawing.Point(11, 40);
+            this.OffSetLabel3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.OffSetLabel3.Name = "OffSetLabel3";
+            this.OffSetLabel3.Size = new System.Drawing.Size(43, 15);
+            this.OffSetLabel3.TabIndex = 1;
+            this.OffSetLabel3.Text = "OffSet";
+            // 
+            // OffSet3y
+            // 
+            this.OffSet3y.Location = new System.Drawing.Point(175, 35);
+            this.OffSet3y.Margin = new System.Windows.Forms.Padding(2);
+            this.OffSet3y.Name = "OffSet3y";
+            this.OffSet3y.Size = new System.Drawing.Size(49, 23);
+            this.OffSet3y.TabIndex = 4;
+            this.OffSet3y.TextChanged += new System.EventHandler(this.OffSet3_TextChanged);
+            // 
+            // OffSet3z
+            // 
+            this.OffSet3z.Location = new System.Drawing.Point(265, 35);
+            this.OffSet3z.Margin = new System.Windows.Forms.Padding(2);
+            this.OffSet3z.Name = "OffSet3z";
+            this.OffSet3z.Size = new System.Drawing.Size(49, 23);
+            this.OffSet3z.TabIndex = 5;
+            this.OffSet3z.TextChanged += new System.EventHandler(this.OffSet3_TextChanged);
+            // 
+            // OffSet3xLabel
+            // 
+            this.OffSet3xLabel.AutoSize = true;
+            this.OffSet3xLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.OffSet3xLabel.Location = new System.Drawing.Point(66, 36);
+            this.OffSet3xLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.OffSet3xLabel.Name = "OffSet3xLabel";
+            this.OffSet3xLabel.Size = new System.Drawing.Size(17, 20);
+            this.OffSet3xLabel.TabIndex = 12;
+            this.OffSet3xLabel.Text = "x";
+            // 
+            // OffSet3yLabel
+            // 
+            this.OffSet3yLabel.AutoSize = true;
+            this.OffSet3yLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.OffSet3yLabel.Location = new System.Drawing.Point(153, 36);
+            this.OffSet3yLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.OffSet3yLabel.Name = "OffSet3yLabel";
+            this.OffSet3yLabel.Size = new System.Drawing.Size(17, 20);
+            this.OffSet3yLabel.TabIndex = 13;
+            this.OffSet3yLabel.Text = "y";
+            // 
+            // OffSet3zLabel
+            // 
+            this.OffSet3zLabel.AutoSize = true;
+            this.OffSet3zLabel.Font = new System.Drawing.Font("Microsoft JhengHei UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.OffSet3zLabel.Location = new System.Drawing.Point(243, 36);
+            this.OffSet3zLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.OffSet3zLabel.Name = "OffSet3zLabel";
+            this.OffSet3zLabel.Size = new System.Drawing.Size(17, 20);
+            this.OffSet3zLabel.TabIndex = 14;
+            this.OffSet3zLabel.Text = "z";
+            // 
+            // RadiusLabel
+            // 
+            this.RadiusLabel.AutoSize = true;
+            this.RadiusLabel.Location = new System.Drawing.Point(11, 82);
+            this.RadiusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.RadiusLabel.Name = "RadiusLabel";
+            this.RadiusLabel.Size = new System.Drawing.Size(45, 15);
+            this.RadiusLabel.TabIndex = 3;
+            this.RadiusLabel.Text = "Radius";
+            // 
             // Inspector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1489, 770);
+            this.Controls.Add(this.CapsuleColliderGroupBox);
             this.Controls.Add(this.BoxColliderGroupBox);
             this.Controls.Add(this.RemoveCmpBut);
             this.Controls.Add(this.SetPrefabBut);
@@ -1415,6 +1559,8 @@ namespace LittleWorm
             this.MeshRendererGroupBox.PerformLayout();
             this.BoxColliderGroupBox.ResumeLayout(false);
             this.BoxColliderGroupBox.PerformLayout();
+            this.CapsuleColliderGroupBox.ResumeLayout(false);
+            this.CapsuleColliderGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1487,6 +1633,19 @@ namespace LittleWorm
         private System.Windows.Forms.Label OffSetLabel2;
         private System.Windows.Forms.TextBox OffSet2x;
         private System.Windows.Forms.GroupBox BoxColliderGroupBox;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox Radius;
+        private System.Windows.Forms.GroupBox CapsuleColliderGroupBox;
+        private System.Windows.Forms.Label HeightLabel;
+        private System.Windows.Forms.TextBox OffSet3x;
+        private System.Windows.Forms.Label OffSetLabel3;
+        private System.Windows.Forms.TextBox OffSet3y;
+        private System.Windows.Forms.TextBox OffSet3z;
+        private System.Windows.Forms.Label OffSet3xLabel;
+        private System.Windows.Forms.Label OffSet3yLabel;
+        private System.Windows.Forms.Label OffSet3zLabel;
+        private System.Windows.Forms.Label RadiusLabel;
+        private System.Windows.Forms.TextBox Height;
     }
 
 

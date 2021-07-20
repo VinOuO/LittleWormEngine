@@ -46,6 +46,46 @@ namespace LittleWormEngine
             }
         }
 
+        public static void Save_PrefabFile(GameObject _GameObject)
+        {
+            List<string> _FileInfo = new List<string>();
+
+            foreach (Component _Component in _GameObject.Components)
+            {
+                switch (_Component.GetType().Name)
+                {
+                    case "Camera":
+                        _FileInfo.Add("Camera");
+                        break;
+                    case "Transform":
+                        _FileInfo.Add("Transform" + " " + _GameObject.GetComponent<Transform>().Position.x + " " + _GameObject.GetComponent<Transform>().Position.y + " " + _GameObject.GetComponent<Transform>().Position.z + " " + _GameObject.GetComponent<Transform>().Rotation.x + " " + _GameObject.GetComponent<Transform>().Rotation.y + " " + _GameObject.GetComponent<Transform>().Rotation.z + " " + _GameObject.GetComponent<Transform>().Scale.x + " " + _GameObject.GetComponent<Transform>().Scale.y + " " + _GameObject.GetComponent<Transform>().Scale.z);
+                        break;
+                    case "MeshRenderer":
+                        _FileInfo.Add("MeshRenderer" + " " + _GameObject.GetComponent<MeshRenderer>().MeshFileName + " " + _GameObject.GetComponent<MeshRenderer>().TextureFileName + " " + _GameObject.GetComponent<MeshRenderer>().OffSet.x + " " + _GameObject.GetComponent<MeshRenderer>().OffSet.y + " " + _GameObject.GetComponent<MeshRenderer>().OffSet.z);
+                        break;
+                    case "BoxCollider":
+                        _FileInfo.Add("BoxCollider" + " " + _GameObject.GetComponent<BoxCollider>().OffSet.x + " " + _GameObject.GetComponent<BoxCollider>().OffSet.y + " " + _GameObject.GetComponent<BoxCollider>().OffSet.z + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.x + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.y + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.z);
+                        break;
+                    case "CapsuleCollider":
+                        _FileInfo.Add("CapsuleCollider" + " " + _GameObject.GetComponent<CapsuleCollider>().OffSet.x + " " + _GameObject.GetComponent<CapsuleCollider>().OffSet.y + " " + _GameObject.GetComponent<CapsuleCollider>().OffSet.z + " " + _GameObject.GetComponent<CapsuleCollider>().RadiusHeight.x + " " + _GameObject.GetComponent<CapsuleCollider>().RadiusHeight.y);
+                        break;
+                }
+            }
+
+            foreach (CustomComponent _Component in _GameObject.CustomComponents)
+            {
+                _FileInfo.Add("Custom " + _Component.GetType().Name);
+            }
+
+            using (StreamWriter File = new StreamWriter(Directory.GetCurrentDirectory() + @"\Save\Prefab\Prefab_" + _GameObject.Name + ".lwobj", false))
+            {
+                for (int i = 0; i < _FileInfo.Count; i++)
+                {
+                    File.WriteLine(_FileInfo[i]);
+                }
+            }
+        }
+
         public static void Save_GameObjectFile(GameObject _GameObject)
         {
             List<string> _FileInfo = new List<string>();
@@ -65,6 +105,9 @@ namespace LittleWormEngine
                         break;
                     case "BoxCollider":
                         _FileInfo.Add("BoxCollider" + " " + _GameObject.GetComponent<BoxCollider>().OffSet.x + " " + _GameObject.GetComponent<BoxCollider>().OffSet.y + " " + _GameObject.GetComponent<BoxCollider>().OffSet.z + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.x + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.y + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.z);
+                        break;
+                    case "CapsuleCollider":
+                        _FileInfo.Add("CapsuleCollider" + " " + _GameObject.GetComponent<CapsuleCollider>().OffSet.x + " " + _GameObject.GetComponent<CapsuleCollider>().OffSet.y + " " + _GameObject.GetComponent<CapsuleCollider>().OffSet.z + " " + _GameObject.GetComponent<CapsuleCollider>().RadiusHeight.x + " " + _GameObject.GetComponent<CapsuleCollider>().RadiusHeight.y);
                         break;
                 }
             }

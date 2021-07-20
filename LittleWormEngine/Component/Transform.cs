@@ -46,10 +46,11 @@ namespace LittleWormEngine
 
         public void Set_ColliderPos(Vector3 _Pos)
         {
-            if(Attaching_GameObject != null)
+            if (Attaching_GameObject != null)
             {
                 if (Attaching_GameObject.ColliderComponent != null)
                 {
+                    Debug.Log(_Pos);
                     Attaching_GameObject.ColliderComponent.Set_Position(_Pos);
                 }
             }

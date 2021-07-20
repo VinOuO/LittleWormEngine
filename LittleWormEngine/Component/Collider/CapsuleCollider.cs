@@ -22,10 +22,10 @@ namespace LittleWormEngine
             glDisableVertexAttribArray(0);
         }
 
-        public void Set_BoxColiiderSize(Vector3 _HalfSize)
+        public void Set_CapsuleColliderSize(Vector2 _RadiusHeight)
         {
             List<object> _Parameters = new List<object>();
-            _Parameters.Add(_HalfSize);
+            _Parameters.Add(_RadiusHeight);
             Set_ColliderSize(_Parameters);
         }
 

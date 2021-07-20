@@ -21,6 +21,9 @@ namespace LittleWormEngine
         public static Window The_GameWindow;
         public static Camera The_Camera;
         public static List<GameObject> GameObjects = new List<GameObject>();
+        public static List<GameObject> AddingGameObjects = new List<GameObject>();
+        public static List<GameObject> DeletingGameObjects = new List<GameObject>();
+        public static List<GameObject> Prefabs = new List<GameObject>();
         public static uint Mesh_Num = 0;
         public static long Frame_Num = 0;
         static Thread Editor_Thread, Physics_Thread;
@@ -50,7 +53,7 @@ namespace LittleWormEngine
                     break;
             }
 
-            Start_GameObjects_Components();
+            Start_GameObjects_Components(GameObjects);
 
             if (!Is_Running)
             {
@@ -103,6 +106,7 @@ namespace LittleWormEngine
                     {
                         case "Game":
                             Input.Update(The_GameWindow);
+                            Update_GameObjects();
                             break;
                         case "Editor":
                             Input.Update(The_GameWindow);
@@ -111,7 +115,7 @@ namespace LittleWormEngine
                             break;
                     }
 
-                    Run_GameObjects_Components();
+                    Run_GameObjects_Components(GameObjects);
                     Game.Update();
                 }
                 
@@ -173,12 +177,12 @@ namespace LittleWormEngine
             }
         }
 
-        static void Start_GameObjects_Components()
+        static void Start_GameObjects_Components(List<GameObject> _GameObjects)
         {
             switch (Mode)
             {
                 case "Game":
-                    foreach (GameObject _GameObject in GameObjects)
+                    foreach (GameObject _GameObject in _GameObjects)
                     {
                         foreach (Component _Component in _GameObject.Components)
                         {
@@ -191,7 +195,7 @@ namespace LittleWormEngine
                     }
                     break;
                 case "Editor":
-                    foreach (GameObject _GameObject in GameObjects)
+                    foreach (GameObject _GameObject in _GameObjects)
                     {
                         foreach (Component _Component in _GameObject.Components)
                         {
@@ -202,12 +206,12 @@ namespace LittleWormEngine
             }
         }
 
-        static void Run_GameObjects_Components()
+        static void Run_GameObjects_Components(List<GameObject> _GameObjects)
         {
             switch (Mode)
             {
                 case "Game":
-                    foreach (GameObject _GameObject in GameObjects)
+                    foreach (GameObject _GameObject in _GameObjects)
                     {
                         foreach (Component _Component in _GameObject.Components)
                         {
@@ -220,7 +224,7 @@ namespace LittleWormEngine
                     }
                     break;
                 case "Editor":
-                    foreach (GameObject _GameObject in GameObjects)
+                    foreach (GameObject _GameObject in _GameObjects)
                     {
                         foreach (Component _Component in _GameObject.Components)
                         {
@@ -304,6 +308,11 @@ namespace LittleWormEngine
                                     _GameObject.GetComponent<BoxCollider>().OffSet = new Vector3(float.Parse(_LineInfos[1]), float.Parse(_LineInfos[2]), float.Parse(_LineInfos[3]));
                                     _GameObject.GetComponent<BoxCollider>().Set_BoxColiiderSize(new Vector3(float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5]), float.Parse(_LineInfos[6])));
                                     break;
+                                case "CapsuleCollider":
+                                    _GameObject.AddComponent<CapsuleCollider>();
+                                    _GameObject.GetComponent<CapsuleCollider>().OffSet = new Vector3(float.Parse(_LineInfos[1]), float.Parse(_LineInfos[2]), float.Parse(_LineInfos[3]));
+                                    _GameObject.GetComponent<CapsuleCollider>().Set_CapsuleColliderSize(new Vector2(float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5])));
+                                    break;
                                 case "Custom":
                                     _GameObject.AddCustomComponent(Type.GetType(_LineInfos[1]));
                                     break;
@@ -316,16 +325,83 @@ namespace LittleWormEngine
             }
         }
 
+        static void Update_GameObjects()
+        {
+            if(AddingGameObjects.Count > 0)
+            {
+                Start_GameObjects_Components(AddingGameObjects);
+                while (AddingGameObjects.Count > 0)
+                {
+                    GameObjects.Add(AddingGameObjects[0]);
+                    AddingGameObjects.RemoveAt(0);
+                }
+            }
+
+            while (DeletingGameObjects.Count > 0)
+            {
+                GameObjects.Remove(DeletingGameObjects[0]);
+                DeletingGameObjects.RemoveAt(0);
+            }
+        }
+
+        public static GameObject Create_Prefab(string _PrefabName)
+        {
+            GameObject _GameObject = new GameObject();
+            _GameObject.Name = _PrefabName;
+            List<string> _GameObjectInfos = ResourceLoader.Load_File(@"Save\Prefab\Prefab_" + _PrefabName + ".lwobj");
+            foreach (string _GameObjectInfo in _GameObjectInfos)
+            {
+                List<string> _LineInfos = ResourceLoader.Split(_GameObjectInfo, ' ');
+                switch (_LineInfos[0])
+                {
+                    case "Camera":
+                        _GameObject.AddComponent<Camera>();
+                        break;
+                    case "Transform":
+                        _GameObject.AddComponent<Transform>();
+                        _GameObject.GetComponent<Transform>().Position = new Vector3(float.Parse(_LineInfos[1]), float.Parse(_LineInfos[2]), float.Parse(_LineInfos[3]));
+                        _GameObject.GetComponent<Transform>().Rotation = new Vector3(float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5]), float.Parse(_LineInfos[6]));
+                        _GameObject.GetComponent<Transform>().Scale = new Vector3(float.Parse(_LineInfos[7]), float.Parse(_LineInfos[8]), float.Parse(_LineInfos[9]));
+                        break;
+                    case "MeshRenderer":
+                        _GameObject.AddComponent<MeshRenderer>();
+                        _GameObject.GetComponent<MeshRenderer>().Set(_LineInfos[1], _LineInfos[2]);
+                        _GameObject.GetComponent<MeshRenderer>().OffSet = new Vector3(float.Parse(_LineInfos[3]), float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5]));
+                        break;
+                    case "BoxCollider":
+                        _GameObject.AddComponent<BoxCollider>();
+                        _GameObject.GetComponent<BoxCollider>().OffSet = new Vector3(float.Parse(_LineInfos[1]), float.Parse(_LineInfos[2]), float.Parse(_LineInfos[3]));
+                        _GameObject.GetComponent<BoxCollider>().Set_BoxColiiderSize(new Vector3(float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5]), float.Parse(_LineInfos[6])));
+                        break;
+                    case "CapsuleCollider":
+                        _GameObject.AddComponent<CapsuleCollider>();
+                        _GameObject.GetComponent<CapsuleCollider>().OffSet = new Vector3(float.Parse(_LineInfos[1]), float.Parse(_LineInfos[2]), float.Parse(_LineInfos[3]));
+                        _GameObject.GetComponent<CapsuleCollider>().Set_CapsuleColliderSize(new Vector2(float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5])));
+                        break;
+                    case "Custom":
+                        _GameObject.AddCustomComponent(Type.GetType(_LineInfos[1]));
+                        break;
+                }
+            }
+            AddingGameObjects.Add(_GameObject);
+            return _GameObject;
+        }
+
+        public static void Delet_GameObject(GameObject _GameObject)
+        {
+            DeletingGameObjects.Add(_GameObject);
+        }
+
         public static List<string> Get_Components()
         {
             List<string> _Temp_Components = new List<string>();
             System.Reflection.Assembly _Assembly = System.Reflection.Assembly.GetEntryAssembly();
             foreach (System.Reflection.TypeInfo _TypeInfo in _Assembly.DefinedTypes)
             {
-                if (_TypeInfo.ImplementedInterfaces.Contains(typeof(Component)))
+                if (_TypeInfo.ImplementedInterfaces.Contains(typeof(Component)) && !_TypeInfo.IsAbstract)
                 {
                     _Temp_Components.Add(_TypeInfo.Name);
-                    Debug.Log(_TypeInfo.FullName);
+                    //Debug.Log(_TypeInfo.FullName);
                 }
             }
             return _Temp_Components;

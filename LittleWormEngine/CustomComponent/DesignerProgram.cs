@@ -12,7 +12,12 @@ namespace LittleWormEngine
         public virtual void OnCollitionEnter(GameObject _Other) { }
         public virtual void OnCollitionStay(GameObject _Other) { }
         public virtual void OnCollitionExit(GameObject _Other) { }
+        public Transform transform { get { return GetComponent<Transform>(); } }
 
+        public GameObject Instantiate(string _PrefabName)
+        {
+            return Core.Create_Prefab(_PrefabName);
+        }
 
         public T GetComponent<T>() where T : Component
         {

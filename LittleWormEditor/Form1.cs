@@ -48,7 +48,6 @@ namespace LittleWorm
 
         private void comboBox_AddCom_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
             Debugger.Text = "87";
         }
 
@@ -126,6 +125,8 @@ namespace LittleWorm
                     return true;
                 case "BoxCollider":
                     return true;
+                case "CapsuleCollider":
+                    return true;
             }
             return false;
         }
@@ -159,6 +160,10 @@ namespace LittleWorm
                     BoxColliderGroupBox.Enabled = false;
                     BoxColliderGroupBox.Hide();
                     break;
+                case "CapsuleCollider":
+                    CapsuleColliderGroupBox.Enabled = false;
+                    CapsuleColliderGroupBox.Hide();
+                    break;
             }
         }
 
@@ -170,6 +175,8 @@ namespace LittleWorm
             MeshRendererGroupBox.Hide();
             BoxColliderGroupBox.Enabled = false;
             BoxColliderGroupBox.Hide();
+            CapsuleColliderGroupBox.Enabled = false;
+            CapsuleColliderGroupBox.Hide();
         }
 
         void Show_Panel(string _Name)
@@ -187,6 +194,10 @@ namespace LittleWorm
                 case "BoxCollider":
                     BoxColliderGroupBox.Enabled = true;
                     BoxColliderGroupBox.Show();
+                    break;
+                case "CapsuleCollider":
+                    CapsuleColliderGroupBox.Enabled = true;
+                    CapsuleColliderGroupBox.Show();
                     break;
             }
         }
@@ -235,6 +246,13 @@ namespace LittleWorm
                     GuiUtility.Find_Control("HalfSizey", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.y;
                     GuiUtility.Find_Control("HalfSizez", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.z;
                     break;
+                case "CapsuleCollider":
+                    GuiUtility.Find_Control("OffSet3x", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.x;
+                    GuiUtility.Find_Control("OffSet3y", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.y;
+                    GuiUtility.Find_Control("OffSet3z", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.z;
+                    GuiUtility.Find_Control("Radius", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().RadiusHeight.x;
+                    GuiUtility.Find_Control("Height", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().RadiusHeight.y;
+                    break;
             }
         }
 
@@ -256,6 +274,9 @@ namespace LittleWorm
                     break;
                 case "BoxCollider":
                     _temp = GuiUtility.Captured_Label(BoxColliderGroupBox.Controls);
+                    break;
+                case "CapsuleCollider":
+                    _temp = GuiUtility.Captured_Label(CapsuleColliderGroupBox.Controls);
                     break;
             }
 
@@ -366,6 +387,24 @@ namespace LittleWorm
                             OffSet2z.Text = "" + (_Output + MouseMovement.x * Scaler);
                         }
                         break;
+                    case "OffSet3xLabel":
+                        if (float.TryParse(OffSet3x.Text, out _Output))
+                        {
+                            OffSet3x.Text = "" + (_Output + MouseMovement.x * Scaler);
+                        }
+                        break;
+                    case "OffSet3yLabel":
+                        if (float.TryParse(OffSet3y.Text, out _Output))
+                        {
+                            OffSet3y.Text = "" + (_Output + MouseMovement.x * Scaler);
+                        }
+                        break;
+                    case "OffSet3zLabel":
+                        if (float.TryParse(OffSet3z.Text, out _Output))
+                        {
+                            OffSet3z.Text = "" + (_Output + MouseMovement.x * Scaler);
+                        }
+                        break;
                     case "HalfSizexLabel":
                         if (float.TryParse(HalfSizex.Text, out _Output))
                         {
@@ -382,6 +421,18 @@ namespace LittleWorm
                         if (float.TryParse(HalfSizez.Text, out _Output))
                         {
                             HalfSizez.Text = "" + (_Output + MouseMovement.x * Scaler);
+                        }
+                        break;
+                    case "RadiusLabel":
+                        if (float.TryParse(Radius.Text, out _Output))
+                        {
+                            Radius.Text = "" + (_Output + MouseMovement.x * Scaler);
+                        }
+                        break;
+                    case "HeightLabel":
+                        if (float.TryParse(Height.Text, out _Output))
+                        {
+                            Height.Text = "" + (_Output + MouseMovement.x * Scaler);
                         }
                         break;
                 }
@@ -451,6 +502,16 @@ namespace LittleWorm
                         GuiUtility.Find_Control("HalfSizez", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.z;
                     }
                     break;
+                case "CapsuleCollider":
+                    if (!User_Typing_Num && !GuiUtility.Is_Focused(CapsuleColliderGroupBox.Controls))
+                    {
+                        GuiUtility.Find_Control("OffSet3x", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.x;
+                        GuiUtility.Find_Control("OffSet3y", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.y;
+                        GuiUtility.Find_Control("OffSet3z", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.z;
+                        GuiUtility.Find_Control("Radius", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().RadiusHeight.x;
+                        GuiUtility.Find_Control("Height", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().RadiusHeight.y;
+                    }
+                    break;
             }
         }
 
@@ -498,6 +559,16 @@ namespace LittleWorm
                         GuiUtility.Find_Control("HalfSizex", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.x;
                         GuiUtility.Find_Control("HalfSizey", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.y;
                         GuiUtility.Find_Control("HalfSizez", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.z;
+                    }
+                    break;
+                case "CapsuleCollider":
+                    if (!User_Typing_Num && !GuiUtility.Is_Focused(CapsuleColliderGroupBox.Controls))
+                    {
+                        GuiUtility.Find_Control("OffSet3x", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.x;
+                        GuiUtility.Find_Control("OffSet3y", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.y;
+                        GuiUtility.Find_Control("OffSet3z", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.z;
+                        GuiUtility.Find_Control("Radius", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().RadiusHeight.x;
+                        GuiUtility.Find_Control("Height", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().RadiusHeight.y;
                     }
                     break;
             }
@@ -581,6 +652,22 @@ namespace LittleWorm
             }
         }
 
+        private void OffSet3_TextChanged(object sender, EventArgs e)
+        {
+            if (EditorCore.SelectingComponent.GetType().Name == "CapsuleCollider" && !Changing_Component)
+            {
+                try
+                {
+                    (EditorCore.SelectingComponent as CapsuleCollider).OffSet = new Vector3(float.Parse(OffSet3x.Text), float.Parse(OffSet3y.Text), float.Parse(OffSet3z.Text));
+                    User_Typing_Num = false;
+                }
+                catch
+                {
+                    User_Typing_Num = true;
+                }
+            }
+        }
+
         private void HalfSize_TextChanged(object sender, EventArgs e)
         {
             if (EditorCore.SelectingComponent.GetType().Name == "BoxCollider" && !Changing_Component)
@@ -588,6 +675,22 @@ namespace LittleWorm
                 try
                 {
                     (EditorCore.SelectingComponent as BoxCollider).Set_BoxColiiderSize(new Vector3(float.Parse(HalfSizex.Text), float.Parse(HalfSizey.Text), float.Parse(HalfSizez.Text)));
+                    User_Typing_Num = false;
+                }
+                catch
+                {
+                    User_Typing_Num = true;
+                }
+            }
+        }
+
+        private void RadiusHeight_TextChanged(object sender, EventArgs e)
+        {
+            if (EditorCore.SelectingComponent.GetType().Name == "CapsuleCollider" && !Changing_Component)
+            {
+                try
+                {
+                    (EditorCore.SelectingComponent as CapsuleCollider).Set_CapsuleColliderSize(new Vector2(float.Parse(Radius.Text), float.Parse(Height.Text)));
                     User_Typing_Num = false;
                 }
                 catch
@@ -650,7 +753,10 @@ namespace LittleWorm
 
         private void SetPrefabBut_Click(object sender, EventArgs e)
         {
-
+            if(EditorCore.SelectingGameObject!= null)
+            {
+                ResourceLoader.Save_PrefabFile(EditorCore.SelectingGameObject);
+            }
         }
 
         private void RemoveCmpBut_Click(object sender, EventArgs e)

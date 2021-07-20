@@ -26,6 +26,8 @@ namespace LittleWormEngine
                     Set_Mesh(ColliderMesh(), new Shader("ColliderVertex.vs", "", "ColliderFragment.fs"));
                     break;
                 case "Game":
+                    Debug.Log(Attaching_GameObject.Name);
+                    PhysicsWorld.Create_Collider(this);
                     Attaching_Rigibody = new RigidBody(PhysicsWorld.Get_Rigibody(Attaching_GameObject));
                     Attaching_GameObject.ColliderComponent = this;
                     if (Attaching_Rigibody.Is_Static)

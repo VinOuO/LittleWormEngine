@@ -1,0 +1,3 @@
+Transform 0 0 0 0 0 0 1 1 1
+MeshRenderer Cube3.obj Crate.jpg 0 0 0
+BoxCollider 0 0 0 1 1 1

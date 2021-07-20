@@ -55,7 +55,6 @@ namespace LittleWormEngine
                 MouseMovement = (NowMousePos - LastMousePos) * Time.DeltaTime;
                 LastMousePos = NowMousePos;
                 MouseMovement.y *= -1;
-                //Console.WriteLine("(" + MouseMovement.x + ", " + MouseMovement.y + ")");
             }
             
             if (Input.GetKey(KeyCode.Q))
