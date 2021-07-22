@@ -28,6 +28,17 @@ class Test_Mesh2 : DesignerProgram
         //Console.WriteLine("Name: " + (PhysicWorld.Get_Rigibody(Attaching_GameObject).UserObject as GameObject).Name);
 
         //Console.WriteLine("_x: " + PhysicWorld._x);
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            if (GetComponent<BoxCollider>().Is_Static)
+            {
+                GetComponent<BoxCollider>().Attaching_Rigibody.Set_Static(false);
+            }
+            else
+            {
+                GetComponent<BoxCollider>().Attaching_Rigibody.Set_Static(true);
+            }
+        }
         if (Input.GetKeyDown(KeyCode.Right))
         {
             _x = 5;

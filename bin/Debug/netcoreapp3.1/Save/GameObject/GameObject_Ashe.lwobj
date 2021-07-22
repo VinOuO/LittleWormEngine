@@ -1,4 +1,4 @@
-Transform -6 5 0 -10 235 0 0.03 0.03 0.03
+Transform -6 -2000 0 -10 235 0 0.03 0.03 0.03
 MeshRenderer Ashe2.obj Ashe.png 0.14667812 3.4505394 0
-BoxCollider 0 0 0 1 2 2
+BoxCollider False False 0 0 0 1 2 2
 Custom Test_Mesh

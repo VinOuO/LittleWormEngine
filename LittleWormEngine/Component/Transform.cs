@@ -50,7 +50,6 @@ namespace LittleWormEngine
             {
                 if (Attaching_GameObject.ColliderComponent != null)
                 {
-                    Debug.Log(_Pos);
                     Attaching_GameObject.ColliderComponent.Set_Position(_Pos);
                 }
             }

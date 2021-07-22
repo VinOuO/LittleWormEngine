@@ -17,6 +17,7 @@ namespace LittleWormEngine
         public RigidBody Attaching_Rigibody { get; set; }
         public List<GameObject> CollidingGameObjects = new List<GameObject>();
         public bool Is_Trigger { get; set; }
+        public bool Is_Static { get; set; }
 
         public void Start()
         {
@@ -26,13 +27,16 @@ namespace LittleWormEngine
                     Set_Mesh(ColliderMesh(), new Shader("ColliderVertex.vs", "", "ColliderFragment.fs"));
                     break;
                 case "Game":
-                    Debug.Log(Attaching_GameObject.Name);
                     PhysicsWorld.Create_Collider(this);
-                    Attaching_Rigibody = new RigidBody(PhysicsWorld.Get_Rigibody(Attaching_GameObject));
                     Attaching_GameObject.ColliderComponent = this;
-                    if (Attaching_Rigibody.Is_Static)
+                    if (!Is_Trigger)
                     {
-                        Attaching_Rigibody.Set_Static();
+                        Attaching_Rigibody = new RigidBody(PhysicsWorld.Get_Rigibody(Attaching_GameObject));
+                        Attaching_Rigibody.Attaching_Collider = this;
+                        if (Is_Static)
+                        {
+                            Attaching_Rigibody.Set_Static(true);
+                        }
                     }
                     break;
             }
@@ -48,8 +52,8 @@ namespace LittleWormEngine
 
             if (ColliderSize_Changed)
             {
-                ColliderSize_Changed = false;
                 Modify_Collider();
+                ColliderSize_Changed = false;
             }
 
             switch (_Type)
@@ -57,6 +61,7 @@ namespace LittleWormEngine
                 case "Rendering":
                     glUseProgram(RenderShader.Program);
                     glBindVertexArray(RenderMesh.Vao);
+                    RenderShader.SetUniform("Is_Trigger", Is_Trigger);
                     RenderShader.SetUniform("transform", Attaching_GameObject.GetComponent<Transform>().GetProjectdTransformwithoutScale(OffSet));
                     Draw();
                     break;
@@ -121,6 +126,11 @@ namespace LittleWormEngine
         public bool ColliderSize_Changed = false;
         public abstract void Set_ColliderSize(List<object> _Size_Parameters);
 
+        public void Set_Is_Trigger(bool _Is_Trigger)
+        {
+            Is_Trigger = _Is_Trigger;
+        }
+
         protected void Modify_Collider()
         {
             switch (Core.Mode)
@@ -148,6 +158,7 @@ namespace LittleWormEngine
             RenderMesh = _RenderMesh;
             RenderShader = _RenderShader;
             RenderShader.AddUniform("transform");
+            RenderShader.AddUniform("Is_Trigger");
         }
 
         protected abstract Mesh ColliderMesh();

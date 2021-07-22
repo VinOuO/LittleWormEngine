@@ -100,6 +100,9 @@ namespace LittleWormEngine.Renderer
         {
             switch (_Value)
             {
+                case bool _b:
+                    glUniform1i(Uniforms.Find(_x => _x.Name == _UniformName).Location, (_b ? 1 : -1));
+                    break;
                 case int _i:
                     glUniform1i(Uniforms.Find(_x => _x.Name == _UniformName).Location, _i);
                     break;

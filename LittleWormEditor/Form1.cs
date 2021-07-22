@@ -34,10 +34,12 @@ namespace LittleWorm
             {
                 if (EditorCore.SelectingGameObject.Is_Component_Attached(EditorCore.SelectingComponent.GetType().Name))
                 {
+                    Debugger.Text = "Not Null";
                     ComponentDropDown.SelectedItem = EditorCore.SelectingComponent.GetType().Name;
                 }
                 else
                 {
+                    Debugger.Text = "Null";
                     EditorCore.SelectingComponent = null;
                     Hide_AllPanel();
                 }
@@ -208,15 +210,15 @@ namespace LittleWorm
             switch (EditorCore.SelectingComponent.GetType().Name)
             {
                 case "Transform":
-                    GuiUtility.Find_Control("Positionx", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Position.x;
-                    GuiUtility.Find_Control("Positiony", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Position.y;
-                    GuiUtility.Find_Control("Positionz", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Position.z;
-                    GuiUtility.Find_Control("Rotationx", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Rotation.x;
-                    GuiUtility.Find_Control("Rotationy", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Rotation.y;
-                    GuiUtility.Find_Control("Rotationz", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Rotation.z;
-                    GuiUtility.Find_Control("Scalex", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Scale.x;
-                    GuiUtility.Find_Control("Scaley", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Scale.y;
-                    GuiUtility.Find_Control("Scalez", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Scale.z;
+                    Positionx.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Position.x;
+                    Positiony.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Position.y;
+                    Positionz.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Position.z;
+                    Rotationx.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Rotation.x;
+                    Rotationy.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Rotation.y;
+                    Rotationz.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Rotation.z;
+                    Scalex.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Scale.x;
+                    Scaley.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Scale.y;
+                    Scalez.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Scale.z;
                     break;
                 case "MeshRenderer":
                     MeshDropDown.Items.Clear();
@@ -234,24 +236,28 @@ namespace LittleWorm
                         TextureDropDown.Items.Add(_temp[_temp.Count - 1]);
                     }
                     TextureDropDown.SelectedItem = EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().TextureFileName;
-                    GuiUtility.Find_Control("OffSetx", MeshRendererGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.x;
-                    GuiUtility.Find_Control("OffSety", MeshRendererGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.y;
-                    GuiUtility.Find_Control("OffSetz", MeshRendererGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.z;
+                    OffSetx.Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.x;
+                    OffSety.Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.y;
+                    OffSetz.Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.z;
                     break;
                 case "BoxCollider":
-                    GuiUtility.Find_Control("OffSet2x", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.x;
-                    GuiUtility.Find_Control("OffSet2y", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.y;
-                    GuiUtility.Find_Control("OffSet2z", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.z;
-                    GuiUtility.Find_Control("HalfSizex", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.x;
-                    GuiUtility.Find_Control("HalfSizey", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.y;
-                    GuiUtility.Find_Control("HalfSizez", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.z;
+                    OffSet2x.Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.x;
+                    OffSet2y.Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.y;
+                    OffSet2z.Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.z;
+                    HalfSizex.Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.x;
+                    HalfSizey.Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.y;
+                    HalfSizez.Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.z;
+                    IsTriggerCheckBox.Checked = EditorCore.SelectingGameObject.GetComponent<BoxCollider>().Is_Trigger;
+                    IsStaticCheckBox.Checked = EditorCore.SelectingGameObject.GetComponent<BoxCollider>().Is_Static;
                     break;
                 case "CapsuleCollider":
-                    GuiUtility.Find_Control("OffSet3x", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.x;
-                    GuiUtility.Find_Control("OffSet3y", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.y;
-                    GuiUtility.Find_Control("OffSet3z", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.z;
-                    GuiUtility.Find_Control("Radius", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().RadiusHeight.x;
-                    GuiUtility.Find_Control("Height", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().RadiusHeight.y;
+                    OffSet3x.Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.x;
+                    OffSet3y.Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.y;
+                    OffSet3z.Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.z;
+                    Radius.Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().RadiusHeight.x;
+                    Height.Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().RadiusHeight.y;
+                    IsTrigger2CheckBox.Checked = EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().Is_Trigger;
+                    IsStatic2CheckBox.Checked = EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().Is_Static;
                     break;
             }
         }
@@ -264,6 +270,10 @@ namespace LittleWorm
         void Check_Mouse()
         {
             Label _temp = new Label();
+            if(EditorCore.SelectingComponent == null)
+            {
+                return;
+            }
             switch (EditorCore.SelectingComponent.GetType().Name)
             {
                 case "Transform":
@@ -457,15 +467,15 @@ namespace LittleWorm
                 case "Transform":
                     if (!User_Typing_Num && !GuiUtility.Is_Focused(TransformGroupBox.Controls))
                     {
-                        GuiUtility.Find_Control("Positionx", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Position.x;
-                        GuiUtility.Find_Control("Positiony", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Position.y;
-                        GuiUtility.Find_Control("Positionz", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Position.z;
-                        GuiUtility.Find_Control("Rotationx", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Rotation.x;
-                        GuiUtility.Find_Control("Rotationy", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Rotation.y;
-                        GuiUtility.Find_Control("Rotationz", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Rotation.z;
-                        GuiUtility.Find_Control("Scalex", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Scale.x;
-                        GuiUtility.Find_Control("Scaley", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Scale.y;
-                        GuiUtility.Find_Control("Scalez", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Scale.z;
+                        Positionx.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Position.x;
+                        Positiony.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Position.y;
+                        Positionz.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Position.z;
+                        Rotationx.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Rotation.x;
+                        Rotationy.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Rotation.y;
+                        Rotationz.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Rotation.z;
+                        Scalex.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Scale.x;
+                        Scaley.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Scale.y;
+                        Scalez.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Scale.z;
                     }
                     break;
                 case "MeshRenderer":
@@ -486,30 +496,34 @@ namespace LittleWorm
                             TextureDropDown.Items.Add(_temp[_temp.Count - 1]);
                         }
                         TextureDropDown.SelectedItem = EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().TextureFileName;
-                        GuiUtility.Find_Control("OffSetx", MeshRendererGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.x;
-                        GuiUtility.Find_Control("OffSety", MeshRendererGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.y;
-                        GuiUtility.Find_Control("OffSetz", MeshRendererGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.z;
+                        OffSetx.Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.x;
+                        OffSety.Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.y;
+                        OffSetz.Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.z;
                     }  
                     break;
                 case "BoxCollider":
                     if (!User_Typing_Num && !GuiUtility.Is_Focused(BoxColliderGroupBox.Controls))
                     {
-                        GuiUtility.Find_Control("OffSet2x", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.x;
-                        GuiUtility.Find_Control("OffSet2y", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.y;
-                        GuiUtility.Find_Control("OffSet2z", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.z;
-                        GuiUtility.Find_Control("HalfSizex", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.x;
-                        GuiUtility.Find_Control("HalfSizey", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.y;
-                        GuiUtility.Find_Control("HalfSizez", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.z;
+                        OffSet2x.Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.x;
+                        OffSet2y.Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.y;
+                        OffSet2z.Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.z;
+                        HalfSizex.Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.x;
+                        HalfSizey.Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.y;
+                        HalfSizez.Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.z;
+                        IsTriggerCheckBox.Checked = EditorCore.SelectingGameObject.GetComponent<BoxCollider>().Is_Trigger;
+                        IsStaticCheckBox.Checked = EditorCore.SelectingGameObject.GetComponent<BoxCollider>().Is_Static;
                     }
                     break;
                 case "CapsuleCollider":
                     if (!User_Typing_Num && !GuiUtility.Is_Focused(CapsuleColliderGroupBox.Controls))
                     {
-                        GuiUtility.Find_Control("OffSet3x", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.x;
-                        GuiUtility.Find_Control("OffSet3y", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.y;
-                        GuiUtility.Find_Control("OffSet3z", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.z;
-                        GuiUtility.Find_Control("Radius", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().RadiusHeight.x;
-                        GuiUtility.Find_Control("Height", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().RadiusHeight.y;
+                        OffSet3x.Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.x;
+                        OffSet3y.Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.y;
+                        OffSet3z.Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.z;
+                        Radius.Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().RadiusHeight.x;
+                        Height.Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().RadiusHeight.y;
+                        IsTrigger2CheckBox.Checked = EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().Is_Trigger;
+                        IsStatic2CheckBox.Checked = EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().Is_Static;
                     }
                     break;
             }
@@ -526,15 +540,15 @@ namespace LittleWorm
                 case "Transform":
                     if (!User_Typing_Num && !GuiUtility.Is_Focused(TransformGroupBox.Controls))
                     {
-                        GuiUtility.Find_Control("Positionx", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Position.x;
-                        GuiUtility.Find_Control("Positiony", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Position.y;
-                        GuiUtility.Find_Control("Positionz", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Position.z;
-                        GuiUtility.Find_Control("Rotationx", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Rotation.x;
-                        GuiUtility.Find_Control("Rotationy", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Rotation.y;
-                        GuiUtility.Find_Control("Rotationz", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Rotation.z;
-                        GuiUtility.Find_Control("Scalex", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Scale.x;
-                        GuiUtility.Find_Control("Scaley", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Scale.y;
-                        GuiUtility.Find_Control("Scalez", TransformGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Scale.z;
+                        Positionx.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Position.x;
+                        Positiony.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Position.y;
+                        Positionz.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Position.z;
+                        Rotationx.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Rotation.x;
+                        Rotationy.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Rotation.y;
+                        Rotationz.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Rotation.z;
+                        Scalex.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Scale.x;
+                        Scaley.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Scale.y;
+                        Scalez.Text = "" + EditorCore.SelectingGameObject.GetComponent<Transform>().Scale.z;
                     }
                     break;
                 case "MeshRenderer":
@@ -543,9 +557,9 @@ namespace LittleWorm
                         case "Transformation":
                             if (!User_Typing_Num && !GuiUtility.Is_Focused(MeshRendererGroupBox.Controls))
                             {
-                                GuiUtility.Find_Control("OffSetx", MeshRendererGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.x;
-                                GuiUtility.Find_Control("OffSety", MeshRendererGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.y;
-                                GuiUtility.Find_Control("OffSetz", MeshRendererGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.z;
+                                OffSetx.Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.x;
+                                OffSety.Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.y;
+                                OffSetz.Text = "" + EditorCore.SelectingGameObject.GetComponent<MeshRenderer>().OffSet.z;
                             }
                             break;
                     }
@@ -553,22 +567,26 @@ namespace LittleWorm
                 case "BoxCollider":
                     if (!User_Typing_Num && !GuiUtility.Is_Focused(BoxColliderGroupBox.Controls))
                     {
-                        GuiUtility.Find_Control("OffSet2x", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.x;
-                        GuiUtility.Find_Control("OffSet2y", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.y;
-                        GuiUtility.Find_Control("OffSet2z", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.z;
-                        GuiUtility.Find_Control("HalfSizex", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.x;
-                        GuiUtility.Find_Control("HalfSizey", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.y;
-                        GuiUtility.Find_Control("HalfSizez", BoxColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.z;
+                        OffSet2x.Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.x;
+                        OffSet2y.Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.y;
+                        OffSet2z.Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().OffSet.z;
+                        HalfSizex.Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.x;
+                        HalfSizey.Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.y;
+                        HalfSizez.Text = "" + EditorCore.SelectingGameObject.GetComponent<BoxCollider>().HalfSize.z;
+                        IsTriggerCheckBox.Checked = EditorCore.SelectingGameObject.GetComponent<BoxCollider>().Is_Trigger;
+                        IsStaticCheckBox.Checked = EditorCore.SelectingGameObject.GetComponent<BoxCollider>().Is_Static;
                     }
                     break;
                 case "CapsuleCollider":
                     if (!User_Typing_Num && !GuiUtility.Is_Focused(CapsuleColliderGroupBox.Controls))
                     {
-                        GuiUtility.Find_Control("OffSet3x", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.x;
-                        GuiUtility.Find_Control("OffSet3y", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.y;
-                        GuiUtility.Find_Control("OffSet3z", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.z;
-                        GuiUtility.Find_Control("Radius", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().RadiusHeight.x;
-                        GuiUtility.Find_Control("Height", CapsuleColliderGroupBox.Controls).Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().RadiusHeight.y;
+                        OffSet3x.Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.x;
+                        OffSet3y.Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.y;
+                        OffSet3z.Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().OffSet.z;
+                        Radius.Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().RadiusHeight.x;
+                        Height.Text = "" + EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().RadiusHeight.y;
+                        IsTrigger2CheckBox.Checked = EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().Is_Trigger;
+                        IsStatic2CheckBox.Checked = EditorCore.SelectingGameObject.GetComponent<CapsuleCollider>().Is_Static;
                     }
                     break;
             }
@@ -768,6 +786,25 @@ namespace LittleWorm
                 EditorCore.SelectingComponent = null;
             }
             Load_ComponentDropDown();
+        }
+
+        private void CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            switch ((sender as Control).Name)
+            {
+                case "IsTriggerCheckBox":
+                    (EditorCore.SelectingComponent as BoxCollider).Is_Trigger = IsTriggerCheckBox.Checked;
+                    break;
+                case "IsTrigger2CheckBox":
+                    (EditorCore.SelectingComponent as CapsuleCollider).Is_Trigger = IsTrigger2CheckBox.Checked;
+                    break;
+                case "IsStaticCheckBox":
+                    (EditorCore.SelectingComponent as BoxCollider).Is_Static = IsStaticCheckBox.Checked;
+                    break;
+                case "IsStatic2CheckBox":
+                    (EditorCore.SelectingComponent as CapsuleCollider).Is_Static = IsStatic2CheckBox.Checked;
+                    break;
+            }
         }
     }
 }

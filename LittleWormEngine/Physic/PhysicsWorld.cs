@@ -69,18 +69,28 @@ namespace LittleWormEngine
             }
         }
 
-        public static void Create_Collider(Component _Component)
+        public static void Create_Collider(Collider _Collider)
         {
-            switch (_Component.GetType().Name)
+            switch (_Collider.GetType().Name)
             {
                 case "BoxCollider":
-                    if (_Component.Attaching_GameObject.Name == "Box" || _Component.Attaching_GameObject.Name == "Ashe")
+                    if (!_Collider.Is_Trigger)
                     {
-                        Create_Box(_Component.Attaching_GameObject, (_Component as BoxCollider).HalfSize);
+                        Create_Box(_Collider.Attaching_GameObject, (_Collider as BoxCollider).HalfSize);
                     }
                     else
                     {
-                        Create_GhostBox(_Component.Attaching_GameObject, (_Component as BoxCollider).HalfSize);
+                        Create_GhostBox(_Collider.Attaching_GameObject, (_Collider as BoxCollider).HalfSize);
+                    }
+                    break;
+                case "CapsuleCollider":
+                    if (!_Collider.Is_Trigger)
+                    {
+                        Create_Capsule(_Collider.Attaching_GameObject, (_Collider as CapsuleCollider).RadiusHeight);
+                    }
+                    else
+                    {
+                        Create_GhostCapsule(_Collider.Attaching_GameObject, (_Collider as CapsuleCollider).RadiusHeight);
                     }
                     break;
             }
@@ -237,7 +247,7 @@ namespace LittleWormEngine
             //---create a dynamic rigidbody
         }
 
-        public static void Create_CapsuleBox(GameObject _GameObject, LittleWormEngine.Utility.Vector2 _RadiusHeight) //Use this to design collider component
+        public static void Create_GhostCapsule(GameObject _GameObject, LittleWormEngine.Utility.Vector2 _RadiusHeight) //Use this to design collider component
         {
             CollisionShape colShape = Create_CapsuleShape(_RadiusHeight);
             collisionShapes.Add(colShape);
@@ -271,15 +281,17 @@ namespace LittleWormEngine
             ClosestRayResultCallback _Ray = new ClosestRayResultCallback(ref _TempFrom, ref _TempTo);
 
             DynamicsWorld.RayTest(_TempFrom, _TempTo, _Ray);
+            /*
             if (_Ray.HasHit)
             {
                 Debug.Log("From: ", new Vector3(_Ray.HitPointWorld.X, _Ray.HitPointWorld.Y, _Ray.HitPointWorld.Z), 0.0f);
                 if (_Ray.CollisionObject.UserObject != null)
                     Debug.Log("HasHit: " + (_Ray.CollisionObject.UserObject as GameObject).Name);
             }
+            */
             return _Ray.HasHit;
         }
-
+        /*
         public static void Set_ObjectPosition(CollisionObject _Obj, Vector3 _Pos)
         {
             BulletSharp.Math.Matrix _Transform;
@@ -287,21 +299,15 @@ namespace LittleWormEngine
             _Transform.Origin = Get_Vector(_Pos);
             _Obj.WorldTransform = _Transform;
         }
-
+        */
         public static void Set_ObjectPosition(GameObject _Obj, Vector3 _Pos)
         {
             BulletSharp.Math.Matrix _Transform;
             _Transform = BulletSharp.Math.Matrix.Identity;
             _Transform.Origin = Get_Vector(_Pos * btWorldtoLWWorldScale);
             CollisionObject _CObj = Get_CollisionObject(_Obj);
-            BulletSharp.RigidBody _Body = BulletSharp.RigidBody.Upcast(_CObj);
-            if (_Body != null && _Body.MotionState != null)
-            {
-                _Body.Activate(true);
-                _Obj.transform.OnlySet_Position(new Vector3(_Body.MotionState.WorldTransform.Origin.X, _Body.MotionState.WorldTransform.Origin.Y, _Body.MotionState.WorldTransform.Origin.Z) / btWorldtoLWWorldScale);
-            }
-
-            Get_CollisionObject(_Obj).WorldTransform = _Transform;
+            _CObj.Activate(true);
+            _CObj.WorldTransform = _Transform;
         }
         /*
         public static void Set_ObjectRotation(GameObject _Obj, Vector3 _Rot)
@@ -451,7 +457,7 @@ namespace LittleWormEngine
                     {
                         foreach (BulletSharp.RigidBody _RigB in Rigidbodys)
                         {
-                            if (_RigA != _RigB)
+                            if (_RigA.UserObject != _RigB.UserObject)
                             {
                                 DynamicsWorld.ContactPairTest(_RigA, _RigB, new ContactSensorCallback(_Objs));
                             }
@@ -465,7 +471,10 @@ namespace LittleWormEngine
                             {
                                 if (_Obj.UserObject != null)
                                 {
-                                    _TempGameObjects.Add(_Obj.UserObject as GameObject);
+                                    if(_Obj.UserObject != _RigA.UserObject)
+                                    {
+                                        _TempGameObjects.Add(_Obj.UserObject as GameObject);
+                                    }
                                 }
                             }
                         }

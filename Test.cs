@@ -10,14 +10,14 @@ class Test : DesignerProgram
 {
     override public void Start()
     {
-        
+        Debug.Log(Name + ": Test");
     }
 
     override public void Update()
     {
         return;
         if (Input.GetKey(KeyCode.Up))
-        {
+        { 
             GetComponent<Transform>().Rotation.y += 20f * Time.DeltaTime;
         }
         if (Input.GetKey(KeyCode.Down))
@@ -36,11 +36,11 @@ class Test : DesignerProgram
 
     public override void OnCollitionEnter(GameObject _Other)
     {
-        Debug.Log(_Other.Name + " Entered");
+        Debug.Log(_Other.Name + " Entered " + Name);
     }
     public override void OnCollitionExit(GameObject _Other)
     {
-        Debug.Log(_Other.Name + " Exited");
+        Debug.Log(_Other.Name + " Exited " + Name);
     }
 }
 

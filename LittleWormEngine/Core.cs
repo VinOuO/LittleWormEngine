@@ -305,13 +305,17 @@ namespace LittleWormEngine
                                     break;
                                 case "BoxCollider":
                                     _GameObject.AddComponent<BoxCollider>();
-                                    _GameObject.GetComponent<BoxCollider>().OffSet = new Vector3(float.Parse(_LineInfos[1]), float.Parse(_LineInfos[2]), float.Parse(_LineInfos[3]));
-                                    _GameObject.GetComponent<BoxCollider>().Set_BoxColiiderSize(new Vector3(float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5]), float.Parse(_LineInfos[6])));
+                                    _GameObject.GetComponent<BoxCollider>().Is_Trigger = bool.Parse(_LineInfos[1]);
+                                    _GameObject.GetComponent<BoxCollider>().Is_Static = bool.Parse(_LineInfos[2]);
+                                    _GameObject.GetComponent<BoxCollider>().OffSet = new Vector3(float.Parse(_LineInfos[3]), float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5]));
+                                    _GameObject.GetComponent<BoxCollider>().Set_BoxColiiderSize(new Vector3(float.Parse(_LineInfos[6]), float.Parse(_LineInfos[7]), float.Parse(_LineInfos[8])));
                                     break;
                                 case "CapsuleCollider":
                                     _GameObject.AddComponent<CapsuleCollider>();
-                                    _GameObject.GetComponent<CapsuleCollider>().OffSet = new Vector3(float.Parse(_LineInfos[1]), float.Parse(_LineInfos[2]), float.Parse(_LineInfos[3]));
-                                    _GameObject.GetComponent<CapsuleCollider>().Set_CapsuleColliderSize(new Vector2(float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5])));
+                                    _GameObject.GetComponent<CapsuleCollider>().Is_Trigger = bool.Parse(_LineInfos[1]);
+                                    _GameObject.GetComponent<CapsuleCollider>().Is_Static = bool.Parse(_LineInfos[2]);
+                                    _GameObject.GetComponent<CapsuleCollider>().OffSet = new Vector3(float.Parse(_LineInfos[3]), float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5]));
+                                    _GameObject.GetComponent<CapsuleCollider>().Set_CapsuleColliderSize(new Vector2(float.Parse(_LineInfos[6]), float.Parse(_LineInfos[7])));
                                     break;
                                 case "Custom":
                                     _GameObject.AddCustomComponent(Type.GetType(_LineInfos[1]));
@@ -370,13 +374,17 @@ namespace LittleWormEngine
                         break;
                     case "BoxCollider":
                         _GameObject.AddComponent<BoxCollider>();
-                        _GameObject.GetComponent<BoxCollider>().OffSet = new Vector3(float.Parse(_LineInfos[1]), float.Parse(_LineInfos[2]), float.Parse(_LineInfos[3]));
-                        _GameObject.GetComponent<BoxCollider>().Set_BoxColiiderSize(new Vector3(float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5]), float.Parse(_LineInfos[6])));
+                        _GameObject.GetComponent<BoxCollider>().Is_Trigger = bool.Parse(_LineInfos[1]);
+                        _GameObject.GetComponent<BoxCollider>().Is_Static = bool.Parse(_LineInfos[2]);
+                        _GameObject.GetComponent<BoxCollider>().OffSet = new Vector3(float.Parse(_LineInfos[3]), float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5]));
+                        _GameObject.GetComponent<BoxCollider>().Set_BoxColiiderSize(new Vector3(float.Parse(_LineInfos[6]), float.Parse(_LineInfos[7]), float.Parse(_LineInfos[8])));
                         break;
                     case "CapsuleCollider":
                         _GameObject.AddComponent<CapsuleCollider>();
-                        _GameObject.GetComponent<CapsuleCollider>().OffSet = new Vector3(float.Parse(_LineInfos[1]), float.Parse(_LineInfos[2]), float.Parse(_LineInfos[3]));
-                        _GameObject.GetComponent<CapsuleCollider>().Set_CapsuleColliderSize(new Vector2(float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5])));
+                        _GameObject.GetComponent<CapsuleCollider>().Is_Trigger = bool.Parse(_LineInfos[1]);
+                        _GameObject.GetComponent<CapsuleCollider>().Is_Static = bool.Parse(_LineInfos[2]);
+                        _GameObject.GetComponent<CapsuleCollider>().OffSet = new Vector3(float.Parse(_LineInfos[3]), float.Parse(_LineInfos[4]), float.Parse(_LineInfos[5]));
+                        _GameObject.GetComponent<CapsuleCollider>().Set_CapsuleColliderSize(new Vector2(float.Parse(_LineInfos[6]), float.Parse(_LineInfos[7])));
                         break;
                     case "Custom":
                         _GameObject.AddCustomComponent(Type.GetType(_LineInfos[1]));

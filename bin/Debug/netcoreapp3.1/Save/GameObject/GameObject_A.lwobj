@@ -1,2 +1,2 @@
-Transform -0.87416184 2.6134071 0 0 0 0 1 1 1
-BoxCollider 0 0 0 1 1 1
+Transform 0 10 0 0 0 0 1 1 1
+BoxCollider True False 0 0 0 1 1 1

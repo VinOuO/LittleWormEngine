@@ -21,7 +21,8 @@ class Test_Mesh : DesignerProgram
         */
         //GetComponent<BoxCollider>().Attaching_Rigibody.Set_Static();
         _Box = Instantiate("Box");
-        _Box.transform.Position.y += 1000;
+        _Box.Name = "Box2";
+        _Box.transform.Position = Vector3.Up * 1000;
         //Attaching_GameObject.transform.Position = Vector3.Up * 10;
     }
     Vector3 Povit = Vector3.Zero;

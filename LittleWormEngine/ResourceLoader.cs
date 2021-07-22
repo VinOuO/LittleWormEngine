@@ -64,10 +64,10 @@ namespace LittleWormEngine
                         _FileInfo.Add("MeshRenderer" + " " + _GameObject.GetComponent<MeshRenderer>().MeshFileName + " " + _GameObject.GetComponent<MeshRenderer>().TextureFileName + " " + _GameObject.GetComponent<MeshRenderer>().OffSet.x + " " + _GameObject.GetComponent<MeshRenderer>().OffSet.y + " " + _GameObject.GetComponent<MeshRenderer>().OffSet.z);
                         break;
                     case "BoxCollider":
-                        _FileInfo.Add("BoxCollider" + " " + _GameObject.GetComponent<BoxCollider>().OffSet.x + " " + _GameObject.GetComponent<BoxCollider>().OffSet.y + " " + _GameObject.GetComponent<BoxCollider>().OffSet.z + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.x + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.y + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.z);
+                        _FileInfo.Add("BoxCollider" + " " + _GameObject.GetComponent<BoxCollider>().Is_Trigger.ToString() + " " + _GameObject.GetComponent<BoxCollider>().Is_Static.ToString() + " " + _GameObject.GetComponent<BoxCollider>().OffSet.x + " " + _GameObject.GetComponent<BoxCollider>().OffSet.y + " " + _GameObject.GetComponent<BoxCollider>().OffSet.z + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.x + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.y + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.z);
                         break;
                     case "CapsuleCollider":
-                        _FileInfo.Add("CapsuleCollider" + " " + _GameObject.GetComponent<CapsuleCollider>().OffSet.x + " " + _GameObject.GetComponent<CapsuleCollider>().OffSet.y + " " + _GameObject.GetComponent<CapsuleCollider>().OffSet.z + " " + _GameObject.GetComponent<CapsuleCollider>().RadiusHeight.x + " " + _GameObject.GetComponent<CapsuleCollider>().RadiusHeight.y);
+                        _FileInfo.Add("CapsuleCollider" + " " + _GameObject.GetComponent<CapsuleCollider>().Is_Trigger.ToString() + " " + _GameObject.GetComponent<CapsuleCollider>().Is_Static.ToString() + " " + _GameObject.GetComponent<CapsuleCollider>().OffSet.x + " " + _GameObject.GetComponent<CapsuleCollider>().OffSet.y + " " + _GameObject.GetComponent<CapsuleCollider>().OffSet.z + " " + _GameObject.GetComponent<CapsuleCollider>().RadiusHeight.x + " " + _GameObject.GetComponent<CapsuleCollider>().RadiusHeight.y);
                         break;
                 }
             }
@@ -104,10 +104,10 @@ namespace LittleWormEngine
                         _FileInfo.Add("MeshRenderer" + " " + _GameObject.GetComponent<MeshRenderer>().MeshFileName + " " + _GameObject.GetComponent<MeshRenderer>().TextureFileName + " " + _GameObject.GetComponent<MeshRenderer>().OffSet.x + " " + _GameObject.GetComponent<MeshRenderer>().OffSet.y + " " + _GameObject.GetComponent<MeshRenderer>().OffSet.z);
                         break;
                     case "BoxCollider":
-                        _FileInfo.Add("BoxCollider" + " " + _GameObject.GetComponent<BoxCollider>().OffSet.x + " " + _GameObject.GetComponent<BoxCollider>().OffSet.y + " " + _GameObject.GetComponent<BoxCollider>().OffSet.z + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.x + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.y + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.z);
+                        _FileInfo.Add("BoxCollider" + " " + _GameObject.GetComponent<BoxCollider>().Is_Trigger.ToString() + " " + _GameObject.GetComponent<BoxCollider>().Is_Static.ToString() + " " + _GameObject.GetComponent<BoxCollider>().OffSet.x + " " + _GameObject.GetComponent<BoxCollider>().OffSet.y + " " + _GameObject.GetComponent<BoxCollider>().OffSet.z + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.x + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.y + " " + _GameObject.GetComponent<BoxCollider>().HalfSize.z);
                         break;
                     case "CapsuleCollider":
-                        _FileInfo.Add("CapsuleCollider" + " " + _GameObject.GetComponent<CapsuleCollider>().OffSet.x + " " + _GameObject.GetComponent<CapsuleCollider>().OffSet.y + " " + _GameObject.GetComponent<CapsuleCollider>().OffSet.z + " " + _GameObject.GetComponent<CapsuleCollider>().RadiusHeight.x + " " + _GameObject.GetComponent<CapsuleCollider>().RadiusHeight.y);
+                        _FileInfo.Add("CapsuleCollider" + " " + _GameObject.GetComponent<CapsuleCollider>().Is_Trigger.ToString() + " " + _GameObject.GetComponent<CapsuleCollider>().Is_Static.ToString() + " " + _GameObject.GetComponent<CapsuleCollider>().OffSet.x + " " + _GameObject.GetComponent<CapsuleCollider>().OffSet.y + " " + _GameObject.GetComponent<CapsuleCollider>().OffSet.z + " " + _GameObject.GetComponent<CapsuleCollider>().RadiusHeight.x + " " + _GameObject.GetComponent<CapsuleCollider>().RadiusHeight.y);
                         break;
                 }
             }

@@ -7,6 +7,7 @@ namespace LittleWormEngine
     abstract class DesignerProgram : CustomComponent
     {
         public GameObject Attaching_GameObject { get; set; }
+        public string Name { get { return Attaching_GameObject.Name; } set{ Attaching_GameObject.Name = value; } }
         public abstract void Start();
         public abstract void Update();
         public virtual void OnCollitionEnter(GameObject _Other) { }
