@@ -57,6 +57,7 @@ namespace LittleWormEngine
         public string MeshFileName;
         public string TextureFileName;
         public Mesh RenderMesh { get; set; }
+        public Texture RenderTexture { get; set; }
         public List<Texture> RenderTextures { get; set; }
         public Shader RenderShader { get; set; }
         public MeshRenderer()
@@ -69,7 +70,8 @@ namespace LittleWormEngine
         {
             RenderMesh = _RenderMesh;
             RenderTextures = new List<Texture>();
-            RenderTextures.Add(_RenderTexture);
+            RenderTexture = _RenderTexture;
+            RenderTextures.Add(RenderTexture);
             RenderShader = _RenderShader;
         }
 
@@ -79,7 +81,8 @@ namespace LittleWormEngine
             TextureFileName = _TextureFileName;
             RenderMesh = ResourceLoader.Load_Mesh(_MeshFileName);
             RenderTextures = new List<Texture>();
-            RenderTextures.Add(ResourceLoader.Load_Texture(_TextureFileName));
+            RenderTexture = ResourceLoader.Load_Texture(_TextureFileName);
+            RenderTextures.Add(RenderTexture);
             RenderShader = new Shader("BasicVertex.vs", "", "BasicFragment.fs");
             RenderShader.AddUniform("transform");
             RenderShader.AddUniform("cam_pos");
@@ -87,9 +90,16 @@ namespace LittleWormEngine
             RenderShader.AddUniform("sampler");
         }
 
-        public void Add_Texture(string _TextureFileName)
+        public Texture Add_Texture(string _TextureFileName)
         {
-            RenderTextures.Add(ResourceLoader.Load_Texture(_TextureFileName));
+            Texture _TempTexture = ResourceLoader.Load_Texture(_TextureFileName);
+            RenderTextures.Add(_TempTexture);
+            return _TempTexture;
+        }
+
+        public int Get_TextureID(Texture _Texture)
+        {
+            return RenderTextures.FindIndex(_T => _T == _Texture);
         }
     }
 }

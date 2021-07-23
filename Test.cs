@@ -11,17 +11,28 @@ class Test : DesignerProgram
     override public void Start()
     {
         Debug.Log(Name + ": Test");
-        GetComponent<MeshRenderer>().Add_Texture("Tex2.png");
+        _Test = GetComponent<MeshRenderer>().Add_Texture("Tex2.png");
         GetComponent<MeshRenderer>().RenderShader.SetUniform("sampler", 0);
     }
     int i = 1;
+    Texture _Test;
     override public void Update()
     {
 
         if (Input.GetKeyDown(KeyCode.C))
         {
             Debug.Log(Name + ": Change");
-            GetComponent<MeshRenderer>().RenderShader.SetUniform("sampler", i = (i == 0 ? 1 : 0));
+            i = (i == 0 ? 1 : 0);
+            switch (i)
+            {
+                case 0:
+                    GetComponent<MeshRenderer>().RenderShader.SetUniform("sampler", GetComponent<MeshRenderer>().Get_TextureID(_Test));
+                    break;
+                case 1:
+                    GetComponent<MeshRenderer>().RenderShader.SetUniform("sampler", GetComponent<MeshRenderer>().Get_TextureID(GetComponent<MeshRenderer>().RenderTexture));
+                    break;
+            }
+            
             Debug.Log("i: " + i);
         }
 
