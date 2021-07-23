@@ -13,7 +13,7 @@ namespace LittleWormEngine
     class Core
     {
         public static string Mode = "Game";
-        public static string SceneName = "Scene";
+        public static string SceneName = "Scene_Debug" + ".lws";
         public static int Width = 800;
         public static int Height = 640;
         public static long Frame_Cap = 5000;
@@ -32,7 +32,7 @@ namespace LittleWormEngine
 
         public static void Start()
         {
-            Create_Scene("Scene.lws");
+            Create_Scene(SceneName);
             Game.Start();
             Glfw.SetCursorPositionCallback(The_GameWindow,Input.Check_Cursor_Position);
             The_Camera = Get_Camera();

@@ -13,7 +13,6 @@ namespace LittleWormEngine.Renderer
     {
         public uint TexID;
         Bitmap Image;
-        BitmapData Tex;
 
         public Texture(string _FileName)
         {

@@ -24,7 +24,11 @@ namespace LittleWormEngine
             switch (_Type)
             {
                 case "Rendering":
-                    glBindTexture(GL_TEXTURE_2D, RenderTexture.TexID);
+                    for(int i = 0; i < RenderTextures.Count; i++)
+                    {
+                        glActiveTexture(GL_TEXTURE0 + i); // Texture unit i
+                        glBindTexture(GL_TEXTURE_2D, RenderTextures[i].TexID);
+                    }
                     glUseProgram(RenderShader.Program);
                     glBindVertexArray(RenderMesh.Vao);
                     RenderShader.SetUniform("transform", Attaching_GameObject.GetComponent<Transform>().GetProjectdTransform(OffSet));
@@ -53,7 +57,7 @@ namespace LittleWormEngine
         public string MeshFileName;
         public string TextureFileName;
         public Mesh RenderMesh { get; set; }
-        public Texture RenderTexture { get; set; }
+        public List<Texture> RenderTextures { get; set; }
         public Shader RenderShader { get; set; }
         public MeshRenderer()
         {
@@ -64,7 +68,8 @@ namespace LittleWormEngine
         public void Set(Mesh _RenderMesh, Texture _RenderTexture, Shader _RenderShader)
         {
             RenderMesh = _RenderMesh;
-            RenderTexture = _RenderTexture;
+            RenderTextures = new List<Texture>();
+            RenderTextures.Add(_RenderTexture);
             RenderShader = _RenderShader;
         }
 
@@ -73,11 +78,18 @@ namespace LittleWormEngine
             MeshFileName = _MeshFileName;
             TextureFileName = _TextureFileName;
             RenderMesh = ResourceLoader.Load_Mesh(_MeshFileName);
-            RenderTexture = ResourceLoader.Load_Texture(_TextureFileName);
+            RenderTextures = new List<Texture>();
+            RenderTextures.Add(ResourceLoader.Load_Texture(_TextureFileName));
             RenderShader = new Shader("BasicVertex.vs", "", "BasicFragment.fs");
             RenderShader.AddUniform("transform");
             RenderShader.AddUniform("cam_pos");
             RenderShader.AddUniform("light_angle");
+            RenderShader.AddUniform("sampler");
+        }
+
+        public void Add_Texture(string _TextureFileName)
+        {
+            RenderTextures.Add(ResourceLoader.Load_Texture(_TextureFileName));
         }
     }
 }

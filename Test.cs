@@ -11,10 +11,20 @@ class Test : DesignerProgram
     override public void Start()
     {
         Debug.Log(Name + ": Test");
+        GetComponent<MeshRenderer>().Add_Texture("Tex2.png");
+        GetComponent<MeshRenderer>().RenderShader.SetUniform("sampler", 0);
     }
-
+    int i = 1;
     override public void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Debug.Log(Name + ": Change");
+            GetComponent<MeshRenderer>().RenderShader.SetUniform("sampler", i = (i == 0 ? 1 : 0));
+            Debug.Log("i: " + i);
+        }
+
         return;
         if (Input.GetKey(KeyCode.Up))
         { 

@@ -98,6 +98,7 @@ namespace LittleWormEngine.Renderer
 
         public unsafe void SetUniform(string _UniformName, object _Value)
         {
+            glUseProgram(Program);
             switch (_Value)
             {
                 case bool _b:
