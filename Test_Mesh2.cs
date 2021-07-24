@@ -21,7 +21,7 @@ class Test_Mesh2 : DesignerProgram
         */
     }
     bool b = true;
-    public int _x = 5;
+    public int _x = 2;
     override public void Update()
     {
         //Debug.Log("??");
@@ -41,11 +41,11 @@ class Test_Mesh2 : DesignerProgram
         }
         if (Input.GetKeyDown(KeyCode.Right))
         {
-            _x = 5;
+            _x = 2;
         }
         else if (Input.GetKeyDown(KeyCode.Left))
         {
-            _x = -5;
+            _x = -2;
         }
         if (Input.GetKeyDown(KeyCode.T))
         {

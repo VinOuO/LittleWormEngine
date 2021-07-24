@@ -32,7 +32,7 @@ namespace LittleWormEngine
                     glUseProgram(RenderShader.Program);
                     glBindVertexArray(RenderMesh.Vao);
                     RenderShader.SetUniform("transform", Attaching_GameObject.GetComponent<Transform>().GetProjectdTransform(OffSet));
-                    RenderShader.SetUniform("cam_pos", Core.The_Camera.Attaching_GameObject.transform.Position);
+                    RenderShader.SetUniform("cam_pos", Camera.Main.Attaching_GameObject.transform.Position);
                     Light_Dir = Matrix3.RotateY(30 * Time.DeltaTime) * Light_Dir;
                     _temp = Matrix3.RotateX(-Attaching_GameObject.GetComponent<Transform>().Rotation.x) * (Matrix3.RotateY(-Attaching_GameObject.GetComponent<Transform>().Rotation.y) * (Matrix3.RotateZ(-Attaching_GameObject.GetComponent<Transform>().Rotation.z) * Light_Dir.Normalize()));
                     RenderShader.SetUniform("light_angle", _temp);
@@ -88,6 +88,11 @@ namespace LittleWormEngine
             RenderShader.AddUniform("cam_pos");
             RenderShader.AddUniform("light_angle");
             RenderShader.AddUniform("sampler");
+        }
+
+        public void Set_Shader(string _VertexShader, string _GeometryShader, string _FragmentShader)
+        {
+            RenderShader = new Shader(_VertexShader, _GeometryShader, _FragmentShader);
         }
 
         public Texture Add_Texture(string _TextureFileName)

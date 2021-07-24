@@ -9,7 +9,8 @@ namespace LittleWormEngine
 {
     class Input
     {
-        public static Vector2 MousePosition { get; set; }
+        public static Vector2 mousePosition { get; set; }
+        public static Vector2 MousePosition { get {return (mousePosition == null? Vector2.Zero : mousePosition); } set { mousePosition = value; } }
         static List<Keys> Pressing_Keys = new List<Keys>();
         static List<Keys> Releasing_Keys = new List<Keys>();
         static List<Keys> Current_Keys = new List<Keys>();
@@ -24,7 +25,8 @@ namespace LittleWormEngine
 
         public static void Check_Cursor_Position(Window _Window, double _x, double _y)
         {
-            MousePosition = new Vector2((float)_x, (float)_y);
+            Vector2 _Temp = new Vector2((float)_x, (float)_y);
+            MousePosition = _Temp;
         }
 
         public static void Check_Input_State(Window _Window)

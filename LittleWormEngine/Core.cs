@@ -14,8 +14,9 @@ namespace LittleWormEngine
     {
         public static string Mode = "Game";
         public static string SceneName = "Scene_Debug" + ".lws";
-        public static int Width = 800;
-        public static int Height = 640;
+        public static Camera MainCamera;
+        public static int Width = 1000;
+        public static int Height = 1000;
         public static long Frame_Cap = 5000;
         public static bool Is_Running;
         public static Window The_GameWindow;

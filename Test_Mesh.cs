@@ -22,12 +22,34 @@ class Test_Mesh : DesignerProgram
         //GetComponent<BoxCollider>().Attaching_Rigibody.Set_Static();
         _Box = Instantiate("Box");
         _Box.Name = "Box2";
-        _Box.transform.Position = Vector3.Up * 1000;
+        _Box.transform.Position = new Vector3(0, 0, 10);
+        GameObject.Find("Camera").transform.Position = Vector3.Zero;
         //Attaching_GameObject.transform.Position = Vector3.Up * 10;
     }
     Vector3 Povit = Vector3.Zero;
     override public void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Right))
+        {
+            _Box.transform.Position.x += 1;
+            Debug.Log(_Box.transform.Position);
+        }
+        else if (Input.GetKeyDown(KeyCode.Left))
+        {
+            _Box.transform.Position.x -= 1;
+            Debug.Log(_Box.transform.Position);
+        }
+        else if (Input.GetKeyDown(KeyCode.Up))
+        {
+            _Box.transform.Position.z += 1;
+            Debug.Log(_Box.transform.Position);
+        }
+        else if (Input.GetKeyDown(KeyCode.Down))
+        {
+            _Box.transform.Position.z -= 1;
+            Debug.Log(_Box.transform.Position);
+        }
+        
         //_Box.transform.Position.x+=Time.DeltaTime * 1;
         if (Input.GetKeyDown(KeyCode.H))
         {

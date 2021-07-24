@@ -6,6 +6,11 @@ namespace LittleWormEngine.Utility
 {
     class Debug
     {
+        public static void Log(Vector2 _Vec2)
+        {
+            Console.WriteLine("(" + _Vec2.x + ", " + _Vec2.y + ")");
+        }
+
         public static void Log(Vector3 _Vec3)
         {
             Console.WriteLine("(" + _Vec3.x + ", " + _Vec3.y + ", " + _Vec3.z + ")");

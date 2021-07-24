@@ -6,12 +6,14 @@ namespace LittleWormEngine
 {
     class Camera : Component
     {
-        public static float zNear = 0.001f;
-        public static float zFar = 1000;
-        public static float Width = Core.Width;
-        public static float Height = Core.Height;
-        public static float fov = 70f;
-        public static Vector3 yAxis = Vector3.Forward;
+        public static Camera Main { get {return Core.MainCamera; } }
+
+        public float zNear = 1f;
+        public float zFar = 1000;
+        public float Width = Core.Width;
+        public float Height = Core.Height;
+        public float fov = 90;
+        public Vector3 yAxis = Vector3.Forward;
 
         public GameObject Attaching_GameObject { get; set; }
         public string Tag { get; set; }
@@ -22,21 +24,53 @@ namespace LittleWormEngine
         }
         public void Update(string _Type)
         {
-
+            /*
+            if (Input.GetKeyDown(KeyCode.Up))
+            {
+                fov += 3;
+            }
+            if (Input.GetKeyDown(KeyCode.Down))
+            {
+                fov -= 3;
+            }
+            */
         }
 
         public Camera()
         {
-
+            Core.MainCamera = this;
         }
 
-        public static void SetProjection(float _zNear, float _zFar, float _Width, float _Height, float _fov)
+        public void SetProjection(float _zNear, float _zFar, float _Width, float _Height, float _fov)
         {
             zNear = _zNear;
             zFar = _zFar;
             Width = _Width;
             Height = _Height;
             fov = _fov;
+        }
+
+        public Vector3 Get_MouseDir()
+        {
+            Vector3 _TempVec3 = Vector3.Zero;
+            double _AngleX, _AngleY, _X, _Y;
+            _AngleX = ((Input.MousePosition.x - Width / 2) / (Width / 2)) * (fov/2);
+            _AngleY = (((Input.MousePosition.y - Height / 2) / (Height / 2)) * -1) * (fov / 2);
+
+            _X = 1 / Math.Cos(Mathematics.Math_of_Rotation.Radians_of(_AngleX));
+            _Y = 1 / Math.Cos(Mathematics.Math_of_Rotation.Radians_of(_AngleY));
+            return new Vector3(Math.Sqrt(_X * _X - 1) * (_AngleX >= 0 ? 1 : -1), Math.Sqrt(_Y * _Y - 1) * (_AngleY >= 0 ? 1 : -1), 1);
+        }
+
+        public Vector3 Get_WorldMousePos() //need to add retation
+        {
+            Vector3 _TempVec3 = Vector3.Zero;
+            double _AngleX, _AngleY, _X, _Y;
+            _AngleX = (Input.MousePosition.x - Width / 2) / Width * fov;
+            _AngleY = (Input.MousePosition.y - Height / 2) / Height * fov;
+            _X = 1 / Math.Cos(Mathematics.Math_of_Rotation.Radians_of(_AngleX));
+            _Y = 1 / Math.Cos(Mathematics.Math_of_Rotation.Radians_of(_AngleY));
+            return new Vector3((_X * _X - 1) * (_AngleX >= 0 ? 1 : -1), (_Y * _Y - 1) * (_AngleY >= 0 ? -1 : 1), 1) * 10 + Attaching_GameObject.transform.Position;
         }
     }
 }

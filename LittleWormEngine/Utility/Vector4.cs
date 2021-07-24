@@ -22,6 +22,14 @@ namespace LittleWormEngine.Utility
             w = _w;
         }
 
+        public Vector4(Vector3 _Vec3, float _w)
+        {
+            x = _Vec3.x;
+            y = _Vec3.y;
+            z = _Vec3.z;
+            w = _w;
+        }
+
         public Vector4(Vector4 _Vector4)
         {
             x = _Vector4.x;
