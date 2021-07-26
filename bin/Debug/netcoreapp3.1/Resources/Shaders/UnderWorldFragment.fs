@@ -26,7 +26,7 @@ void main()
 	}
 	*/
 	
-	if(dot(normalize(FlashLightDir - cam_pos), normalize(position0 - cam_pos)) >= 0.99f){
+	if(dot(normalize(FlashLightDir), normalize(position0 - cam_pos)) >= 0.9995f){
 		fragColor = texture(underworldsampler, texCoord0);
 	}
 	else{

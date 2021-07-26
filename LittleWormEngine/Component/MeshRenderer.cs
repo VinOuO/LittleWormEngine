@@ -24,23 +24,59 @@ namespace LittleWormEngine
             switch (_Type)
             {
                 case "Rendering":
-                    for(int i = 0; i < RenderTextures.Count; i++)
-                    {
-                        glActiveTexture(GL_TEXTURE0 + i); // Texture unit i
-                        glBindTexture(GL_TEXTURE_2D, RenderTextures[i].TexID);
-                    }
-                    glUseProgram(RenderShader.Program);
-                    glBindVertexArray(RenderMesh.Vao);
-                    RenderShader.SetUniform("transform", Attaching_GameObject.GetComponent<Transform>().GetProjectdTransform(OffSet));
-                    RenderShader.SetUniform("cam_pos", Camera.Main.Attaching_GameObject.transform.Position);
-                    Light_Dir = Matrix3.RotateY(30 * Time.DeltaTime) * Light_Dir;
-                    _temp = Matrix3.RotateX(-Attaching_GameObject.GetComponent<Transform>().Rotation.x) * (Matrix3.RotateY(-Attaching_GameObject.GetComponent<Transform>().Rotation.y) * (Matrix3.RotateZ(-Attaching_GameObject.GetComponent<Transform>().Rotation.z) * Light_Dir.Normalize()));
-                    RenderShader.SetUniform("light_angle", _temp);
-                    Draw();
+                    Render();
                     break;
             }
         }
+        void Render()
+        {
+            for (int i = 0; i < RenderTextures.Count; i++)
+            {
+                glActiveTexture(GL_TEXTURE0 + i); // Texture unit i
+                glBindTexture(GL_TEXTURE_2D, RenderTextures[i].TexID);
+            }
+            glUseProgram(RenderShader.Program);
+            glBindVertexArray(RenderMesh.Vao);
 
+            RenderShader.SetUniform("transform", Attaching_GameObject.GetComponent<Transform>().GetProjectdTransform(OffSet));
+            RenderShader.SetUniform("nptransform", Attaching_GameObject.GetComponent<Transform>().GetTransform(OffSet));
+            RenderShader.SetUniform("cam_pos", Camera.Main.Attaching_GameObject.transform.Position);
+            Light_Dir = Matrix3.RotateY(30 * Time.DeltaTime) * Light_Dir;
+            _temp = Matrix3.RotateX(-Attaching_GameObject.GetComponent<Transform>().Rotation.x) * (Matrix3.RotateY(-Attaching_GameObject.GetComponent<Transform>().Rotation.y) * (Matrix3.RotateZ(-Attaching_GameObject.GetComponent<Transform>().Rotation.z) * Light_Dir.Normalize()));
+            RenderShader.SetUniform("light_angle", _temp);
+            Draw();
+        }
+
+        void Render_with_Shadow()
+        {
+            for (int i = 0; i < RenderTextures.Count; i++)
+            {
+                glActiveTexture(GL_TEXTURE0 + i); // Texture unit i
+                glBindTexture(GL_TEXTURE_2D, RenderTextures[i].TexID);
+            }
+            glUseProgram(RenderShader.Program);
+            glBindVertexArray(RenderMesh.Vao);
+            RenderShader.SetUniform("transform", Matrix4.Flip( Attaching_GameObject.GetComponent<Transform>().GetProjectdTransform(OffSet)));
+            RenderShader.SetUniform("cam_pos", Camera.Main.Attaching_GameObject.transform.Position);
+            Light_Dir = Matrix3.RotateY(30 * Time.DeltaTime) * Light_Dir;
+            _temp = Matrix3.RotateX(-Attaching_GameObject.GetComponent<Transform>().Rotation.x) * (Matrix3.RotateY(-Attaching_GameObject.GetComponent<Transform>().Rotation.y) * (Matrix3.RotateZ(-Attaching_GameObject.GetComponent<Transform>().Rotation.z) * Light_Dir.Normalize()));
+            RenderShader.SetUniform("light_angle", _temp);
+            Draw();
+        }
+        
+        void Renderer_ShadowMap()
+        {
+            glViewport(0, 0, ShadowMap.Width, ShadowMap.Height);
+            glBindFramebuffer(GL_FRAMEBUFFER, ShadowMap.FrameBufferID);
+            glClear(GL_DEPTH_BUFFER_BIT);
+            Render();
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+            glViewport(0, 0, Core.Width, Core.Height);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            glBindTexture(GL_TEXTURE_2D, ShadowMap.TexID);
+            Render();
+        }
+        
         public unsafe void Draw()
         {
             glEnableVertexAttribArray(0);
@@ -58,12 +94,14 @@ namespace LittleWormEngine
         public string TextureFileName;
         public Mesh RenderMesh { get; set; }
         public Texture RenderTexture { get; set; }
+        public ShadowTexture ShadowMap { get; set; }
         public List<Texture> RenderTextures { get; set; }
         public Shader RenderShader { get; set; }
         public MeshRenderer()
         {
             Tag = "Renderer";
             OffSet = Vector3.Zero;
+            ShadowMap = new ShadowTexture();
         }
 
         public void Set(Mesh _RenderMesh, Texture _RenderTexture, Shader _RenderShader)
@@ -85,6 +123,7 @@ namespace LittleWormEngine
             RenderTextures.Add(RenderTexture);
             RenderShader = new Shader("BasicVertex.vs", "", "BasicFragment.fs");
             RenderShader.AddUniform("transform");
+            RenderShader.AddUniform("nptransform");
             RenderShader.AddUniform("cam_pos");
             RenderShader.AddUniform("light_angle");
             RenderShader.AddUniform("sampler");

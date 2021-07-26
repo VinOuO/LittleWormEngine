@@ -13,7 +13,19 @@ namespace LittleWormEngine.Utility
 
         public static void Log(Vector3 _Vec3)
         {
-            Console.WriteLine("(" + _Vec3.x + ", " + _Vec3.y + ", " + _Vec3.z + ")");
+            Console.WriteLine("(" + Math.Round(_Vec3.x, 2) + ", " + Math.Round(_Vec3.y, 2) + ", " + Math.Round(_Vec3.z, 2) + ")");
+        }
+        public static void Log(Vector4 _Vec4)
+        {
+            Console.WriteLine("(" + Math.Round(_Vec4.x, 2) + ", " + Math.Round(_Vec4.y, 2) + ", " + Math.Round(_Vec4.z, 2) + ", " + Math.Round(_Vec4.w, 2) + ")");
+        }
+
+        public static void Log(Matrix4 _Mat4)
+        {
+            Log(_Mat4.Get_Vector4("Row", 0));
+            Log(_Mat4.Get_Vector4("Row", 1));
+            Log(_Mat4.Get_Vector4("Row", 2));
+            Log(_Mat4.Get_Vector4("Row", 3));
         }
 
         public static void Log(string _String, Vector3 _Vec3, int _a)

@@ -100,16 +100,31 @@ namespace LittleWormEngine
 
         public static bool GetKeyDown(KeyCode _Key)
         {
+            switch (_Key)
+            {
+                case KeyCode.Any:
+                    return (Pressing_Keys.Count > 0 || Pressing_MouseButtons.Count > 0) ? true : false;
+            }
             return Pressing_Keys.Contains((Keys)_Key) ? true : false;
         }
 
         public static bool GetKey(KeyCode _Key)
         {
+            switch (_Key)
+            {
+                case KeyCode.Any:
+                    return (Current_Keys.Count > 0 || Current_MouseButtons.Count > 0) ? true : false;
+            }
             return Current_Keys.Contains((Keys)_Key) ? true : false;
         }
 
         public static bool GetKeyUp(KeyCode _Key)
         {
+            switch (_Key)
+            {
+                case KeyCode.Any:
+                    return (Releasing_Keys.Count > 0 || Releasing_MouseButtons.Count > 0) ? true : false;
+            }
             return Releasing_Keys.Contains((Keys)_Key) ? true : false;
         }
 
@@ -140,6 +155,7 @@ namespace LittleWormEngine
     public enum KeyCode
     {
         //Unknown = -1,
+        Any = -1,
         Space = 32,
         Apostrophe = 39,
         Comma = 44,

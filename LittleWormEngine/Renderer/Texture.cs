@@ -32,7 +32,7 @@ namespace LittleWormEngine.Renderer
             glGenerateMipmap(GL_TEXTURE_2D);
         }
 
-        public static void Set_TextureMode()
+        public void Set_TextureMode()
         {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);

@@ -19,7 +19,7 @@ namespace LittleWormEngine.Utility
             Matrix[3, 0] = _Row3.x; Matrix[3, 1] = _Row3.y; Matrix[3, 2] = _Row3.z; Matrix[3, 3] = _Row3.w;
         }
 
-        Vector4 Get_Vector4(string _Row_or_Col, int _No)
+        public Vector4 Get_Vector4(string _Row_or_Col, int _No)
         {
             switch (_Row_or_Col)
             {
@@ -38,7 +38,7 @@ namespace LittleWormEngine.Utility
                                new Vector4(0, 0, 1, 0), 
                                new Vector4(0, 0, 0, 1));
         }
-
+        static bool De2 = true;
         public static Matrix4 CameraTranslation(Vector3 _CameraPosition)
         {
             return new Matrix4(new Vector4(1, 0, 0, -_CameraPosition.x),
@@ -89,17 +89,38 @@ namespace LittleWormEngine.Utility
                                new Vector4(0, 0, 1, 0), 
                                new Vector4(0, 0, 0, 1));
         }
+        
+        public static Matrix4 Projection(float r, float l, float t, float b, float f, float n)
+        {
+            return new Matrix4(new Vector4( 2*n/(r-l)   , 0             , (r+l)/(r-l)           , 0),
+                               new Vector4(0            , 2 * n/(t-b)   , (t+b)/(t-b)           , 0),
+                               new Vector4(0            , 0             , -(f + n) / (f-n)      , 2 * f * n / (f - n)),
+                               new Vector4(0            , 0             , 1                     , 0));
+        }
 
         public static Matrix4 Projection(float _zNear, float _zFar, float _Width, float _Height, float _fov)
         {
             float _ar = _Width / _Height;
-            float _tanHalffov = (float)Math.Tan(Math_of_Rotation.Radians_of(_fov / 2));
-            float _zRange = _zNear - _zFar;
+            float _tanHalffov = (float)Math.Tan(_fov / 2 * Math.PI/180);
 
-            return new Matrix4(new Vector4(1/(_tanHalffov * _ar), 0, 0, 0),
+            return new Matrix4(new Vector4(1 / (_tanHalffov * _ar), 0, 0, 0),
                                new Vector4(0, 1 / _tanHalffov, 0, 0),
-                               new Vector4(0, 0, -(_zNear+_zFar)/_zRange, 2*_zNear*_zFar/_zRange),
+                               new Vector4(0, 0, (_zFar + _zNear) / (_zFar - _zNear), -2 * _zNear * _zFar / (_zFar - _zNear)),
                                new Vector4(0, 0, 1, 0));
+        }
+
+
+        public static Matrix4 Flip(Matrix4 _Matrix)
+        {
+            return new Matrix4(_Matrix.Get_Vector4("Col", 0), _Matrix.Get_Vector4("Col", 1), _Matrix.Get_Vector4("Col", 2), _Matrix.Get_Vector4("Col", 3));
+        }
+
+        public static Matrix4 Projection_Test(float _zNear, float _zFar, float _Top, float _Bottom, float _Right, float _Left)
+        {
+            return new Matrix4(new Vector4(2 * _zNear/(_Right - _Left), 0                 , 0                             , -_zNear * (_Right + _Left)/(_Right-_Left)),
+                               new Vector4(0                , 2*_zNear/(_Top - _Bottom)   , 0                             , -_zNear * (_Top+_Bottom)/(_Top-_Bottom)),
+                               new Vector4(0                , 0                 , -(_zFar + _zNear) / (_zFar - _zNear)   , 2 * _zFar * _zNear / (_zNear - _zFar)),
+                               new Vector4(0                , 0                 , -1                             , 0));
         }
 
         public static Vector4 operator *(Vector4 _a, Matrix4 _b) => new Vector4(_a * _b.Get_Vector4("Col", 0), _a * _b.Get_Vector4("Col", 1), _a * _b.Get_Vector4("Col", 2), _a * _b.Get_Vector4("Col", 3));

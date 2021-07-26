@@ -9,7 +9,7 @@ uniform mat4 transform;
 uniform mat4 nptransform;
 
 vec4 temp_Pos;
-
+vec4 temp_Pos2;
 out vec3 normal0;
 out vec2 texCoord0;
 out vec3 cam_angle;

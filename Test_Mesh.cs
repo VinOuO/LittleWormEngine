@@ -22,13 +22,44 @@ class Test_Mesh : DesignerProgram
         //GetComponent<BoxCollider>().Attaching_Rigibody.Set_Static();
         _Box = Instantiate("Box");
         _Box.Name = "Box2";
-        _Box.transform.Position = new Vector3(0, 0, 10);
-        GameObject.Find("Camera").transform.Position = Vector3.Zero;
-        //Attaching_GameObject.transform.Position = Vector3.Up * 10;
+        transform.Position = Vector3.Zero;
+        //_Box.transform.Position = new Vector3(0, 0, 10);
+        //
+        //Attaching_GameObject.transform.Position = Vector3.Forward * 10;
     }
     Vector3 Povit = Vector3.Zero;
     override public void Update()
     {
+        if (Input.GetKey(KeyCode.Up))
+        {
+            GetComponent<Transform>().Position.y += 20f * Time.DeltaTime;
+        }
+        if (Input.GetKey(KeyCode.Down))
+        {
+            GetComponent<Transform>().Position.y -= 20f * Time.DeltaTime;
+        }
+        if (Input.GetKey(KeyCode.Left))
+        {
+            GetComponent<Transform>().Position.x -= 20f * Time.DeltaTime;
+        }
+        if (Input.GetKey(KeyCode.Right))
+        {
+            GetComponent<Transform>().Position.x += 20f * Time.DeltaTime;
+        }
+        if (Input.GetKey(KeyCode.W))
+        {
+            GetComponent<Transform>().Position.z += 20f * Time.DeltaTime;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            GetComponent<Transform>().Position.z -= 20f * Time.DeltaTime;
+        }
+        if (Input.GetKeyUp(KeyCode.Any))
+        {
+            Debug.Log("fov: " + Camera.Main.fov);
+            Debug.Log(transform.Position);
+        }
+        /*
         if (Input.GetKeyDown(KeyCode.Right))
         {
             _Box.transform.Position.x += 1;
@@ -49,7 +80,7 @@ class Test_Mesh : DesignerProgram
             _Box.transform.Position.z -= 1;
             Debug.Log(_Box.transform.Position);
         }
-        
+        */
         //_Box.transform.Position.x+=Time.DeltaTime * 1;
         if (Input.GetKeyDown(KeyCode.H))
         {
