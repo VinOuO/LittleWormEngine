@@ -76,6 +76,7 @@ namespace LittleWormEngine.Renderer
 
         public uint CreateShader(int _Type, string _Code)
         {
+            Debug.Log(_Code);
             uint _Shader = glCreateShader(_Type);
             glShaderSource(_Shader, _Code);
             glCompileShader(_Shader);

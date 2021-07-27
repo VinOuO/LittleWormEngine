@@ -162,6 +162,23 @@ namespace LittleWormEngine.Renderer
         */
         #endregion
 
+        public static MeshData Get_DebugQuad()
+        {
+            float _Scaler = 0.5f;
+            List<Vertex> _Vertices = new List<Vertex>();
+            List<uint> _Indices = new List<uint>();
+
+            _Vertices.Add(new Vertex(new Vector3(-1,-1,0) * _Scaler));
+            _Vertices.Add(new Vertex(new Vector3(1,-1,0) * _Scaler));
+            _Vertices.Add(new Vertex(new Vector3(-1,1,0) * _Scaler));
+            _Vertices.Add(new Vertex(new Vector3(1,1,0) * _Scaler));
+            
+            _Indices.Add(0); _Indices.Add(3); _Indices.Add(1);
+            _Indices.Add(0); _Indices.Add(2); _Indices.Add(3);
+
+            return new MeshData(_Vertices, _Indices);
+        }
+
         public static MeshData Get_LineMesh(Vector3 _StartPos, Vector3 _EndPos, float _Radius)
         {
             int _SectorCount = 100;
@@ -207,7 +224,7 @@ namespace LittleWormEngine.Renderer
 
             return new MeshData(_Vertices, _Indices);
         }
-        public static bool De = false;
+
         public static MeshData Get_ClosedCirclePipeMesh(List<Vector3> _Points, float _Radius, Vector3 _SuppoutAxis)
         {
             int _SectorCount = 100;

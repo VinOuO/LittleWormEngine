@@ -20,9 +20,9 @@ class Test_Mesh : DesignerProgram
         GetComponent<Transform>().Position.x = 0;
         */
         //GetComponent<BoxCollider>().Attaching_Rigibody.Set_Static();
-        _Box = Instantiate("Box");
-        _Box.Name = "Box2";
-        transform.Position = Vector3.Zero;
+        //_Box = Instantiate("Box");
+        //_Box.Name = "Box2";
+        //transform.Position = Vector3.Zero;
         //_Box.transform.Position = new Vector3(0, 0, 10);
         //
         //Attaching_GameObject.transform.Position = Vector3.Forward * 10;
