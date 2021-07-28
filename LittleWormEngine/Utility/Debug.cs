@@ -45,7 +45,9 @@ namespace LittleWormEngine.Utility
 
         public static void LogError(string _String)
         {
-            Console.WriteLine(_String, ConsoleColor.Red);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(_String);
+            Console.ResetColor();
         }
 
         static List<string> Logged_Strings = new List<string>();

@@ -24,8 +24,11 @@ namespace LittleWormEngine
             switch (_Type)
             {
                 case "Rendering":
-                    Render_ShadowMap();
                     //Render();
+                    if (Attaching_GameObject.Name == "Ashe")
+                    {
+                        Render_ShadowMap();
+                    }
                     break;
             }
         }
@@ -69,22 +72,26 @@ namespace LittleWormEngine
         {
             Matrix4 _LightSpace = Matrix4.PerspectiveProjection(Core.MainCamera.zNear, Core.MainCamera.zFar, Core.MainCamera.Width, Core.MainCamera.Height, Core.MainCamera.fov) * Matrix4.GetCameraTransform() * Attaching_GameObject.transform.GetTransform(OffSet);
             ShadowShader.SetUniform("LightSpace", _LightSpace);
+            Debug.Log_Once(glGetProgramInfoLog(ShadowShader.Program));
 
-            //glActiveTexture(GL_TEXTURE0);
-            //glBindTexture(GL_TEXTURE_2D, RenderTextures[0].TexID);
             glViewport(0, 0, ShadowMap.Width, ShadowMap.Height);
             glBindFramebuffer(GL_FRAMEBUFFER, ShadowMap.RenderBufferID);
-            //glBindFramebuffer(GL_FRAMEBUFFER, 0);
-            //glClear(GL_COLOR_BUFFER_BIT);
-            //glClear(GL_DEPTH_BUFFER_BIT);
-            glBindVertexArray(RenderMesh.Vao);
-            Debug.Log_Once(glGetProgramInfoLog(ShadowShader.Program));
-            Draw();
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-            //Debug_Draw();
-            glDisable(GL_DEPTH_TEST);
-            Show_ShadowMap();
-            glEnable(GL_DEPTH_TEST);
+            glBindVertexArray(RenderMesh.Vao);
+            Draw();
+            _LightSpace = Matrix4.PerspectiveProjection(Core.MainCamera.zNear, Core.MainCamera.zFar, Core.MainCamera.Width, Core.MainCamera.Height, Core.MainCamera.fov) * Matrix4.GetCameraTransform() * GameObject.Find("Box2").transform.GetTransform(GameObject.Find("Box2").GetComponent<MeshRenderer>().OffSet);
+            ShadowShader.SetUniform("LightSpace", _LightSpace);
+            glBindVertexArray(GameObject.Find("Box2").GetComponent<MeshRenderer>().RenderMesh.Vao);
+            Draw();
+            /*
+            _LightSpace = Matrix4.PerspectiveProjection(Core.MainCamera.zNear, Core.MainCamera.zFar, Core.MainCamera.Width, Core.MainCamera.Height, Core.MainCamera.fov) * Matrix4.GetCameraTransform() * Attaching_GameObject.transform.GetTransform(GameObject.Find("Box2").GetComponent<MeshRenderer>().OffSet);
+            ShadowShader.SetUniform("LightSpace", _LightSpace);
+
+            glBindVertexArray(GameObject.Find("Box2").GetComponent<MeshRenderer>().RenderMesh.Vao);
+            Draw();
+            */
+            //Show_ShadowMap();
         }
 
         void Debug_Draw()

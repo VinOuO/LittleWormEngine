@@ -10,6 +10,6 @@ void main()
 {
     float DepthValue = texture(DepthMap, texCoord0).r;
 	//FragColor = vec4(vec3(DepthValue),1);
-	FragColor = vec4(vec3(DepthValue), texCoord0);
+	FragColor = vec4(vec3(DepthValue), 1);
 	//FragColor =  texture(DepthMap, texCoord0);
 } 

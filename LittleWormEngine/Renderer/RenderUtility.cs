@@ -31,6 +31,7 @@ namespace LittleWormEngine.Renderer
             glClearColor(0, 0, 0, 1);
             glEnable(GL_CULL_FACE);
             glEnable(GL_DEPTH_TEST);
+            //glDepthFunc(GL_ALWAYS);
             glFrontFace(GL_CW);
             glCullFace(GL_BACK);
             //TODO :Depth clamp for later
