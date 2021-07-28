@@ -67,28 +67,37 @@ namespace LittleWormEngine
         
         void Render_ShadowMap()
         {
-            /*
-            Matrix4 _LightSpace = Matrix4.OrthographicProjection(Camera.Main.Right, Camera.Main.Left, Camera.Main.Top, Camera.Main.Bottom, Camera.Main.zFar, Camera.Main.zNear) * Matrix4.RotateX(45);
+            Matrix4 _LightSpace = Matrix4.PerspectiveProjection(Core.MainCamera.zNear, Core.MainCamera.zFar, Core.MainCamera.Width, Core.MainCamera.Height, Core.MainCamera.fov) * Matrix4.GetCameraTransform() * Attaching_GameObject.transform.GetTransform(OffSet);
             ShadowShader.SetUniform("LightSpace", _LightSpace);
-            ShadowShader.SetUniform("Transform", Attaching_GameObject.transform.GetTransform(OffSet));
-            
-            //glViewport(0, 0, ShadowMap.Width, ShadowMap.Height);
-            glBindFramebuffer(GL_FRAMEBUFFER, ShadowMap.FrameBufferID);
+
+            //glActiveTexture(GL_TEXTURE0);
+            //glBindTexture(GL_TEXTURE_2D, RenderTextures[0].TexID);
+            glViewport(0, 0, ShadowMap.Width, ShadowMap.Height);
+            glBindFramebuffer(GL_FRAMEBUFFER, ShadowMap.RenderBufferID);
+            //glBindFramebuffer(GL_FRAMEBUFFER, 0);
+            //glClear(GL_COLOR_BUFFER_BIT);
+            //glClear(GL_DEPTH_BUFFER_BIT);
+            glBindVertexArray(RenderMesh.Vao);
+            Debug.Log_Once(glGetProgramInfoLog(ShadowShader.Program));
+            Draw();
+
+            //Debug_Draw();
+            glDisable(GL_DEPTH_TEST);
+            Show_ShadowMap();
+            glEnable(GL_DEPTH_TEST);
+        }
+
+        void Debug_Draw()
+        {
+            Matrix4 _LightSpace = Matrix4.PerspectiveProjection(Core.MainCamera.zNear, Core.MainCamera.zFar, Core.MainCamera.Width, Core.MainCamera.Height, Core.MainCamera.fov) * Matrix4.GetCameraTransform() * Attaching_GameObject.transform.GetTransform(OffSet);
+            //Matrix4 _LightSpace = Matrix4.OrthographicProjection(Camera.Main.Right, Camera.Main.Left, Camera.Main.Top, Camera.Main.Bottom, Camera.Main.zFar, Camera.Main.zNear) * Matrix4.GetCameraTransform() * Attaching_GameObject.transform.GetTransform(OffSet);
+            ShadowShader.SetUniform("LightSpace", _LightSpace);
+            //ShadowShader.SetUniform("LightSpace", Attaching_GameObject.GetComponent<Transform>().GetProjectdTransform(OffSet));
+            //Debug.Log_Once(glGetProgramInfoLog(ShadowShader.Program));
+            glActiveTexture(GL_TEXTURE0); // Texture unit i
             glBindTexture(GL_TEXTURE_2D, RenderTextures[0].TexID);
-            glUseProgram(ShadowShader.Program);
-            //glUseProgram(RenderShader.Program);
             glBindVertexArray(RenderMesh.Vao);
             Draw();
-            */
-            Show_ShadowMap();
-            
-            /*
-            glBindFramebuffer(GL_FRAMEBUFFER, 0);
-            glViewport(0, 0, Core.Width, Core.Height);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            glBindTexture(GL_TEXTURE_2D, ShadowMap.TexID);
-            Render();
-            */
         }
 
 
@@ -96,24 +105,29 @@ namespace LittleWormEngine
         public Shader DebugShader { get; set; }
         unsafe void Show_ShadowMap()
         {
-            //glBindFramebuffer(GL_FRAMEBUFFER, 0);
-            //glViewport(0, 0, Core.Width, Core.Height);
-            //glClearColor(0, 0, 0, 1);
-            //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+            glViewport(0, 0, Core.Width, Core.Height);
+            glClearColor(0, 1, 1, 1);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+            glActiveTexture(GL_TEXTURE0); // Texture unit i
+            glBindTexture(GL_TEXTURE_2D, ShadowMap.TexID);
             glUseProgram(DebugShader.Program);
-
             glBindVertexArray(DebugMesh.Vao);
-            
+            Debug.Log_Once(glGetProgramInfoLog(DebugShader.Program));
+            //DebugShader.SetUniform("DepthMap", 0);
             glEnableVertexAttribArray(0);
+            glEnableVertexAttribArray(1);
             glDrawElements(GL_TRIANGLES, DebugMesh.Indices.Length, GL_UNSIGNED_INT, NULL);
             glDisableVertexAttribArray(0);
+            glDisableVertexAttribArray(1);
         }
 
         public void Set_DebugMesh(Mesh _RenderMesh, Shader _RenderShader)
         {
             DebugMesh = _RenderMesh;
             DebugShader = _RenderShader;
+            DebugShader.AddUniform("DepthMap");
         }
 
         Mesh Get_DebugMesh()
@@ -151,7 +165,6 @@ namespace LittleWormEngine
         {
             Tag = "Renderer";
             OffSet = Vector3.Zero;
-            ShadowMap = new ShadowTexture();
         }
 
         public void Set(Mesh _RenderMesh, Texture _RenderTexture, Shader _RenderShader)
@@ -178,6 +191,7 @@ namespace LittleWormEngine
             RenderShader.AddUniform("light_angle");
             RenderShader.AddUniform("sampler");
 
+            ShadowMap = new ShadowTexture();
             ShadowShader = new Shader("ShadowVertex.vs", "", "ShadowFragment.fs");
             ShadowShader.AddUniform("LightSpace");
             ShadowShader.AddUniform("Transform");

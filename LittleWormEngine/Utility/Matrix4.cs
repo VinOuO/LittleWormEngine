@@ -98,6 +98,12 @@ namespace LittleWormEngine.Utility
                                new Vector4(-(_Right + _Left) / (_Right - _Left) , -(_Top + _Bottom) / (_Top - _Bottom)  , -(_zFar + _zNear) / (_zFar - _zNear)  , 1));
         }
 
+        public static Matrix4 GetCameraTransform()
+        {
+            Transform CameraTransform = Core.The_Camera.Attaching_GameObject.transform;
+            return RotateX(CameraTransform.Rotation.x) * RotateY(CameraTransform.Rotation.y) * RotateZ(CameraTransform.Rotation.z) * CameraTranslation(CameraTransform.Position);
+        }
+
         public static Matrix4 PerspectiveProjection(float _zNear, float _zFar, float _Width, float _Height, float _fov)
         {
             float _ar = _Width / _Height;
