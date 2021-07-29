@@ -21,46 +21,29 @@ namespace LittleWormEngine.Renderer
 
         public ShadowTexture()
         {
-            Create_Texture_Testing();
+            Create_Texture_OK();
         }
 
         public unsafe void Create_Texture_Testing()
         {
-            FrameBufferID = glGenFramebuffer();
-            glBindFramebuffer(GL_FRAMEBUFFER, FrameBufferID);
-            /*
             TexID = glGenTexture();
             glBindTexture(GL_TEXTURE_2D, TexID);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Width, Height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, Width, Height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-            glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, TexID, 0);
-            glDrawBuffer(GL_COLOR_ATTACHMENT0);
-            */
-            TexID2 = glGenTexture();
-            glBindTexture(GL_TEXTURE_2D, TexID2);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, Height, Height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_NONE);
-            glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_COMPONENT, TexID2, 0);
 
-            //glDrawBuffer(GL_COLOR_ATTACHMENT0);
-            //glDrawBuffer(GL_NONE);
-            //glReadBuffer(GL_NONE);
+            FrameBufferID = glGenFramebuffer();
+            glBindFramebuffer(GL_FRAMEBUFFER, FrameBufferID);
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, TexID, 0);
 
-            DepthBufferID = glGenRenderbuffer();
-            glBindRenderbuffer(DepthBufferID);
-            glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, Width, Height);
-            glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, DepthBufferID);
+            glDrawBuffer(GL_NONE);
+            glReadBuffer(GL_NONE);
 
             if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
             {
-                Debug.LogError("Something went wrong!");
+                Debug.LogError("Something went wrong!: Code" + glCheckFramebufferStatus(GL_FRAMEBUFFER));
             }
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
         }
@@ -82,7 +65,7 @@ namespace LittleWormEngine.Renderer
 
             if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
             {
-                Debug.LogError("Something went wrong!");
+                Debug.LogError("Something went wrong!: Code" + glCheckFramebufferStatus(GL_FRAMEBUFFER));
             }
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
         }

@@ -6,6 +6,7 @@ using LittleWormEngine.Utility;
 using GLFW;
 using static OpenGL.GL;
 
+
 namespace LittleWormEngine
 {
     class MeshRenderer : Component
@@ -70,10 +71,6 @@ namespace LittleWormEngine
 
             glBindVertexArray(RenderMesh.Vao);
             Draw();
-            _LightSpace = Matrix4.PerspectiveProjection(Core.MainCamera.zNear, Core.MainCamera.zFar, Core.MainCamera.Width, Core.MainCamera.Height, Core.MainCamera.fov) * Matrix4.GetCameraTransform() * GameObject.Find("Box2").transform.GetTransform(GameObject.Find("Box2").GetComponent<MeshRenderer>().OffSet);
-            ShadowShader.SetUniform("LightSpace", _LightSpace);
-            glBindVertexArray(GameObject.Find("Box2").GetComponent<MeshRenderer>().RenderMesh.Vao);
-            Draw();
         }
 
         static bool Debug_Set_Up = false;
@@ -88,11 +85,12 @@ namespace LittleWormEngine
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             glActiveTexture(GL_TEXTURE0); // Texture unit i
-            glBindTexture(GL_TEXTURE_DEPTH, ShadowMap.TexID2);
+            glBindTexture(GL_TEXTURE_2D, ShadowMap.TexID);
             glUseProgram(DebugShader.Program);
             glBindVertexArray(DebugMesh.Vao);
 
             Debug.Log_Once(glGetProgramInfoLog(DebugShader.Program));
+
             glEnableVertexAttribArray(0);
             glEnableVertexAttribArray(1);
             glDrawElements(GL_TRIANGLES, DebugMesh.Indices.Length, GL_UNSIGNED_INT, NULL);
