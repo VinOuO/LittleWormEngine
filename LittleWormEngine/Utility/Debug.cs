@@ -42,5 +42,22 @@ namespace LittleWormEngine.Utility
         {
             Console.WriteLine(_String);
         }
+
+        public static void LogError(string _String)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(_String);
+            Console.ResetColor();
+        }
+
+        static List<string> Logged_Strings = new List<string>();
+        public static void Log_Once(string _String)
+        {
+            if (!Logged_Strings.Exists(_x => _x == _String) && _String != "")
+            {
+                Console.WriteLine(_String);
+                Logged_Strings.Add(_String);
+            }
+        }
     }
 }

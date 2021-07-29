@@ -147,8 +147,6 @@ namespace LittleWormEngine
             }
         }
 
-        public string MeshFileName;
-        public string TextureFileName;
         public Mesh RenderMesh { get; set; }
         public Texture RenderTexture { get; set; }
         public Shader RenderShader { get; set; }

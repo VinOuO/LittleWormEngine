@@ -30,6 +30,7 @@ namespace LittleWormEngine.Renderer
             Image.UnlockBits(_Bmp_Data);
             Set_TextureMode();
             glGenerateMipmap(GL_TEXTURE_2D);
+            glBindTexture(GL_TEXTURE_2D, 0);
         }
 
         public void Set_TextureMode()

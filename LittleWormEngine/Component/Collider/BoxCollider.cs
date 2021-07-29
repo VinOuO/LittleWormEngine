@@ -111,15 +111,6 @@ namespace LittleWormEngine
         */
         #endregion
 
-        public unsafe void Draw()
-        {
-            glEnableVertexAttribArray(0);
-
-            glDrawElements(GL_TRIANGLES, RenderMesh.Indices.Length, GL_UNSIGNED_INT, NULL);
-
-            glDisableVertexAttribArray(0);
-        }
-
         public void Set_BoxColiiderSize(Vector3 _HalfSize)
         {
             List<object> _Parameters = new List<object>();
@@ -177,13 +168,6 @@ namespace LittleWormEngine
             OffSet = Vector3.Zero;
             HalfSize = Vector3.One;
             Is_Trigger = false;
-        }
-
-        public void Set_Mesh(Mesh _RenderMesh, Shader _RenderShader)
-        {
-            RenderMesh = _RenderMesh;
-            RenderShader = _RenderShader;
-            RenderShader.AddUniform("transform");
         }
 
         protected override BulletSharp.CollisionShape Create_Shape()

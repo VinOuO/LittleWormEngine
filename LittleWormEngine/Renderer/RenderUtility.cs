@@ -31,6 +31,7 @@ namespace LittleWormEngine.Renderer
             glClearColor(0, 0, 0, 1);
             glEnable(GL_CULL_FACE);
             glEnable(GL_DEPTH_TEST);
+            //glDepthFunc(GL_ALWAYS);
             glFrontFace(GL_CW);
             glCullFace(GL_BACK);
             //TODO :Depth clamp for later
@@ -162,6 +163,23 @@ namespace LittleWormEngine.Renderer
         */
         #endregion
 
+        public static MeshData Get_DebugQuad()
+        {
+            float _Scaler = 1f;
+            List<Vertex> _Vertices = new List<Vertex>();
+            List<uint> _Indices = new List<uint>();
+
+            _Vertices.Add(new Vertex(new Vector3(-1, -1, 0) * _Scaler, new Vector2(0, 1)));
+            _Vertices.Add(new Vertex(new Vector3(1, -1, 0) * _Scaler, new Vector2(1, 1)));
+            _Vertices.Add(new Vertex(new Vector3(-1, 1, 0) * _Scaler, new Vector2(0, 0)));
+            _Vertices.Add(new Vertex(new Vector3(1, 1, 0) * _Scaler, new Vector2(1, 0)));
+
+            _Indices.Add(0); _Indices.Add(3); _Indices.Add(1);
+            _Indices.Add(0); _Indices.Add(2); _Indices.Add(3);
+
+            return new MeshData(_Vertices, _Indices);
+        }
+
         public static MeshData Get_LineMesh(Vector3 _StartPos, Vector3 _EndPos, float _Radius)
         {
             int _SectorCount = 100;
@@ -207,7 +225,7 @@ namespace LittleWormEngine.Renderer
 
             return new MeshData(_Vertices, _Indices);
         }
-        public static bool De = false;
+
         public static MeshData Get_ClosedCirclePipeMesh(List<Vector3> _Points, float _Radius, Vector3 _SuppoutAxis)
         {
             int _SectorCount = 100;

@@ -7,16 +7,17 @@ namespace LittleWormEngine
     class Camera : Component
     {
         public static Camera Main { get { return Core.MainCamera; } }
-
         public float zNear = 0.1f;
         public float zFar = 100;
-        public float Width = Core.Width;
-        public float Height = Core.Height;
-        public float Top = Core.Height / 2;
-        public float Bottom = -Core.Height / 2;
-        public float Right = Core.Width / 2;
-        public float Left = -Core.Width / 2;
         public float fov = 45;
+
+        public float Width = Core.Width / 600;
+        public float Height = Core.Height / 600;
+        public float Top = Core.Height / 600;
+        public float Bottom = -Core.Height / 600;
+        public float Right = Core.Width / 600;
+        public float Left = -Core.Width / 600;
+
         public Vector3 yAxis = Vector3.Forward;
 
         public GameObject Attaching_GameObject { get; set; }

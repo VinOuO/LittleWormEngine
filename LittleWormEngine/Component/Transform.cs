@@ -63,7 +63,7 @@ namespace LittleWormEngine
         public Matrix4 GetProjectdTransform(Vector3 _OffSet)
         {
             Transform CameraTransform = Core.The_Camera.Attaching_GameObject.transform;
-            return Matrix4.Projection(Core.MainCamera.zNear, Core.MainCamera.zFar, Core.MainCamera.Width, Core.MainCamera.Height, Core.MainCamera.fov) * Matrix4.RotateX(CameraTransform.Rotation.x) * Matrix4.RotateY(CameraTransform.Rotation.y) * Matrix4.RotateZ(CameraTransform.Rotation.z) * Matrix4.CameraTranslation(CameraTransform.Position) * GetTransform(_OffSet);
+            return Matrix4.PerspectiveProjection(Core.MainCamera.zNear, Core.MainCamera.zFar, Core.MainCamera.Width, Core.MainCamera.Height, Core.MainCamera.fov) * Matrix4.RotateX(CameraTransform.Rotation.x) * Matrix4.RotateY(CameraTransform.Rotation.y) * Matrix4.RotateZ(CameraTransform.Rotation.z) * Matrix4.CameraTranslation(CameraTransform.Position) * GetTransform(_OffSet);
         }
 
         public Matrix4 GetTransformwithoutScale(Vector3 _OffSet)
@@ -74,7 +74,7 @@ namespace LittleWormEngine
         public Matrix4 GetProjectdTransformwithoutScale(Vector3 _OffSet)
         {
             Transform CameraTransform = Core.The_Camera.Attaching_GameObject.transform;
-            return Matrix4.Projection(Core.MainCamera.zNear, Core.MainCamera.zFar, Core.MainCamera.Width, Core.MainCamera.Height, Core.MainCamera.fov) * Matrix4.RotateX(CameraTransform.Rotation.x) * Matrix4.RotateY(CameraTransform.Rotation.y) * Matrix4.RotateZ(CameraTransform.Rotation.z) * Matrix4.CameraTranslation(CameraTransform.Position) * GetTransformwithoutScale(_OffSet);
+            return Matrix4.PerspectiveProjection(Core.MainCamera.zNear, Core.MainCamera.zFar, Core.MainCamera.Width, Core.MainCamera.Height, Core.MainCamera.fov) * Matrix4.RotateX(CameraTransform.Rotation.x) * Matrix4.RotateY(CameraTransform.Rotation.y) * Matrix4.RotateZ(CameraTransform.Rotation.z) * Matrix4.CameraTranslation(CameraTransform.Position) * GetTransformwithoutScale(_OffSet);
         }
     }
 }

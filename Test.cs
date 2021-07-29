@@ -35,7 +35,7 @@ class Test : DesignerProgram
         //Debug.Log(transform.GetProjectdTransform(Vector3.Zero) * new Vector4(Vector3.Zero + Vector3.Forward, 1));
         Debug.Log("\n---End Debug---");
         */
-        //Inis_Shader();
+        Inis_Shader();
     }
     int i = 1;
     Texture _Test;
@@ -44,11 +44,11 @@ class Test : DesignerProgram
     {
         if (Input.GetKey(KeyCode.Up))
         {
-            GetComponent<Transform>().Position.y += 20f * Time.DeltaTime;
+            //GetComponent<Transform>().Position.y += 20f * Time.DeltaTime;
         }
         if (Input.GetKey(KeyCode.Down))
         {
-            GetComponent<Transform>().Position.y -= 20f * Time.DeltaTime;
+            //GetComponent<Transform>().Position.y -= 20f * Time.DeltaTime;
         }
         if (Input.GetKey(KeyCode.Left))
         {
@@ -68,8 +68,7 @@ class Test : DesignerProgram
         }
         if (Input.GetKeyUp(KeyCode.Any))
         {
-            Debug.Log("fov: " + Camera.Main.fov);
-            Debug.Log(transform.Position);
+            //Debug.Log(transform.Position);
         }
         //GetComponent<MeshRenderer>().RenderShader.SetUniform("FlashLightDir", Camera.Main.Get_MouseDir());
         //GetComponent<MeshRenderer>().RenderShader.SetUniform("nptransform", Attaching_GameObject.GetComponent<Transform>().GetTransform(Attaching_GameObject.GetComponent<MeshRenderer>().OffSet));

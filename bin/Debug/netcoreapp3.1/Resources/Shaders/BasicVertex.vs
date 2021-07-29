@@ -17,7 +17,7 @@ out vec3 cam_angle;
 void main()
 {
 	translated_pos = nptransform * vec4(position, 1.0);
-	cam_angle = normalize(cam_pos - vec3(translated_pos.x, translated_pos.y, translated_pos.z)); //position is wrong, need to * transform
+	cam_angle = normalize(cam_pos - vec3(translated_pos.x, translated_pos.y, translated_pos.z));
 	normal0 = normal;
 	texCoord0 = texCoord;
 	gl_Position = transform * vec4(position, 1.0);

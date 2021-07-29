@@ -22,8 +22,7 @@ class Test_Mesh : DesignerProgram
         //GetComponent<BoxCollider>().Attaching_Rigibody.Set_Static();
         _Box = Instantiate("Box");
         _Box.Name = "Box2";
-        transform.Position = Vector3.Zero;
-        //_Box.transform.Position = new Vector3(0, 0, 10);
+        _Box.transform.Position = new Vector3(-3, 1, 50);
         //
         //Attaching_GameObject.transform.Position = Vector3.Forward * 10;
     }
@@ -40,11 +39,11 @@ class Test_Mesh : DesignerProgram
         }
         if (Input.GetKey(KeyCode.Left))
         {
-            GetComponent<Transform>().Position.x -= 20f * Time.DeltaTime;
+            GetComponent<Transform>().Rotation.y -= 20f * Time.DeltaTime;
         }
         if (Input.GetKey(KeyCode.Right))
         {
-            GetComponent<Transform>().Position.x += 20f * Time.DeltaTime;
+            GetComponent<Transform>().Rotation.y += 20f * Time.DeltaTime;
         }
         if (Input.GetKey(KeyCode.W))
         {
