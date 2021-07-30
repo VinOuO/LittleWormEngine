@@ -7,32 +7,26 @@ in vec3 position0;
 out vec4 fragColor;
 
 uniform vec3 FlashLightDir;
-uniform vec3 cam_pos;
-uniform vec3 light_angle;
-uniform sampler2D sampler;
-uniform sampler2D underworldsampler;
+uniform vec3 Camera_Pos;
+//uniform vec3 light_angle;
+uniform sampler2D NormalSampler;
+uniform mat4 Transform;
+uniform mat4 NPTransform;
+uniform sampler2D UnderWorldSampler;
+
+vec4 temp_Pos;
 
 float light_intensity = 1;
 float R = 0.0f;
 void main()
 {
-	fragColor = texture(sampler, texCoord0);
-	/*
-	if(position0.x > 10 && position0.y > 5){
-		fragColor = texture(underworldsampler, texCoord0);
-	}
+	if(dot(normalize(FlashLightDir), normalize(position0 - Camera_Pos)) >= 0.999f){
+		fragColor = texture(UnderWorldSampler, texCoord0);
+	} 
 	else{
-		fragColor = texture(sampler, texCoord0);
-	}
-	*/
-	
-	if(dot(normalize(FlashLightDir), normalize(position0 - cam_pos)) >= 0.9995f){
-		fragColor = texture(underworldsampler, texCoord0);
-	}
-	else{
-		fragColor = texture(sampler, texCoord0);
+		fragColor = texture(NormalSampler, texCoord0);
 	}
     
-	light_intensity = 0.1f + 0.6f * dot(light_angle, normal0) + R * dot(reflect(light_angle, normal0), cam_angle);
-	fragColor *= light_intensity;
+	//light_intensity = 0.1f + 0.6f * dot(light_angle, normal0) + R * dot(reflect(light_angle, normal0), cam_angle);
+	//fragColor *= light_intensity;
 }

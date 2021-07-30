@@ -39,7 +39,7 @@ namespace LittleWormEngine
                 _State = (int)Glfw.GetMouseButton(_Window, _MouseButton);
                 if (!Current_MouseButtons.Contains(_MouseButton) && _State == (int)InputState.Press)
                 {
-                    Console.WriteLine("Mouse : " + _MouseButton.ToString() + " is pressed");
+                    //Console.WriteLine("Mouse : " + _MouseButton.ToString() + " is pressed");
                     Pressing_MouseButtons.Add(_MouseButton);
                 }
             }
@@ -50,7 +50,7 @@ namespace LittleWormEngine
                 _State = (int)Glfw.GetMouseButton(_Window, _MouseButton);
                 if (Current_MouseButtons.Contains(_MouseButton) && _State == (int)InputState.Release)
                 {
-                    Console.WriteLine("Mouse : " + _MouseButton.ToString() + " is released");
+                    //Console.WriteLine("Mouse : " + _MouseButton.ToString() + " is released");
                     Releasing_MouseButtons.Add(_MouseButton);
                 }
             }
@@ -71,7 +71,7 @@ namespace LittleWormEngine
                 _State = (int)Glfw.GetKey(_Window, _Key);
                 if (!Current_Keys.Contains(_Key) && _State == (int)InputState.Press)
                 {
-                    Console.WriteLine("Key : " + _Key.ToString() + " is pressed");
+                    //Console.WriteLine("Key : " + _Key.ToString() + " is pressed");
                     Pressing_Keys.Add(_Key);
                 }
             }
@@ -82,7 +82,7 @@ namespace LittleWormEngine
                 _State = (int)Glfw.GetKey(_Window, _Key);
                 if (Current_Keys.Contains(_Key) && _State == (int)InputState.Release)
                 {
-                    Console.WriteLine("Key : " + _Key.ToString() + " is released");
+                    //Console.WriteLine("Key : " + _Key.ToString() + " is released");
                     Releasing_Keys.Add(_Key);
                 }
             }

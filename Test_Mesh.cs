@@ -22,7 +22,6 @@ class Test_Mesh : DesignerProgram
         //GetComponent<BoxCollider>().Attaching_Rigibody.Set_Static();
         _Box = Instantiate("Box");
         _Box.Name = "Box2";
-        _Box.transform.Position = new Vector3(-3, 1, 50);
         //
         //Attaching_GameObject.transform.Position = Vector3.Forward * 10;
     }
@@ -52,11 +51,6 @@ class Test_Mesh : DesignerProgram
         if (Input.GetKey(KeyCode.S))
         {
             GetComponent<Transform>().Position.z -= 20f * Time.DeltaTime;
-        }
-        if (Input.GetKeyUp(KeyCode.Any))
-        {
-            Debug.Log("fov: " + Camera.Main.fov);
-            Debug.Log(transform.Position);
         }
         /*
         if (Input.GetKeyDown(KeyCode.Right))

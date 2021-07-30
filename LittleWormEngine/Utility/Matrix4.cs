@@ -38,7 +38,7 @@ namespace LittleWormEngine.Utility
                                new Vector4(0, 0, 1, 0), 
                                new Vector4(0, 0, 0, 1));
         }
-        static bool De2 = true;
+
         public static Matrix4 CameraTranslation(Vector3 _CameraPosition)
         {
             return new Matrix4(new Vector4(1, 0, 0, -_CameraPosition.x),

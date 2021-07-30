@@ -15,8 +15,8 @@ namespace LittleWormEngine
         public static string Mode = "Game";
         public static string SceneName = "Scene_Debug" + ".lws";
         public static Camera MainCamera;
-        public static int Width = 1050;
-        public static int Height = 1050;
+        public static int Width = 1600;
+        public static int Height = 900;
         public static long Frame_Cap = 5000;
         public static bool Is_Running;
         public static Window The_GameWindow;
@@ -239,7 +239,7 @@ namespace LittleWormEngine
 
         static void Render_Meshes()
         {
-            MeshRenderer.Inis_ShadowMapping();
+            //MeshRenderer.Inis_ShadowMapping();
             foreach (GameObject _GameObject in GameObjects)
             {
                 foreach (Component _Component in _GameObject.RenderComponents)
@@ -247,7 +247,7 @@ namespace LittleWormEngine
                     _Component.Update("Rendering");
                 }
             }
-            MeshRenderer.Show_ShadowMap();
+            //MeshRenderer.Show_ShadowMap();
         }
 
         public static uint Get_MeshID()
@@ -448,10 +448,11 @@ namespace LittleWormEngine
         
     }
 
-    class ModifyingGameObjectInfo
+    class ModifyingGameObjectInfo //Utility of adding compontents
     {
         public GameObject ModifyingGameObject;
         public string RemovingComponent;
+        public string AddingComponent;
 
         public ModifyingGameObjectInfo(GameObject _ModifyingGameObject, string _RemovingComponent)
         {

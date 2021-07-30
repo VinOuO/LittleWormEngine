@@ -13,6 +13,7 @@ namespace LittleWormEngine
         public virtual void OnCollitionEnter(GameObject _Other) { }
         public virtual void OnCollitionStay(GameObject _Other) { }
         public virtual void OnCollitionExit(GameObject _Other) { }
+        public virtual void ShaderUniformUpdate() { }
         public Transform transform { get { return GetComponent<Transform>(); } }
 
         public GameObject Instantiate(string _PrefabName)
@@ -32,6 +33,17 @@ namespace LittleWormEngine
             }
         }
 
+        public void AddComponent<T>() where T : Component
+        {
+            Component _Adding_Component = (Component)Activator.CreateInstance(typeof(T));
+            _Adding_Component.Attaching_GameObject = Attaching_GameObject;
+            Attaching_GameObject.Components.Add(_Adding_Component);
+            if (_Adding_Component.Tag == "Renderer")
+            {
+                Attaching_GameObject.RenderComponents.Add(_Adding_Component);
+            }
+        }
+
         public T GetCustomComponent<T>() where T : CustomComponent
         {
             if (Attaching_GameObject.CustomComponents.Exists(_x => _x is T))
@@ -42,6 +54,13 @@ namespace LittleWormEngine
             {
                 return (T)(CustomComponent)null;
             }
+        }
+
+        public void AddCustomComponent<T>() where T : CustomComponent
+        {
+            CustomComponent _Adding_Component = (CustomComponent)Activator.CreateInstance(typeof(T));
+            _Adding_Component.Attaching_GameObject = Attaching_GameObject;
+            Attaching_GameObject.CustomComponents.Add(_Adding_Component);
         }
     }
 }

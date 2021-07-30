@@ -740,7 +740,7 @@ namespace LittleWorm
             Load_GameObjectDropDown();
         }
 
-        private void AddCmpBut_Click(object sender, EventArgs e)
+        private void AddCmpBut_Click(object sender, EventArgs e) //While adding meshrender it will crash due to didn't set up
         {
             if (AddComponentDropDown.Text == "" || EditorCore.SelectingGameObject == null)
             {

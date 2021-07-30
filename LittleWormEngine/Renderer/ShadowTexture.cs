@@ -21,6 +21,7 @@ namespace LittleWormEngine.Renderer
 
         public ShadowTexture()
         {
+            //Create_Texture_Testing();
             Create_Texture_OK();
         }
 

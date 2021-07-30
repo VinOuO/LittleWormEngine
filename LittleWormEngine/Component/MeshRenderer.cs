@@ -29,8 +29,8 @@ namespace LittleWormEngine
             switch (_Type)
             {
                 case "Rendering":
-                    //Render();
-                    Render_ShadowMap();
+                    Render();
+                    //Render_ShadowMap();
                     break;
             }
         }
@@ -43,13 +43,23 @@ namespace LittleWormEngine
             }
             glUseProgram(RenderShader.Program);
             glBindVertexArray(RenderMesh.Vao);
-
-            RenderShader.SetUniform("transform", Attaching_GameObject.GetComponent<Transform>().GetProjectdTransform(OffSet));
-            RenderShader.SetUniform("nptransform", Attaching_GameObject.GetComponent<Transform>().GetTransform(OffSet));
-            RenderShader.SetUniform("cam_pos", Camera.Main.Attaching_GameObject.transform.Position);
-            Light_Dir = Matrix3.RotateY(30 * Time.DeltaTime) * Light_Dir;
-            _temp = Matrix3.RotateX(-Attaching_GameObject.GetComponent<Transform>().Rotation.x) * (Matrix3.RotateY(-Attaching_GameObject.GetComponent<Transform>().Rotation.y) * (Matrix3.RotateZ(-Attaching_GameObject.GetComponent<Transform>().Rotation.z) * Light_Dir.Normalize()));
-            RenderShader.SetUniform("light_angle", _temp);
+            if (Using_Defult_Shader) //Defult shader
+            {
+                RenderShader.SetUniform("transform", Attaching_GameObject.GetComponent<Transform>().GetProjectdTransform(OffSet));
+                RenderShader.SetUniform("nptransform", Attaching_GameObject.GetComponent<Transform>().GetTransform(OffSet));
+                RenderShader.SetUniform("cam_pos", Camera.Main.Attaching_GameObject.transform.Position);
+                Light_Dir = Matrix3.RotateY(30 * Time.DeltaTime) * Light_Dir;
+                _temp = Matrix3.RotateX(-Attaching_GameObject.GetComponent<Transform>().Rotation.x) * (Matrix3.RotateY(-Attaching_GameObject.GetComponent<Transform>().Rotation.y) * (Matrix3.RotateZ(-Attaching_GameObject.GetComponent<Transform>().Rotation.z) * Light_Dir.Normalize()));
+                RenderShader.SetUniform("light_angle", _temp);
+            }
+            else
+            {
+                foreach(DesignerProgram _DesignerProgram in Attaching_GameObject.CustomComponents)
+                {
+                    _DesignerProgram.ShaderUniformUpdate();
+                }
+            }
+            Debug.Log_Once(glGetProgramInfoLog(RenderShader.Program));
             Draw();
         }
 
@@ -61,6 +71,9 @@ namespace LittleWormEngine
 
         void Render_ShadowMap()
         {
+            glDepthMask(true);
+            glEnable(GL_DEPTH_TEST);
+
             Matrix4 _LightSpace = Matrix4.PerspectiveProjection(Core.MainCamera.zNear, Core.MainCamera.zFar, Core.MainCamera.Width, Core.MainCamera.Height, Core.MainCamera.fov) * Matrix4.GetCameraTransform() * Attaching_GameObject.transform.GetTransform(OffSet);
             ShadowShader.SetUniform("LightSpace", _LightSpace);
             Debug.Log_Once(glGetProgramInfoLog(ShadowShader.Program));
@@ -90,6 +103,25 @@ namespace LittleWormEngine
             glBindVertexArray(DebugMesh.Vao);
 
             Debug.Log_Once(glGetProgramInfoLog(DebugShader.Program));
+
+            float[] A = new float[1024*1024];
+            for (int i = 0; i < A.Length; i++)
+            {
+                A[i] = i - 1024 * 1024;
+            }
+
+            IntPtr ptr;
+            unsafe
+            {
+                fixed (float* p = &A[0]) ptr = (IntPtr)p;
+            }
+
+            glGetTexImage(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, GL_FLOAT, ptr);
+            //glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_FLOAT, ptr);
+            for (int i = 0; i < A.Length; i++)
+            {
+                //Debug.Log_Once("Tex: " + A[i]);
+            }
 
             glEnableVertexAttribArray(0);
             glEnableVertexAttribArray(1);
@@ -142,7 +174,7 @@ namespace LittleWormEngine
             Tag = "Renderer";
             OffSet = Vector3.Zero;
         }
-        /* Can not use is the mesh doesn't contain normal
+        /* Can not use if the mesh doesn't contain normal
         public void Set(Mesh _RenderMesh, string _TextureFileName)
         {
             MeshFileName = "Defined in Game";
@@ -165,6 +197,7 @@ namespace LittleWormEngine
             }
         }
         */
+        bool Using_Defult_Shader = true;
         public void Set(string _MeshFileName, string _TextureFileName)
         {
             MeshFileName = _MeshFileName;
@@ -198,6 +231,7 @@ namespace LittleWormEngine
         public void Set_Shader(string _VertexShader, string _GeometryShader, string _FragmentShader)
         {
             RenderShader = new Shader(_VertexShader, _GeometryShader, _FragmentShader);
+            Using_Defult_Shader = false;
         }
 
         public Texture Add_Texture(string _TextureFileName)

@@ -8,15 +8,15 @@ namespace LittleWormEngine
     {
         public static Camera Main { get { return Core.MainCamera; } }
         public float zNear = 0.1f;
-        public float zFar = 100;
+        public float zFar = 10000;
         public float fov = 45;
 
-        public float Width = Core.Width / 600;
-        public float Height = Core.Height / 600;
-        public float Top = Core.Height / 600;
-        public float Bottom = -Core.Height / 600;
-        public float Right = Core.Width / 600;
-        public float Left = -Core.Width / 600;
+        public float Width = Core.Width;
+        public float Height = Core.Height;
+        public float Top = Core.Height;
+        public float Bottom = -Core.Height;
+        public float Right = Core.Width;
+        public float Left = -Core.Width;
 
         public Vector3 yAxis = Vector3.Forward;
 
@@ -59,11 +59,17 @@ namespace LittleWormEngine
         {
             Vector3 _TempVec3 = Vector3.Zero;
             double _AngleX, _AngleY, _X, _Y;
-            _AngleX = ((Input.MousePosition.x - Width / 2) / (Width / 2)) * (fov/2) * (Width / Height);
-            _AngleY = (((Input.MousePosition.y - Height / 2) / (Height / 2)) * -1) * (fov / 2);
+            _AngleX = ((Input.MousePosition.x - Core.Width / 2) / (Core.Width / 2)) * (fov/2) * (double)Core.Width / (double)Core.Height;
+            _AngleY = (((Input.MousePosition.y - Core.Height / 2) / (Core.Height / 2)) * -1) * (fov / 2);
 
             _X = 1 / Math.Cos(Mathematics.Math_of_Rotation.Radians_of(_AngleX));
             _Y = 1 / Math.Cos(Mathematics.Math_of_Rotation.Radians_of(_AngleY));
+            //_TempVec3 = new Vector3(Math.Sqrt(_X * _X - 1) * (_AngleX >= 0 ? 1 : -1), Math.Sqrt(_Y * _Y - 1) * (_AngleY >= 0 ? 1 : -1), 1);
+            if (Input.GetKeyDown(MouseCode.Left))
+            {
+                //Debug.Log("After X:" + _AngleX);
+                //Debug.Log("After Y:" + _AngleY);
+            }
             return new Vector3(Math.Sqrt(_X * _X - 1) * (_AngleX >= 0 ? 1 : -1), Math.Sqrt(_Y * _Y - 1) * (_AngleY >= 0 ? 1 : -1), 1);
         }
     }
