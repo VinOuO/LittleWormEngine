@@ -1,18 +1,3 @@
-/*
-#version 330 core
-
-//layout(location = 0) out vec4 fragColor;
-
-//uniform sampler2D sampler;
-
-void main()
-{
-	gl_FragDepth = gl_FragCoord.z;
-	//fragColor = vec4(gl_FragCoord.w,gl_FragCoord.w,gl_FragCoord.w,1);
-	//fragColor = vec4(gl_FragDepth,gl_FragDepth,gl_FragDepth,1);
-}
-*/
-
 #version 330 core
 out vec4 FragColor;
 
@@ -28,7 +13,15 @@ float LinearizeDepth(float depth)
 void main()
 {             
     float depth = LinearizeDepth(gl_FragCoord.z) / far; // divide by far for demonstration
-	gl_FragDepth = depth;
-    FragColor = vec4(vec3(depth), 1.0);
-    //FragColor = vec4(0.5);
+	FragColor = vec4(vec3(depth), 1.0);
+	/*
+	if(depth == 0)
+	{
+		FragColor = vec4(1,1,1,1);
+	}
+	else
+	{
+		FragColor = vec4(vec3(depth), 1.0);
+	}
+	*/
 }

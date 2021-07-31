@@ -38,6 +38,8 @@ namespace LittleWormEngine
             Glfw.SetCursorPositionCallback(The_GameWindow,Input.Check_Cursor_Position);
             The_Camera = Get_Camera();
             PhysicsWorld.Set_PhysicWorld();
+            MeshRenderer.Set_Combin_Shadow();
+
             while (!PhysicsWorld.InisReady)
             {
                 Thread.Sleep(1);
@@ -236,10 +238,9 @@ namespace LittleWormEngine
             }
 
         }
-
+        public static bool Using_ShadowMapping = true;
         static void Render_Meshes()
         {
-            //MeshRenderer.Inis_ShadowMapping();
             foreach (GameObject _GameObject in GameObjects)
             {
                 foreach (Component _Component in _GameObject.RenderComponents)
@@ -247,7 +248,11 @@ namespace LittleWormEngine
                     _Component.Update("Rendering");
                 }
             }
-            //MeshRenderer.Show_ShadowMap();
+            MeshRenderer.Combin_ShadowMaps();
+            if (Using_ShadowMapping)
+            {
+                MeshRenderer.Show_ShadowMap();
+            }
         }
 
         public static uint Get_MeshID()

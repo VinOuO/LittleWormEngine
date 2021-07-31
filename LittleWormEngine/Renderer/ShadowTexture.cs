@@ -27,6 +27,9 @@ namespace LittleWormEngine.Renderer
 
         public unsafe void Create_Texture_Testing()
         {
+            FrameBufferID = glGenFramebuffer();
+            glBindFramebuffer(GL_FRAMEBUFFER, FrameBufferID);
+
             TexID = glGenTexture();
             glBindTexture(GL_TEXTURE_2D, TexID);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, Width, Height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
@@ -35,8 +38,6 @@ namespace LittleWormEngine.Renderer
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-            FrameBufferID = glGenFramebuffer();
-            glBindFramebuffer(GL_FRAMEBUFFER, FrameBufferID);
             glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, TexID, 0);
 
             glDrawBuffer(GL_NONE);
@@ -61,7 +62,9 @@ namespace LittleWormEngine.Renderer
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
             glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, TexID, 0);
+
             glDrawBuffer(GL_COLOR_ATTACHMENT0);
 
             if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)

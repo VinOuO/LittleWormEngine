@@ -29,8 +29,14 @@ namespace LittleWormEngine
             switch (_Type)
             {
                 case "Rendering":
-                    Render();
-                    //Render_ShadowMap();
+                    if (Core.Using_ShadowMapping)
+                    {
+                        Render_ShadowMap();
+                    }
+                    else
+                    {
+                        Render();
+                    }
                     break;
             }
         }
@@ -63,7 +69,7 @@ namespace LittleWormEngine
             Draw();
         }
 
-        public static void Inis_ShadowMapping()
+        public void Inis_ShadowMapping()
         {
             glViewport(0, 0, ShadowMap.Width, ShadowMap.Height);
             glBindFramebuffer(GL_FRAMEBUFFER, ShadowMap.FrameBufferID);
@@ -71,8 +77,7 @@ namespace LittleWormEngine
 
         void Render_ShadowMap()
         {
-            glDepthMask(true);
-            glEnable(GL_DEPTH_TEST);
+            Inis_ShadowMapping();
 
             Matrix4 _LightSpace = Matrix4.PerspectiveProjection(Core.MainCamera.zNear, Core.MainCamera.zFar, Core.MainCamera.Width, Core.MainCamera.Height, Core.MainCamera.fov) * Matrix4.GetCameraTransform() * Attaching_GameObject.transform.GetTransform(OffSet);
             ShadowShader.SetUniform("LightSpace", _LightSpace);
@@ -98,30 +103,11 @@ namespace LittleWormEngine
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             glActiveTexture(GL_TEXTURE0); // Texture unit i
-            glBindTexture(GL_TEXTURE_2D, ShadowMap.TexID);
+            glBindTexture(GL_TEXTURE_2D, Combined_ShadowMap.TexID);
             glUseProgram(DebugShader.Program);
             glBindVertexArray(DebugMesh.Vao);
 
             Debug.Log_Once(glGetProgramInfoLog(DebugShader.Program));
-
-            float[] A = new float[1024*1024];
-            for (int i = 0; i < A.Length; i++)
-            {
-                A[i] = i - 1024 * 1024;
-            }
-
-            IntPtr ptr;
-            unsafe
-            {
-                fixed (float* p = &A[0]) ptr = (IntPtr)p;
-            }
-
-            glGetTexImage(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, GL_FLOAT, ptr);
-            //glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_FLOAT, ptr);
-            for (int i = 0; i < A.Length; i++)
-            {
-                //Debug.Log_Once("Tex: " + A[i]);
-            }
 
             glEnableVertexAttribArray(0);
             glEnableVertexAttribArray(1);
@@ -129,6 +115,96 @@ namespace LittleWormEngine
             glDisableVertexAttribArray(0);
             glDisableVertexAttribArray(1);
         }
+
+        static ShadowTexture Combined_ShadowMap;
+        static Shader Combin_Shadow_Shader;
+        public static void Set_Combin_Shadow()
+        {
+            Combin_Shadow_Shader = new Shader("CombinShadowVertex.vs", "", "CombinShadowFragment.fs");
+            Combin_Shadow_Shader.AddUniform("CombinedMap");
+            Combin_Shadow_Shader.AddUniform("DepthMap");
+            Combined_ShadowMap = new ShadowTexture();
+        }
+
+        public unsafe static void Combin_ShadowMaps()
+        {
+            glBindFramebuffer(GL_FRAMEBUFFER, Combined_ShadowMap.FrameBufferID);
+            //glBindFramebuffer(GL_FRAMEBUFFER, 0);
+            glViewport(0, 0, Combined_ShadowMap.Width, Combined_ShadowMap.Height);
+
+            glClearColor(0, 1, 1, 1);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            SetAllBlack();
+            
+            foreach (GameObject _GameObject in Core.GameObjects)
+            {
+                foreach (Component _Component in _GameObject.RenderComponents)
+                {
+                    if (_Component.GetType().Name == "MeshRenderer")
+                    {
+                        Debug.Log_Once(_GameObject.Name + " Map");
+
+                        glActiveTexture(GL_TEXTURE0); 
+                        glBindTexture(GL_TEXTURE_2D, Combined_ShadowMap.TexID);
+                        glActiveTexture(GL_TEXTURE0 + 1); 
+                        glBindTexture(GL_TEXTURE_2D, (_Component as MeshRenderer).ShadowMap.TexID);
+
+                        Combin_Shadow_Shader.SetUniform("CombinedMap", 0);
+                        Combin_Shadow_Shader.SetUniform("DepthMap", 1);
+                        
+                        glUseProgram(Combin_Shadow_Shader.Program);
+                        glBindVertexArray(DebugMesh.Vao);
+                        
+                        Debug.Log_Once(glGetProgramInfoLog(Combin_Shadow_Shader.Program));
+                        
+                        glEnableVertexAttribArray(0);
+                        glEnableVertexAttribArray(1);
+                        glDrawElements(GL_TRIANGLES, DebugMesh.Indices.Length, GL_UNSIGNED_INT, NULL);
+                        glDisableVertexAttribArray(0);
+                        glDisableVertexAttribArray(1);
+                    }
+                }
+            }
+            
+        }
+        
+        static Shader AllBlackShader = new Shader("AllBlack.vs", "", "AllBlack.fs");
+        public unsafe static void SetAllBlack()
+        {
+            glUseProgram(AllBlackShader.Program);
+            glBindVertexArray(DebugMesh.Vao);
+
+            Debug.Log_Once(glGetProgramInfoLog(AllBlackShader.Program));
+
+            glEnableVertexAttribArray(0);
+            glEnableVertexAttribArray(1);
+            glDrawElements(GL_TRIANGLES, DebugMesh.Indices.Length, GL_UNSIGNED_INT, NULL);
+            glDisableVertexAttribArray(0);
+            glDisableVertexAttribArray(1);
+        }
+
+        #region Write Pixel
+        /*
+        float[] A = new float[1024*1024];
+        for (int i = 0; i < A.Length; i++)
+        {
+            A[i] = i - 1024 * 1024;
+        }
+
+        IntPtr ptr;
+        unsafe
+        {
+            fixed (float* p = &A[0]) ptr = (IntPtr)p;
+        }
+
+        glGetTexImage(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, GL_FLOAT, ptr);
+        //glGetTexImage(GL_TEXTURE_2D, 0, GL_RGB, GL_FLOAT, ptr);
+        for (int i = 0; i < A.Length; i++)
+        {
+            //Debug.Log_Once("Tex: " + A[i]);
+        }
+        */
+        #endregion
 
         public void Set_DebugMesh(Mesh _RenderMesh, Shader _RenderShader)
         {
@@ -165,10 +241,9 @@ namespace LittleWormEngine
         public Texture RenderTexture { get; set; }
         public List<Texture> RenderTextures { get; set; }
         public Shader RenderShader { get; set; }
+        public Shader ShadowShader { get; set; }
+        public ShadowTexture ShadowMap { get; set; }
 
-        public static bool ShadowMapping_SetUp = false;
-        public static Shader ShadowShader { get; set; }
-        public static ShadowTexture ShadowMap { get; set; }
         public MeshRenderer()
         {
             Tag = "Renderer";
@@ -213,14 +288,11 @@ namespace LittleWormEngine
             RenderShader.AddUniform("light_angle");
             RenderShader.AddUniform("sampler");
 
-            if (!ShadowMapping_SetUp)
-            {
-                Set_ShadowMap();
-                ShadowMapping_SetUp = true;
-            }
+
+            Set_ShadowMap();
         }
 
-        public static void Set_ShadowMap()
+        public void Set_ShadowMap()
         {
             ShadowMap = new ShadowTexture();
             ShadowShader = new Shader("ShadowVertex.vs", "", "ShadowFragment.fs");

@@ -169,13 +169,13 @@ namespace LittleWormEngine.Renderer
             List<Vertex> _Vertices = new List<Vertex>();
             List<uint> _Indices = new List<uint>();
 
-            _Vertices.Add(new Vertex(new Vector3(-1, -1, 0) * _Scaler, new Vector2(0, 1)));
-            _Vertices.Add(new Vertex(new Vector3(1, -1, 0) * _Scaler, new Vector2(1, 1)));
-            _Vertices.Add(new Vertex(new Vector3(-1, 1, 0) * _Scaler, new Vector2(0, 0)));
-            _Vertices.Add(new Vertex(new Vector3(1, 1, 0) * _Scaler, new Vector2(1, 0)));
+            _Vertices.Add(new Vertex(new Vector3(-1, 1, 0) * _Scaler, new Vector2(0, 1)));
+            _Vertices.Add(new Vertex(new Vector3(1, 1, 0) * _Scaler, new Vector2(1, 1)));
+            _Vertices.Add(new Vertex(new Vector3(-1, -1, 0) * _Scaler, new Vector2(0, 0)));
+            _Vertices.Add(new Vertex(new Vector3(1, -1, 0) * _Scaler, new Vector2(1, 0)));
 
-            _Indices.Add(0); _Indices.Add(3); _Indices.Add(1);
-            _Indices.Add(0); _Indices.Add(2); _Indices.Add(3);
+            _Indices.Add(0);  _Indices.Add(1); _Indices.Add(3);
+            _Indices.Add(0);  _Indices.Add(3); _Indices.Add(2);
 
             return new MeshData(_Vertices, _Indices);
         }

@@ -32,6 +32,15 @@ class Game
         Wall.GetComponent<MeshRenderer>().Set("Floor.obj", "Tex4.png");
         DesignerHandler.AddGameObject(Wall);
         Wall.AddCustomComponent<Test>();
+
+        GameObject TeaTAble = new GameObject("TeaTAble");
+        TeaTAble.AddComponent<Transform>();
+        TeaTAble.transform.Position.y = -7.3f;
+        TeaTAble.transform.Position.z = -8.6f;
+        TeaTAble.AddComponent<MeshRenderer>();
+        TeaTAble.GetComponent<MeshRenderer>().Set("TeaTAble.obj", "Crate.jpg");
+        DesignerHandler.AddGameObject(TeaTAble);
+        TeaTAble.AddCustomComponent<Test>();
     }
 
     public static void Update()
