@@ -21,7 +21,7 @@ class Game
         DesignerHandler.AddGameObject(Floor);
         GameObject.Find("Ashe").AddCustomComponent<Test>();
         Floor.AddCustomComponent<Test>();
-
+        /*
         GameObject Wall = new GameObject("Wall");
         Wall.AddComponent<Transform>();
         Wall.transform.Position.x = -19;
@@ -32,7 +32,7 @@ class Game
         Wall.GetComponent<MeshRenderer>().Set("Floor.obj", "Tex4.png");
         DesignerHandler.AddGameObject(Wall);
         Wall.AddCustomComponent<Test>();
-
+        */
         GameObject TeaTAble = new GameObject("TeaTAble");
         TeaTAble.AddComponent<Transform>();
         TeaTAble.transform.Position.y = -7.3f;

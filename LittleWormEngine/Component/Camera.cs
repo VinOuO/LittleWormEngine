@@ -8,7 +8,7 @@ namespace LittleWormEngine
     {
         public static Camera Main { get { return Core.MainCamera; } }
         public float zNear = 0.1f;
-        public float zFar = 10000;
+        public float zFar = 50;
         public float fov = 45;
 
         public float Width = Core.Width;

@@ -16,8 +16,8 @@ namespace LittleWormEngine.Renderer
         public uint TexID2;
         public uint FrameBufferID;
         public uint DepthBufferID;
-        public int Width = 1024;
-        public int Height = 1024;
+        public int Width = Core.Width;
+        public int Height = Core.Height;
 
         public ShadowTexture()
         {
@@ -57,7 +57,7 @@ namespace LittleWormEngine.Renderer
             
             TexID = glGenTexture();
             glBindTexture(GL_TEXTURE_2D, TexID);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Width, Height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, Width, Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

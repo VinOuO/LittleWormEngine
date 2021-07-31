@@ -248,9 +248,9 @@ namespace LittleWormEngine
                     _Component.Update("Rendering");
                 }
             }
-            MeshRenderer.Combin_ShadowMaps();
             if (Using_ShadowMapping)
             {
+                MeshRenderer.Combin_ShadowMaps();
                 MeshRenderer.Show_ShadowMap();
             }
         }

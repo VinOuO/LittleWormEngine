@@ -79,7 +79,8 @@ namespace LittleWormEngine
         {
             Inis_ShadowMapping();
 
-            Matrix4 _LightSpace = Matrix4.PerspectiveProjection(Core.MainCamera.zNear, Core.MainCamera.zFar, Core.MainCamera.Width, Core.MainCamera.Height, Core.MainCamera.fov) * Matrix4.GetCameraTransform() * Attaching_GameObject.transform.GetTransform(OffSet);
+            //Matrix4 _LightSpace = Matrix4.PerspectiveProjection(Core.MainCamera.zNear, Core.MainCamera.zFar, Core.MainCamera.Width, Core.MainCamera.Height, Core.MainCamera.fov) * Matrix4.GetCameraTransform() * Attaching_GameObject.transform.GetTransform(OffSet);
+            Matrix4 _LightSpace = Matrix4.Flip(Matrix4.OrthographicProjection(Core.MainCamera.zNear, Core.MainCamera.zFar, Core.MainCamera.Width, Core.MainCamera.Height, Core.MainCamera.fov)) * Matrix4.GetCameraTransform() * Attaching_GameObject.transform.GetTransform(OffSet);
             ShadowShader.SetUniform("LightSpace", _LightSpace);
             Debug.Log_Once(glGetProgramInfoLog(ShadowShader.Program));
 
@@ -94,6 +95,7 @@ namespace LittleWormEngine
         static bool Debug_Set_Up = false;
         public static Mesh DebugMesh { get; set; }
         public static Shader DebugShader { get; set; }
+        static int i = 1;
         public unsafe static void Show_ShadowMap()
         {
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -103,6 +105,17 @@ namespace LittleWormEngine
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             glActiveTexture(GL_TEXTURE0); // Texture unit i
+            /*
+            i = (int)(Time.PresentTime() / 1);
+            i %= Core.GameObjects.Count;
+            if (!Core.GameObjects[i].Is_Component_Attached("MeshRenderer"))
+            {
+                i++;
+            }
+            Debug.Log("" + i);
+
+            glBindTexture(GL_TEXTURE_2D, Core.GameObjects[i].GetComponent<MeshRenderer>().ShadowMap.TexID);
+            */
             glBindTexture(GL_TEXTURE_2D, Combined_ShadowMap.TexID);
             glUseProgram(DebugShader.Program);
             glBindVertexArray(DebugMesh.Vao);
@@ -134,7 +147,7 @@ namespace LittleWormEngine
 
             glClearColor(0, 1, 1, 1);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            SetAllBlack();
+            SetAllWhite();
             
             foreach (GameObject _GameObject in Core.GameObjects)
             {
@@ -168,13 +181,13 @@ namespace LittleWormEngine
             
         }
         
-        static Shader AllBlackShader = new Shader("AllBlack.vs", "", "AllBlack.fs");
-        public unsafe static void SetAllBlack()
+        static Shader AllWhiteShader = new Shader("AllWhite.vs", "", "AllWhite.fs");
+        public unsafe static void SetAllWhite()
         {
-            glUseProgram(AllBlackShader.Program);
+            glUseProgram(AllWhiteShader.Program);
             glBindVertexArray(DebugMesh.Vao);
 
-            Debug.Log_Once(glGetProgramInfoLog(AllBlackShader.Program));
+            Debug.Log_Once(glGetProgramInfoLog(AllWhiteShader.Program));
 
             glEnableVertexAttribArray(0);
             glEnableVertexAttribArray(1);

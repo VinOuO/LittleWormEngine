@@ -12,16 +12,9 @@ float LinearizeDepth(float depth)
 
 void main()
 {             
+	/* For Perspective Projection depth test
     float depth = LinearizeDepth(gl_FragCoord.z) / far; // divide by far for demonstration
 	FragColor = vec4(vec3(depth), 1.0);
-	/*
-	if(depth == 0)
-	{
-		FragColor = vec4(1,1,1,1);
-	}
-	else
-	{
-		FragColor = vec4(vec3(depth), 1.0);
-	}
 	*/
+	FragColor = vec4(vec3(gl_FragCoord.z), 1.0);
 }

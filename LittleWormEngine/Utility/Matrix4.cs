@@ -98,6 +98,21 @@ namespace LittleWormEngine.Utility
                                new Vector4(-(_Right + _Left) / (_Right - _Left) , -(_Top + _Bottom) / (_Top - _Bottom)  , -(_zFar + _zNear) / (_zFar - _zNear)  , 1));
         }
 
+        public static Matrix4 OrthographicProjection(float _zNear, float _zFar, float _Width, float _Height, float _fov)
+        {
+            float _Right, _Left, _Top, _Bottom;
+            float _AspectRatio = _Width / _Height;
+            float _tanHalffov = (float)Math.Tan(_fov / 2 * Math.PI / 180);
+            _Right = _zFar * (_tanHalffov * _AspectRatio);
+            _Left = -_Right;
+            _Top = _zFar * (_tanHalffov);
+            _Bottom = -_Top;
+            return new Matrix4(new Vector4(2 / (_Right - _Left)                 , 0                                     , 0                                     , -(_Right + _Left) / (_Right - _Left)),
+                               new Vector4(0                                    , 2 / (_Top - _Bottom)                  , 0                                     , -(_Top + _Bottom) / (_Top - _Bottom)),
+                               new Vector4(0                                    , 0                                     , 2 / _zFar                  , 0),
+                               new Vector4(-(_Right + _Left) / (_Right - _Left) , -(_Top + _Bottom) / (_Top - _Bottom)  , -_zFar / _zFar  , 1));
+        }
+
         public static Matrix4 GetCameraTransform()
         {
             Transform CameraTransform = Core.The_Camera.Attaching_GameObject.transform;
@@ -106,10 +121,10 @@ namespace LittleWormEngine.Utility
 
         public static Matrix4 PerspectiveProjection(float _zNear, float _zFar, float _Width, float _Height, float _fov)
         {
-            float _ar = _Width / _Height;
+            float _AspectRatio = _Width / _Height;
             float _tanHalffov = (float)Math.Tan(_fov / 2 * Math.PI/180);
 
-            return new Matrix4(new Vector4(1 / (_tanHalffov * _ar), 0, 0, 0),
+            return new Matrix4(new Vector4(1 / (_tanHalffov * _AspectRatio), 0, 0, 0),
                                new Vector4(0, 1 / _tanHalffov, 0, 0),
                                new Vector4(0, 0, (_zFar + _zNear) / (_zFar - _zNear), -2 * _zNear * _zFar / (_zFar - _zNear)),
                                new Vector4(0, 0, 1, 0));
