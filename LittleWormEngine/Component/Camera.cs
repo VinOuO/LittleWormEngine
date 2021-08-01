@@ -7,6 +7,7 @@ namespace LittleWormEngine
     class Camera : Component
     {
         public static Camera Main { get { return Core.MainCamera; } }
+        public Transform transform { get { return Attaching_GameObject.transform; } }
         public float zNear = 0.1f;
         public float zFar = 50;
         public float fov = 45;

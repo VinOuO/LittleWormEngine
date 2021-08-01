@@ -12,7 +12,7 @@ class Test : DesignerProgram
     override public void Start()
     {
         //Camera.Main.Attaching_GameObject.transform.Position = Vector3.Zero;
-        Inis_Shader();
+        //Inis_Shader();
     }
     int i = 1;
     Texture _Test;
@@ -24,8 +24,10 @@ class Test : DesignerProgram
         //transform.Position = new Vector3(_Temp_Vec4.x, _Temp_Vec4.y, _Temp_Vec4.z);
         //transform.Position = Camera.Main.Get_MouseDir() * 10;
         //transform.Position.z = 5;
-        GetComponent<MeshRenderer>().RenderShader.SetUniform("Camera_Pos", Camera.Main.Attaching_GameObject.transform.Position);
-        GetComponent<MeshRenderer>().RenderShader.SetUniform("FlashLightDir", Camera.Main.Get_MouseDir());
+
+        //GetComponent<MeshRenderer>().RenderShader.SetUniform("Camera_Pos", Camera.Main.Attaching_GameObject.transform.Position);
+        //GetComponent<MeshRenderer>().RenderShader.SetUniform("FlashLightDir", Camera.Main.Get_MouseDir());
+
         //GetComponent<MeshRenderer>().RenderShader.SetUniform("NPTransform", GetComponent<Transform>().GetTransform(GetComponent<MeshRenderer>().OffSet));
         //GetComponent<MeshRenderer>().RenderShader.SetUniform("Transform", GetComponent<Transform>().GetProjectdTransform(GetComponent<MeshRenderer>().OffSet));
         return;

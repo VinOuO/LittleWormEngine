@@ -15,6 +15,7 @@ namespace LittleWormEngine
         public static string Mode = "Game";
         public static string SceneName = "Scene_Debug" + ".lws";
         public static Camera MainCamera;
+        public static Camera LightCamera;
         public static int Width = 1600;
         public static int Height = 900;
         public static long Frame_Cap = 5000;
@@ -241,17 +242,24 @@ namespace LittleWormEngine
         public static bool Using_ShadowMapping = true;
         static void Render_Meshes()
         {
+            if (Using_ShadowMapping)
+            {
+                foreach (GameObject _GameObject in GameObjects)
+                {
+                    foreach (Component _Component in _GameObject.RenderComponents)
+                    {
+                        _Component.Update("ShadowRendering");
+                    }
+                }
+                MeshRenderer.Combin_ShadowMaps();
+                //MeshRenderer.Show_ShadowMap();
+            }
             foreach (GameObject _GameObject in GameObjects)
             {
                 foreach (Component _Component in _GameObject.RenderComponents)
                 {
                     _Component.Update("Rendering");
                 }
-            }
-            if (Using_ShadowMapping)
-            {
-                MeshRenderer.Combin_ShadowMaps();
-                MeshRenderer.Show_ShadowMap();
             }
         }
 

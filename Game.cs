@@ -35,12 +35,17 @@ class Game
         */
         GameObject TeaTAble = new GameObject("TeaTAble");
         TeaTAble.AddComponent<Transform>();
+        TeaTAble.transform.Position.x = 3f;
         TeaTAble.transform.Position.y = -7.3f;
         TeaTAble.transform.Position.z = -8.6f;
         TeaTAble.AddComponent<MeshRenderer>();
         TeaTAble.GetComponent<MeshRenderer>().Set("TeaTAble.obj", "Crate.jpg");
         DesignerHandler.AddGameObject(TeaTAble);
         TeaTAble.AddCustomComponent<Test>();
+
+        GameObject Light = Core.Create_Prefab("LightCamera");
+        Light.Name = "Light";
+        Core.LightCamera = Light.GetComponent<Camera>();
     }
 
     public static void Update()
