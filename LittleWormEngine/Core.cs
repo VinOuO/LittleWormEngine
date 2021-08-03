@@ -13,7 +13,7 @@ namespace LittleWormEngine
     class Core
     {
         public static string Mode = "Game";
-        public static string SceneName = "Scene_Debug" + ".lws";
+        public static string SceneName = "Scene_Demo1" + ".lws";
         public static Camera MainCamera;
         public static Camera LightCamera;
         public static int Width = 1600;
@@ -21,7 +21,6 @@ namespace LittleWormEngine
         public static long Frame_Cap = 5000;
         public static bool Is_Running;
         public static Window The_GameWindow;
-        public static Camera The_Camera;
         public static List<GameObject> GameObjects = new List<GameObject>();
         public static List<GameObject> AddingGameObjects = new List<GameObject>();
         public static List<GameObject> DeletingGameObjects = new List<GameObject>();
@@ -35,9 +34,10 @@ namespace LittleWormEngine
         public static void Start()
         {
             Create_Scene(SceneName);
+            MeshRenderer.Set_DebugMesh(MeshRenderer.Get_DebugMesh(), new Shader("DebugVertex.vs", "", "DebugFragment.fs"));
             Game.Start();
             Glfw.SetCursorPositionCallback(The_GameWindow,Input.Check_Cursor_Position);
-            The_Camera = Get_Camera();
+            MainCamera = Get_Camera();
             PhysicsWorld.Set_PhysicWorld();
             MeshRenderer.Set_Combin_Shadow();
 
@@ -169,13 +169,45 @@ namespace LittleWormEngine
             ModifyingGameObjectInfo _Temp_Info;
             while(ModifyingGameObjectInfos.Count > 0)
             {
-                if(ModifyingGameObjectInfos[0].RemovingComponent == null)
+                Debug.Log(ModifyingGameObjectInfos[0].Operation);
+                switch (ModifyingGameObjectInfos[0].Operation)
                 {
-                    RemoveGameObject(ModifyingGameObjectInfos[0].ModifyingGameObject);
-                }
-                else
-                {
-                    ModifyingGameObjectInfos[0].ModifyingGameObject.RemoveComponent(ModifyingGameObjectInfos[0].RemovingComponent);
+                    case "AddGObj":
+                        GameObjects.Add(ModifyingGameObjectInfos[0].ModifyingGameObject);
+                        Debug.Log("Add GOBJ!" + ModifyingGameObjectInfos[0].ModifyingGameObject.Name);
+                        EditorCore.ChangeGameObjectDropDown = true;
+                        break;
+                    case "RemoveGObj":
+                        RemoveGameObject(ModifyingGameObjectInfos[0].ModifyingGameObject);
+                        EditorCore.ChangeGameObjectDropDown = true;
+                        break;
+                    case "AddCmp":
+                        GameObject _GameObject = ModifyingGameObjectInfos[0].ModifyingGameObject;
+                        switch (ModifyingGameObjectInfos[0].Component)
+                        {
+                            case "Camera":
+                                _GameObject.AddComponent<Camera>();
+                                break;
+                            case "Transform":
+                                _GameObject.AddComponent<Transform>();
+                                break;
+                            case "MeshRenderer":
+                                _GameObject.AddComponent<MeshRenderer>();
+                                _GameObject.GetComponent<MeshRenderer>().Set("Cube3.obj", "Tex2.png");
+                                break;
+                            case "BoxCollider":
+                                _GameObject.AddComponent<BoxCollider>();
+                                break;
+                            case "CapsuleCollider":
+                                _GameObject.AddComponent<CapsuleCollider>();
+                                break;
+                        }
+                        EditorCore.ChangeCompontentDropDown = true;
+                        break;
+                    case "RemoveCmp":
+                        ModifyingGameObjectInfos[0].ModifyingGameObject.RemoveComponent(ModifyingGameObjectInfos[0].Component);
+                        EditorCore.ChangeCompontentDropDown = true;
+                        break;
                 }
                 ModifyingGameObjectInfos.RemoveAt(0);
             }
@@ -425,7 +457,6 @@ namespace LittleWormEngine
                 if (_TypeInfo.ImplementedInterfaces.Contains(typeof(Component)) && !_TypeInfo.IsAbstract)
                 {
                     _Temp_Components.Add(_TypeInfo.Name);
-                    //Debug.Log(_TypeInfo.FullName);
                 }
             }
             return _Temp_Components;
@@ -464,18 +495,28 @@ namespace LittleWormEngine
     class ModifyingGameObjectInfo //Utility of adding compontents
     {
         public GameObject ModifyingGameObject;
-        public string RemovingComponent;
-        public string AddingComponent;
+        public string Operation;
+        public string Component;
 
-        public ModifyingGameObjectInfo(GameObject _ModifyingGameObject, string _RemovingComponent)
+        public ModifyingGameObjectInfo(GameObject _ModifyingGameObject, string _Opration, string _Component)
         {
             ModifyingGameObject = _ModifyingGameObject;
-            RemovingComponent = _RemovingComponent;
+            Operation = _Opration;
+            Component = _Component;
         }
 
-        public ModifyingGameObjectInfo(GameObject _ModifyingGameObject)
+        public ModifyingGameObjectInfo(GameObject _ModifyingGameObject, string _Operation)
         {
             ModifyingGameObject = _ModifyingGameObject;
+            switch (_Operation)
+            {
+                case "Add":
+                    Operation = "AddGObj";
+                    break;
+                case "Remove":
+                    Operation = "RemoveGObj";
+                    break;
+            }
         }
     }
 }

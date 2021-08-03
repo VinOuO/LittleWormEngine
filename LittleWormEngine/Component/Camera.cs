@@ -44,7 +44,7 @@ namespace LittleWormEngine
 
         public Camera()
         {
-            Core.MainCamera = this;
+
         }
 
         public void SetProjection(float _zNear, float _zFar, float _Width, float _Height, float _fov)
@@ -65,13 +65,14 @@ namespace LittleWormEngine
 
             _X = 1 / Math.Cos(Mathematics.Math_of_Rotation.Radians_of(_AngleX));
             _Y = 1 / Math.Cos(Mathematics.Math_of_Rotation.Radians_of(_AngleY));
-            //_TempVec3 = new Vector3(Math.Sqrt(_X * _X - 1) * (_AngleX >= 0 ? 1 : -1), Math.Sqrt(_Y * _Y - 1) * (_AngleY >= 0 ? 1 : -1), 1);
-            if (Input.GetKeyDown(MouseCode.Left))
-            {
-                //Debug.Log("After X:" + _AngleX);
-                //Debug.Log("After Y:" + _AngleY);
-            }
-            return new Vector3(Math.Sqrt(_X * _X - 1) * (_AngleX >= 0 ? 1 : -1), Math.Sqrt(_Y * _Y - 1) * (_AngleY >= 0 ? 1 : -1), 1);
+            _TempVec3 = new Vector3(Math.Sqrt(_X * _X - 1) * (_AngleX >= 0 ? 1 : -1), Math.Sqrt(_Y * _Y - 1) * (_AngleY >= 0 ? 1 : -1), 1);
+            Transform _Trans = Main.transform;
+            return Matrix3.RotateX(_Trans.Rotation.x) * Matrix3.RotateY(_Trans.Rotation.y) * Matrix3.RotateZ(_Trans.Rotation.z) * _TempVec3;
+        }
+
+        public static Vector2 Get_MousePos()
+        {
+            return new Vector2((Input.MousePosition.x - Core.Width / 2) / (Core.Width / 2), -1 * (Input.MousePosition.y - Core.Height / 2) / (Core.Height / 2));
         }
     }
 }

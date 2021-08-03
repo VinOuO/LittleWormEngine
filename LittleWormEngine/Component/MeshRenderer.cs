@@ -17,15 +17,16 @@ namespace LittleWormEngine
 
         public void Start()
         {
-            if (!Debug_Set_Up)
-            {
-                Set_DebugMesh(Get_DebugMesh(), new Shader("DebugVertex.vs", "", "DebugFragment.fs"));
-                Debug_Set_Up = true;
-            }
+
         }
         Vector3 _temp, Light_Dir = new Vector3(1, 0, 0);
         public void Update(string _Type)
         {
+            if(Core.Mode == "Editor" && FileChanged)
+            {
+                Reset_Mesh();
+                FileChanged = false;
+            }
             switch (_Type)
             {
                 case "ShadowRendering":
@@ -86,21 +87,32 @@ namespace LittleWormEngine
 
             glUseProgram(ShadowRenderShader.Program);
             glBindVertexArray(RenderMesh.Vao);
+
             Debug.Log_Once(glGetProgramInfoLog(ShadowRenderShader.Program));
 
-            ShadowRenderShader.SetUniform("Transform", Attaching_GameObject.GetComponent<Transform>().GetProjectdTransform(OffSet));
-            LightSpace = Matrix4.Flip(Matrix4.OrthographicProjection(Core.LightCamera.zNear, Core.LightCamera.zFar, Core.LightCamera.Width, Core.LightCamera.Height, Core.LightCamera.fov)) * Matrix4.RotateX(Core.LightCamera.transform.Rotation.x) * Matrix4.RotateY(Core.LightCamera.transform.Rotation.y) * Matrix4.RotateZ(Core.LightCamera.transform.Rotation.z) * Matrix4.CameraTranslation(Core.LightCamera.transform.Position) * Attaching_GameObject.transform.GetTransform(OffSet);
-            ShadowRenderShader.SetUniform("LightSpace", LightSpace);
-            ShadowRenderShader.SetUniform("LightDir", Matrix3.RotateX(Core.LightCamera.transform.Rotation.x) * Matrix3.RotateY(Core.LightCamera.transform.Rotation.y) * Matrix3.RotateZ(Core.LightCamera.transform.Rotation.z) * Vector3.Forward);
-            ShadowRenderShader.SetUniform("CameraDir", Matrix3.RotateX(Camera.Main.transform.Rotation.x) * Matrix3.RotateY(Camera.Main.transform.Rotation.y) * Matrix3.RotateZ(Camera.Main.transform.Rotation.z) * Vector3.Forward);
+            if (Using_Defult_Shader)
+            {
+                ShadowRenderShader.SetUniform("Transform", Attaching_GameObject.GetComponent<Transform>().GetProjectdTransform(OffSet));
+                LightSpace = Matrix4.Flip(Matrix4.OrthographicProjection(Core.LightCamera.zNear, Core.LightCamera.zFar, Core.LightCamera.Width, Core.LightCamera.Height, Core.LightCamera.fov)) * Matrix4.RotateX(Core.LightCamera.transform.Rotation.x) * Matrix4.RotateY(Core.LightCamera.transform.Rotation.y) * Matrix4.RotateZ(Core.LightCamera.transform.Rotation.z) * Matrix4.CameraTranslation(Core.LightCamera.transform.Position) * Attaching_GameObject.transform.GetTransform(OffSet);
+                ShadowRenderShader.SetUniform("LightSpace", LightSpace);
+                ShadowRenderShader.SetUniform("LightDir", Matrix3.RotateX(Core.LightCamera.transform.Rotation.x) * Matrix3.RotateY(Core.LightCamera.transform.Rotation.y) * Matrix3.RotateZ(Core.LightCamera.transform.Rotation.z) * Vector3.Forward);
+                ShadowRenderShader.SetUniform("CameraDir", Matrix3.RotateX(Camera.Main.transform.Rotation.x) * Matrix3.RotateY(Camera.Main.transform.Rotation.y) * Matrix3.RotateZ(Camera.Main.transform.Rotation.z) * Vector3.Forward);
 
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, RenderTexture.TexID);
-            glActiveTexture(GL_TEXTURE0 + 1);
-            glBindTexture(GL_TEXTURE_2D, Combined_ShadowMap.TexID);
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, RenderTexture.TexID);
+                glActiveTexture(GL_TEXTURE0 + 1);
+                glBindTexture(GL_TEXTURE_2D, Combined_ShadowMap.TexID);
 
-            ShadowRenderShader.SetUniform("Sampler", 0);
-            ShadowRenderShader.SetUniform("ShadowMap", 1);
+                ShadowRenderShader.SetUniform("Sampler", 0);
+                ShadowRenderShader.SetUniform("ShadowMap", 1);
+            }
+            else
+            {
+                foreach (DesignerProgram _DesignerProgram in Attaching_GameObject.CustomComponents)
+                {
+                    _DesignerProgram.ShaderUniformUpdate();
+                }
+            }    
             Draw();
         }
 
@@ -128,7 +140,6 @@ namespace LittleWormEngine
             Draw();
         }
 
-        static bool Debug_Set_Up = false;
         public static Mesh DebugMesh { get; set; }
         public static Shader DebugShader { get; set; }
         static int i = 1;
@@ -255,14 +266,14 @@ namespace LittleWormEngine
         */
         #endregion
 
-        public void Set_DebugMesh(Mesh _RenderMesh, Shader _RenderShader)
+        public static void Set_DebugMesh(Mesh _RenderMesh, Shader _RenderShader)
         {
             DebugMesh = _RenderMesh;
             DebugShader = _RenderShader;
             DebugShader.AddUniform("DepthMap");
         }
 
-        Mesh Get_DebugMesh()
+        public static Mesh Get_DebugMesh()
         {
             Mesh _Mesh = new Mesh();
             RenderUtility.MeshData _Temp = new RenderUtility.MeshData();
@@ -286,6 +297,7 @@ namespace LittleWormEngine
 
         public string MeshFileName;
         public string TextureFileName;
+        public bool FileChanged = false;
         public Mesh RenderMesh { get; set; }
         public Texture RenderTexture { get; set; }
         public List<Texture> RenderTextures { get; set; }
@@ -298,6 +310,8 @@ namespace LittleWormEngine
         {
             Tag = "Renderer";
             OffSet = Vector3.Zero;
+            Set_ShadowMap();
+            Set_PhongLignt();
         }
         /* Can not use if the mesh doesn't contain normal
         public void Set(Mesh _RenderMesh, string _TextureFileName)
@@ -337,9 +351,14 @@ namespace LittleWormEngine
             RenderShader.AddUniform("cam_pos");
             RenderShader.AddUniform("light_angle");
             RenderShader.AddUniform("sampler");
+        }
 
-            Set_ShadowMap();
-            Set_PhongLignt();
+        void Reset_Mesh()
+        {
+            RenderMesh = ResourceLoader.Load_Mesh(MeshFileName);
+            int _Temp = Get_TextureID(RenderTexture);
+            RenderTextures[_Temp] = ResourceLoader.Load_Texture(TextureFileName);
+            RenderTexture = RenderTextures[_Temp];
         }
 
         public void Set_ShadowMap()

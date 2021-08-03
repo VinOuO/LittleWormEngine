@@ -37,7 +37,8 @@ namespace LittleWormEngine
             {
                 _FileInfo.Add("GameObject_" + _GameObject.Name);
             }
-            using (StreamWriter File = new StreamWriter(Directory.GetCurrentDirectory() + @"\Save\Scene\" + Core.SceneName + ".lws", false))
+
+            using (StreamWriter File = new StreamWriter(Directory.GetCurrentDirectory() + @"\Save\Scene\" + Core.SceneName, false))
             {
                 for (int i = 0; i < _FileInfo.Count; i++)
                 {

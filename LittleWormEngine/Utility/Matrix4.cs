@@ -115,7 +115,7 @@ namespace LittleWormEngine.Utility
 
         public static Matrix4 GetCameraTransform()
         {
-            Transform CameraTransform = Core.The_Camera.Attaching_GameObject.transform;
+            Transform CameraTransform = Core.MainCamera.Attaching_GameObject.transform;
             return RotateX(CameraTransform.Rotation.x) * RotateY(CameraTransform.Rotation.y) * RotateZ(CameraTransform.Rotation.z) * CameraTranslation(CameraTransform.Position);
         }
 

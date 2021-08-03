@@ -102,6 +102,20 @@ namespace LittleWorm
                 {
                     Frame_Num = Core.Frame_Num;
 
+                    if (EditorCore.ChangeGameObjectDropDown)
+                    {
+                        MethodInvoker _temp_Invoke = delegate () { Load_GameObjectDropDown(); };
+                        Invoke(_temp_Invoke);
+                        EditorCore.ChangeGameObjectDropDown = false;
+                    }
+
+                    if (EditorCore.ChangeCompontentDropDown)
+                    {
+                        MethodInvoker _temp_Invoke = delegate () { Load_ComponentDropDown(); };
+                        Invoke(_temp_Invoke);
+                        EditorCore.ChangeCompontentDropDown = false;
+                    }
+
                     if (EditorCore.SelectingComponent != null)
                     {
                         lock (EditorCore.SelectingComponent)
@@ -721,11 +735,13 @@ namespace LittleWorm
         private void MeshDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
             (EditorCore.SelectingComponent as MeshRenderer).MeshFileName = MeshDropDown.Text;
+            (EditorCore.SelectingComponent as MeshRenderer).FileChanged = true;
         }
 
         private void TextureDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
             (EditorCore.SelectingComponent as MeshRenderer).TextureFileName = TextureDropDown.Text;
+            (EditorCore.SelectingComponent as MeshRenderer).FileChanged = true;
         }
 
         private void AddGObjBut_Click(object sender, EventArgs e)
@@ -736,11 +752,14 @@ namespace LittleWorm
             }
             GameObject _GameObject = new GameObject(AddGameObject.Text);
             AddGameObject.Text = "";
-            DesignerHandler.AddGameObject(_GameObject);
-            Load_GameObjectDropDown();
+            lock (Core.ModifyingGameObjectInfos)
+            {
+                Core.ModifyingGameObjectInfos.Add(new ModifyingGameObjectInfo(_GameObject, "Add"));
+            }
+            //Load_GameObjectDropDown();
         }
 
-        private void AddCmpBut_Click(object sender, EventArgs e) //While adding meshrender it will crash due to didn't set up
+        private void AddCmpBut_Click(object sender, EventArgs e) 
         {
             if (AddComponentDropDown.Text == "" || EditorCore.SelectingGameObject == null)
             {
@@ -750,23 +769,26 @@ namespace LittleWorm
             {
                 return;
             }
-            EditorCore.SelectingGameObject.AddComponent(AddComponentDropDown.Text);
+            lock (Core.ModifyingGameObjectInfos)
+            {
+                Core.ModifyingGameObjectInfos.Add(new ModifyingGameObjectInfo(EditorCore.SelectingGameObject, "AddCmp", AddComponentDropDown.Text));
+            }
             ComponentDropDown.Items.Clear();
             foreach (LittleWormEngine.Component _Component in EditorCore.SelectingGameObject.Components)
             {
                 ComponentDropDown.Items.Add(_Component.GetType().Name);
             }
+            //Load_ComponentDropDown();
         }
 
         private void RemoveGObjBut_Click(object sender, EventArgs e)
         {
-            lock (Core.GameObjects)
+            lock (Core.ModifyingGameObjectInfos)
             {
-                Core.ModifyingGameObjectInfos.Add(new ModifyingGameObjectInfo(EditorCore.SelectingGameObject));
-                //EditorCore.SelectingGameObject.Remove();
+                Core.ModifyingGameObjectInfos.Add(new ModifyingGameObjectInfo(EditorCore.SelectingGameObject, "Remove"));
                 EditorCore.SelectingGameObject = null;
             }
-            Load_GameObjectDropDown();
+            //Load_GameObjectDropDown();
         }
 
         private void SetPrefabBut_Click(object sender, EventArgs e)
@@ -781,11 +803,10 @@ namespace LittleWorm
         {
             lock (EditorCore.SelectingGameObject.Components)
             {
-                Core.ModifyingGameObjectInfos.Add(new ModifyingGameObjectInfo(EditorCore.SelectingGameObject, EditorCore.SelectingComponent.GetType().Name));
-                //EditorCore.SelectingGameObject.RemoveComponent(EditorCore.SelectingComponent.GetType().Name);
+                Core.ModifyingGameObjectInfos.Add(new ModifyingGameObjectInfo(EditorCore.SelectingGameObject, "RemoveCmp",EditorCore.SelectingComponent.GetType().Name));
                 EditorCore.SelectingComponent = null;
             }
-            Load_ComponentDropDown();
+            //Load_ComponentDropDown();
         }
 
         private void CheckBox_CheckedChanged(object sender, EventArgs e)

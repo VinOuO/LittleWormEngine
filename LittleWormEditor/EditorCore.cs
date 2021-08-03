@@ -13,6 +13,7 @@ namespace LittleWorm
         public static Component SelectingComponent;
         public static List<string> MeshFileNames;
         public static List<string> TextureFileNames;
+        public static bool ChangeGameObjectDropDown = false, ChangeCompontentDropDown = false;
 
         [STAThread]
         public static void Start()

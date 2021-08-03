@@ -11,7 +11,7 @@ namespace LittleWormEngine
 
         public static void AddGameObject(GameObject _GameObject)
         {
-            Core.GameObjects.Add(_GameObject);
+            Core.AddingGameObjects.Add(_GameObject);
         }
 
         public static Vector2 MouseMovement = new Vector2(Vector2.Zero);
