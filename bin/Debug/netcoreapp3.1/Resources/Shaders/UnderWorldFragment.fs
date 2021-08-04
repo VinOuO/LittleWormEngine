@@ -20,7 +20,7 @@ float light_intensity = 1;
 float R = 0.0f;
 void main()
 {
-	if(dot(normalize(FlashLightDir), normalize(position0 - Camera_Pos)) >= 0.999f){
+	if(dot(normalize(FlashLightDir), normalize(position0 - Camera_Pos)) >= 0.99f){
 		fragColor = texture(UnderWorldSampler, texCoord0);
 	} 
 	else{
@@ -28,5 +28,5 @@ void main()
 	}
     
 	//light_intensity = 0.1f + 0.6f * dot(light_angle, normal0) + R * dot(reflect(light_angle, normal0), cam_angle);
-	//fragColor *= light_intensity;
+	fragColor *= 0.5;
 }

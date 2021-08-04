@@ -32,7 +32,7 @@ namespace LittleWormEngine.Utility
 
         public static Matrix3 RotateX(float _Angle)
         {
-            double _Radians = Math_of_Rotation.Radians_of(_Angle);
+            double _Radians = Math_of_Rotation.Radians_of(-_Angle);
             return new Matrix3(new Vector3(1, 0, 0),
                                new Vector3(0, (float)Math.Cos(_Radians), -(float)Math.Sin(_Radians)), 
                                new Vector3(0, (float)Math.Sin(_Radians), (float)Math.Cos(_Radians)));
@@ -40,7 +40,7 @@ namespace LittleWormEngine.Utility
 
         public static Matrix3 RotateY(float _Angle)
         {
-            double _Radians = Math_of_Rotation.Radians_of(_Angle);
+            double _Radians = Math_of_Rotation.Radians_of(-_Angle);
             return new Matrix3(new Vector3((float)Math.Cos(_Radians), 0, (float)Math.Sin(_Radians)), 
                                new Vector3(0, 1, 0), 
                                new Vector3(-(float)Math.Sin(_Radians), 0, (float)Math.Cos(_Radians)));

@@ -8,7 +8,7 @@ using LittleWormEngine.Mathematics;
 
 class Test : DesignerProgram
 {
-
+    public string UnderWorldTexture = "Tex2.png";
     override public void Start()
     {
         Inis_Shader();
@@ -32,7 +32,7 @@ class Test : DesignerProgram
     public void Inis_Shader()
     {
         MeshRenderer _MR = GetComponent<MeshRenderer>();
-        _MR.Add_Texture("Tex2.png");
+        _MR.Add_Texture(UnderWorldTexture);
         _MR.Set_Shader("UnderWorldVertex.vs", "", "UnderWorldFragment.fs");
         _MR.RenderShader.AddUniform("Transform");
         _MR.RenderShader.AddUniform("NPTransform");

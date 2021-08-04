@@ -9,7 +9,7 @@ namespace LittleWormEngine
         public static Camera Main { get { return Core.MainCamera; } }
         public Transform transform { get { return Attaching_GameObject.transform; } }
         public float zNear = 0.1f;
-        public float zFar = 50;
+        public float zFar = 200;
         public float fov = 45;
 
         public float Width = Core.Width;
@@ -19,7 +19,7 @@ namespace LittleWormEngine
         public float Right = Core.Width;
         public float Left = -Core.Width;
 
-        public Vector3 yAxis = Vector3.Forward;
+        public Vector3 Forward { get {Vector4 _Temp = Matrix4.RotateX(transform.Rotation.x) * Matrix4.RotateY(transform.Rotation.y)  * Matrix4.RotateZ(transform.Rotation.z) * new Vector4(Vector3.Forward, 1);return new Vector3(-_Temp.x,(_Temp.z < 0? 1:-1) * _Temp.y, _Temp.z); } }
 
         public GameObject Attaching_GameObject { get; set; }
         public string Tag { get; set; }
@@ -66,8 +66,16 @@ namespace LittleWormEngine
             _X = 1 / Math.Cos(Mathematics.Math_of_Rotation.Radians_of(_AngleX));
             _Y = 1 / Math.Cos(Mathematics.Math_of_Rotation.Radians_of(_AngleY));
             _TempVec3 = new Vector3(Math.Sqrt(_X * _X - 1) * (_AngleX >= 0 ? 1 : -1), Math.Sqrt(_Y * _Y - 1) * (_AngleY >= 0 ? 1 : -1), 1);
-            Transform _Trans = Main.transform;
-            return Matrix3.RotateX(_Trans.Rotation.x) * Matrix3.RotateY(_Trans.Rotation.y) * Matrix3.RotateZ(_Trans.Rotation.z) * _TempVec3;
+            //Transform _Trans = Main.transform;
+            //return Matrix3.RotateX(-_Trans.Rotation.x) * Matrix3.RotateY(_Trans.Rotation.y) * Matrix3.RotateZ(_Trans.Rotation.z) * _TempVec3;
+            if (Input.GetKeyDown(MouseCode.Left))
+            {
+                //Debug.Log(_TempVec3);
+                Debug.Log(Forward);
+                //Debug.Log(Mathematics.Math_of_Rotation.ForwardBasedRotate(_TempVec3, Vector3.Forward));
+            }
+            return Mathematics.Math_of_Rotation.ForwardBasedRotate(_TempVec3, Forward, Vector3.Up);
+            return Mathematics.Math_of_Rotation.ForwardBasedRotate(_TempVec3, Vector3.Up * -0.1f +Vector3.Left +Vector3.Forward, Vector3.Up);
         }
 
         public static Vector2 Get_MousePos()

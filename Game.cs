@@ -47,18 +47,34 @@ class Game
         GameObject Light = Core.Create_Prefab("LightCamera");
         Light.Name = "Light";
         Core.LightCamera = Light.GetComponent<Camera>();
+        GameObject.Find("Wall").GetCustomComponent<Test>().UnderWorldTexture = "Wall_Under.png";
+        GameObject.Find("Picture").GetCustomComponent<Test>().UnderWorldTexture = "Picture_Under.png";
+        GameObject.Find("Door").GetCustomComponent<Test>().UnderWorldTexture = "Door_Under.png";
+        GameObject.Find("Bed").GetCustomComponent<Test>().UnderWorldTexture = "Bed_Under.png";
+        GameObject.Find("Floor").GetCustomComponent<Test>().UnderWorldTexture = "Floor_Under.png";
+        GameObject.Find("Closet").GetCustomComponent<Test>().UnderWorldTexture = "Closet_Under.png";
     }
 
     public static void Update()
     {
-        if (Camera.Get_MousePos().x > 0.7f)
+        switch (Core.Mode)
         {
-            Camera.Main.transform.Rotation.y += Time.DeltaTime * 50;
+            case "Editor":
+
+                break;
+            case "Game":
+                if (Camera.Get_MousePos().x > 0.8f)
+                {
+                    Camera.Main.transform.Rotation.y += Time.DeltaTime * 50;
+                }
+                else if (Camera.Get_MousePos().x < -0.8f)
+                {
+                    Camera.Main.transform.Rotation.y -= Time.DeltaTime * 50;
+                }
+                break;
         }
-        else if (Camera.Get_MousePos().x < -0.7f)
-        {
-            Camera.Main.transform.Rotation.y -= Time.DeltaTime * 50;
-        }
+        
+        
     }
 
     public static void End()

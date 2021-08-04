@@ -89,6 +89,37 @@ namespace LittleWormEngine.Mathematics
             return Matrix3.Rotate(Cross(Vector3.Backward, _AxisTo).Normalize(), _RotateRadians) * _Vector;
         }
 
+        public static Vector3 ForwardBasedRotate(Vector3 _Vector, Vector3 _AxisTo, Vector3 _SupportAxis)
+        {
+            float _RotateRadians = Radians_between(_AxisTo, Vector3.Forward);
+            _AxisTo = _AxisTo.Normalize();
+            if (Math.Round(Angle_of(_RotateRadians)) == 0 || Math.Round(Angle_of(_RotateRadians)) == 180)
+            {
+                return Matrix3.Rotate(_SupportAxis, _RotateRadians) * _Vector;
+            }
+            return Matrix3.Rotate(Cross(Vector3.Forward, _AxisTo).Normalize(), _RotateRadians) * _Vector;
+        }
+
+        public static Vector3 ForwardBasedRotate(Vector3 _Vector, Vector3 _AxisTo)
+        {
+            float _RotateRadians = Radians_between(_AxisTo, Vector3.Forward);
+            _AxisTo = _AxisTo.Normalize();
+
+            if (Math.Round(Angle_of(_RotateRadians)) == 0 || Math.Round(Angle_of(_RotateRadians)) == 180)
+            {
+                if (_AxisTo.z == Vector3.Forward.z)
+                {
+                    return _Vector;
+                }
+                else
+                {
+                    return -_Vector;
+                }
+            }
+
+            return Matrix3.Rotate(Cross(Vector3.Forward, _AxisTo).Normalize(), _RotateRadians) * _Vector;
+        }
+
 
 
         public static Vector3 Cross(Vector3 _VectorA, Vector3 _VectorB)

@@ -479,8 +479,8 @@ namespace LittleWormEngine
             switch (Mode)
             {
                 case "Game":
-                    The_GameWindow = GameWindow.Create_Window(Width, Height, "Game");
-                    //The_GameWindow = GameWindow.Create_Window("Game");
+                    //The_GameWindow = GameWindow.Create_Window(Width, Height, "Game");
+                    The_GameWindow = GameWindow.Create_Window("Game");
                     break;
                 case "Editor":
                     The_GameWindow = GameWindow.Create_Window(Width, Height, "Scene");

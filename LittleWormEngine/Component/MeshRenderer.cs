@@ -148,7 +148,7 @@ namespace LittleWormEngine
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
             glViewport(0, 0, Core.Width, Core.Height);
 
-            glClearColor(0, 1, 1, 1);
+            glClearColor(0.2f, 0.2f, 0.2f, 1);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             glActiveTexture(GL_TEXTURE0); // Texture unit i
@@ -192,7 +192,7 @@ namespace LittleWormEngine
             //glBindFramebuffer(GL_FRAMEBUFFER, 0);
             glViewport(0, 0, Combined_ShadowMap.Width, Combined_ShadowMap.Height);
 
-            glClearColor(0, 1, 1, 1);
+            glClearColor(0f, 0f, 0f, 1);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             SetAllWhite();
             

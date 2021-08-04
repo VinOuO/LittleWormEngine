@@ -283,6 +283,14 @@ namespace LittleWormEngine
                     }
                 }
             }
+            /*
+            foreach(Vertex _V in _Vertices)
+            {
+                //_V.Position.x *= -1;
+                //_V.Position.y *= -1;
+                //_V.Position.z *= -1;
+            }
+            */
             _Mesh.AddVertices(_Vertices, _Indices);
             return _Mesh;
         }
