@@ -35,9 +35,10 @@ namespace LittleWormEngine
         {
             Create_Scene(SceneName);
             MeshRenderer.Set_DebugMesh(MeshRenderer.Get_DebugMesh(), new Shader("DebugVertex.vs", "", "DebugFragment.fs"));
-            Game.Start();
-            Glfw.SetCursorPositionCallback(The_GameWindow,Input.Check_Cursor_Position);
+            Glfw.SetCursorPositionCallback(The_GameWindow, Input.Check_Cursor_Position);
             MainCamera = Get_Camera();
+
+            Game.Start();
             PhysicsWorld.Set_PhysicWorld();
             MeshRenderer.Set_Combin_Shadow();
 
@@ -479,8 +480,8 @@ namespace LittleWormEngine
             switch (Mode)
             {
                 case "Game":
-                    //The_GameWindow = GameWindow.Create_Window(Width, Height, "Game");
-                    The_GameWindow = GameWindow.Create_Window("Game");
+                    The_GameWindow = GameWindow.Create_Window(Width, Height, "Game");
+                    //The_GameWindow = GameWindow.Create_Window("Game");
                     break;
                 case "Editor":
                     The_GameWindow = GameWindow.Create_Window(Width, Height, "Scene");

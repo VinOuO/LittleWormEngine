@@ -53,10 +53,36 @@ class Game
         GameObject.Find("Bed").GetCustomComponent<Test>().UnderWorldTexture = "Bed_Under.png";
         GameObject.Find("Floor").GetCustomComponent<Test>().UnderWorldTexture = "Floor_Under.png";
         GameObject.Find("Closet").GetCustomComponent<Test>().UnderWorldTexture = "Closet_Under.png";
+        Cam = GameObject.Find("Camera");
     }
-
+    static GameObject Cam;
     public static void Update()
     {
+        if (Input.GetKey(KeyCode.W))
+        {
+            Cam.transform.Position += Camera.Main.ForwardDir * Time.DeltaTime * 50;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            Cam.transform.Position -= Camera.Main.ForwardDir * Time.DeltaTime * 50;
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            Cam.transform.Position -= Camera.Main.RightDir * Time.DeltaTime * 50;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            Cam.transform.Position += Camera.Main.RightDir * Time.DeltaTime * 50;
+        }
+        if (Input.GetKey(KeyCode.Up))
+        {
+            GameObject.Find("Ground").transform.Position.y += Time.DeltaTime * 50;
+        }
+        if (Input.GetKey(KeyCode.Down))
+        {
+            GameObject.Find("Ground").transform.Position.y -= Time.DeltaTime * 50;
+        }
         switch (Core.Mode)
         {
             case "Editor":
@@ -73,8 +99,8 @@ class Game
                 }
                 break;
         }
-        
-        
+
+
     }
 
     public static void End()

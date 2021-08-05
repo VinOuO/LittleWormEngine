@@ -8,16 +8,24 @@ out vec4 fragColor;
 
 uniform vec3 FlashLightDir;
 uniform vec3 Camera_Pos;
-//uniform vec3 light_angle;
+uniform vec3 CameraDir;
 uniform sampler2D NormalSampler;
 uniform mat4 Transform;
 uniform mat4 NPTransform;
 uniform sampler2D UnderWorldSampler;
+uniform vec3 LightDir;
 
 vec4 temp_Pos;
 
 float light_intensity = 1;
 float R = 0.0f;
+
+float LightIntensity()
+{
+	float _Intensity = 0.1f + 0.6f * dot(LightDir, normal0) + 0.3f * dot(reflect(LightDir, normal0), CameraDir);
+	return _Intensity;
+}
+
 void main()
 {
 	if(dot(normalize(FlashLightDir), normalize(position0 - Camera_Pos)) >= 0.99f){
@@ -26,7 +34,5 @@ void main()
 	else{
 		fragColor = texture(NormalSampler, texCoord0);
 	}
-    
-	//light_intensity = 0.1f + 0.6f * dot(light_angle, normal0) + R * dot(reflect(light_angle, normal0), cam_angle);
-	fragColor *= 0.5;
+    fragColor *= LightIntensity() * 0.5 + 0.5;
 }

@@ -19,7 +19,10 @@ namespace LittleWormEngine
         public float Right = Core.Width;
         public float Left = -Core.Width;
 
-        public Vector3 Forward { get {Vector4 _Temp = Matrix4.RotateX(transform.Rotation.x) * Matrix4.RotateY(transform.Rotation.y)  * Matrix4.RotateZ(transform.Rotation.z) * new Vector4(Vector3.Forward, 1);return new Vector3(-_Temp.x,(_Temp.z < 0? 1:-1) * _Temp.y, _Temp.z); } }
+        public float Zoomer = 0.25f;
+
+        public Vector3 ForwardDir { get {Vector4 _Temp = Matrix4.RotateX(transform.Rotation.x) * Matrix4.RotateY(transform.Rotation.y)  * Matrix4.RotateZ(transform.Rotation.z) * new Vector4(Vector3.Forward, 1);return new Vector3(-_Temp.x,(_Temp.z < 0? 1:-1) * _Temp.y, _Temp.z); } }
+        public Vector3 RightDir { get { Vector4 _Temp = Matrix4.RotateX(transform.Rotation.x) * Matrix4.RotateY(transform.Rotation.y + 90) * Matrix4.RotateZ(transform.Rotation.z) * new Vector4(Vector3.Forward, 1); return new Vector3(-_Temp.x, (_Temp.z < 0 ? 1 : -1) * _Temp.y, _Temp.z); } }
 
         public GameObject Attaching_GameObject { get; set; }
         public string Tag { get; set; }
@@ -71,10 +74,10 @@ namespace LittleWormEngine
             if (Input.GetKeyDown(MouseCode.Left))
             {
                 //Debug.Log(_TempVec3);
-                Debug.Log(Forward);
+                Debug.Log(ForwardDir);
                 //Debug.Log(Mathematics.Math_of_Rotation.ForwardBasedRotate(_TempVec3, Vector3.Forward));
             }
-            return Mathematics.Math_of_Rotation.ForwardBasedRotate(_TempVec3, Forward, Vector3.Up);
+            return Mathematics.Math_of_Rotation.ForwardBasedRotate(_TempVec3, ForwardDir, Vector3.Up);
             return Mathematics.Math_of_Rotation.ForwardBasedRotate(_TempVec3, Vector3.Up * -0.1f +Vector3.Left +Vector3.Forward, Vector3.Up);
         }
 

@@ -38,16 +38,20 @@ class Test : DesignerProgram
         _MR.RenderShader.AddUniform("NPTransform");
         _MR.RenderShader.AddUniform("FlashLightDir");
         _MR.RenderShader.AddUniform("Camera_Pos");
+        _MR.RenderShader.AddUniform("LightDir");
+        _MR.RenderShader.AddUniform("CameraDir");
         _MR.RenderShader.AddUniform("NormalSampler");
         _MR.RenderShader.AddUniform("UnderWorldSampler");
         _MR.RenderShader.SetUniform("NormalSampler", 0);
         _MR.RenderShader.SetUniform("UnderWorldSampler", 1);
+        _MR.RenderShader.SetUniform("LightDir", Vector3.Left + Vector3.Up);
     }
 
     public override void ShaderUniformUpdate()
     {
-        GetComponent<MeshRenderer>().RenderShader.SetUniform("NPTransform",GetComponent<Transform>().GetTransform(GetComponent<MeshRenderer>().OffSet));
+        GetComponent<MeshRenderer>().RenderShader.SetUniform("NPTransform", GetComponent<Transform>().GetTransform(GetComponent<MeshRenderer>().OffSet));
         GetComponent<MeshRenderer>().RenderShader.SetUniform("Transform", GetComponent<Transform>().GetProjectdTransform(GetComponent<MeshRenderer>().OffSet));
+        GetComponent<MeshRenderer>().RenderShader.SetUniform("CameraDir", Matrix3.RotateX(Camera.Main.transform.Rotation.x) * Matrix3.RotateY(Camera.Main.transform.Rotation.y) * Matrix3.RotateZ(Camera.Main.transform.Rotation.z) * Vector3.Forward);
     }
 }
 

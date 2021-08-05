@@ -93,7 +93,7 @@ namespace LittleWormEngine
             if (Using_Defult_Shader)
             {
                 ShadowRenderShader.SetUniform("Transform", Attaching_GameObject.GetComponent<Transform>().GetProjectdTransform(OffSet));
-                LightSpace = Matrix4.Flip(Matrix4.OrthographicProjection(Core.LightCamera.zNear, Core.LightCamera.zFar, Core.LightCamera.Width, Core.LightCamera.Height, Core.LightCamera.fov)) * Matrix4.RotateX(Core.LightCamera.transform.Rotation.x) * Matrix4.RotateY(Core.LightCamera.transform.Rotation.y) * Matrix4.RotateZ(Core.LightCamera.transform.Rotation.z) * Matrix4.CameraTranslation(Core.LightCamera.transform.Position) * Attaching_GameObject.transform.GetTransform(OffSet);
+                LightSpace = Matrix4.Flip(Matrix4.OrthographicProjection(Core.LightCamera.zNear, Core.LightCamera.zFar, Core.LightCamera.Width, Core.LightCamera.Height, Core.LightCamera.fov, Core.LightCamera.Zoomer)) * Matrix4.RotateX(Core.LightCamera.transform.Rotation.x) * Matrix4.RotateY(Core.LightCamera.transform.Rotation.y) * Matrix4.RotateZ(Core.LightCamera.transform.Rotation.z) * Matrix4.CameraTranslation(Core.LightCamera.transform.Position) * Attaching_GameObject.transform.GetTransform(OffSet);
                 ShadowRenderShader.SetUniform("LightSpace", LightSpace);
                 ShadowRenderShader.SetUniform("LightDir", Matrix3.RotateX(Core.LightCamera.transform.Rotation.x) * Matrix3.RotateY(Core.LightCamera.transform.Rotation.y) * Matrix3.RotateZ(Core.LightCamera.transform.Rotation.z) * Vector3.Forward);
                 ShadowRenderShader.SetUniform("CameraDir", Matrix3.RotateX(Camera.Main.transform.Rotation.x) * Matrix3.RotateY(Camera.Main.transform.Rotation.y) * Matrix3.RotateZ(Camera.Main.transform.Rotation.z) * Vector3.Forward);
@@ -122,13 +122,13 @@ namespace LittleWormEngine
             glBindFramebuffer(GL_FRAMEBUFFER, ShadowMap.FrameBufferID);
         }
 
-        Matrix4 LightSpace;
+        public Matrix4 LightSpace;
         void Render_ShadowMap()
         {
             Inis_ShadowMapping();
 
             //Matrix4 _LightSpace = Matrix4.PerspectiveProjection(Core.MainCamera.zNear, Core.MainCamera.zFar, Core.MainCamera.Width, Core.MainCamera.Height, Core.MainCamera.fov) * Matrix4.GetCameraTransform() * Attaching_GameObject.transform.GetTransform(OffSet);
-            LightSpace = Matrix4.Flip(Matrix4.OrthographicProjection(Core.LightCamera.zNear, Core.LightCamera.zFar, Core.LightCamera.Width, Core.LightCamera.Height, Core.LightCamera.fov)) * Matrix4.RotateX(Core.LightCamera.transform.Rotation.x) * Matrix4.RotateY(Core.LightCamera.transform.Rotation.y) * Matrix4.RotateZ(Core.LightCamera.transform.Rotation.z) * Matrix4.CameraTranslation(Core.LightCamera.transform.Position) * Attaching_GameObject.transform.GetTransform(OffSet);
+            LightSpace = Matrix4.Flip(Matrix4.OrthographicProjection(Core.LightCamera.zNear, Core.LightCamera.zFar, Core.LightCamera.Width, Core.LightCamera.Height, Core.LightCamera.fov, Core.LightCamera.Zoomer)) * Matrix4.RotateX(Core.LightCamera.transform.Rotation.x) * Matrix4.RotateY(Core.LightCamera.transform.Rotation.y) * Matrix4.RotateZ(Core.LightCamera.transform.Rotation.z) * Matrix4.CameraTranslation(Core.LightCamera.transform.Position) * Attaching_GameObject.transform.GetTransform(OffSet);
             ShadowShader.SetUniform("LightSpace", LightSpace);
             Debug.Log_Once(glGetProgramInfoLog(ShadowShader.Program));
 
@@ -176,7 +176,7 @@ namespace LittleWormEngine
             glDisableVertexAttribArray(1);
         }
 
-        static ShadowTexture Combined_ShadowMap;
+        public static ShadowTexture Combined_ShadowMap;
         static Shader Combin_Shadow_Shader;
         public static void Set_Combin_Shadow()
         {
