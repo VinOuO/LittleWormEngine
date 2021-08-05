@@ -12,8 +12,8 @@ namespace LittleWormEngine
 {
     class Core
     {
-        public static string Mode = "Game";
-        public static string SceneName = "Scene_Demo1" + ".lws";
+        public static string Mode = "Editor";
+        public static string SceneName = "Scene" + ".lws";
         public static Camera MainCamera;
         public static Camera LightCamera;
         public static int Width = 1600;
@@ -272,7 +272,7 @@ namespace LittleWormEngine
             }
 
         }
-        public static bool Using_ShadowMapping = true;
+        public static bool Using_ShadowMapping = false;
         static void Render_Meshes()
         {
             if (Using_ShadowMapping)

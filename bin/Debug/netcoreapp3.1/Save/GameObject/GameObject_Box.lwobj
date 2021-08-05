@@ -1,4 +1,4 @@
-Transform 6.9843016 0 0 0 0 0 1 1 1
+Transform 6.9843016 -3.8986802 0 0 0 0 1 1 1
 MeshRenderer Cube3.obj Crate.jpg 0 0 0
 BoxCollider False False 0 0 0 1 1 1
 Custom Test
