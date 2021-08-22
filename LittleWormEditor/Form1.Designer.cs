@@ -696,10 +696,12 @@ namespace LittleWorm
             this.OffSetLabel2 = new System.Windows.Forms.Label();
             this.OffSet2x = new System.Windows.Forms.TextBox();
             this.BoxColliderGroupBox = new System.Windows.Forms.GroupBox();
+            this.IsStaticCheckBox = new System.Windows.Forms.CheckBox();
             this.IsTriggerCheckBox = new System.Windows.Forms.CheckBox();
             this.Height = new System.Windows.Forms.TextBox();
             this.Radius = new System.Windows.Forms.TextBox();
             this.CapsuleColliderGroupBox = new System.Windows.Forms.GroupBox();
+            this.IsStatic2CheckBox = new System.Windows.Forms.CheckBox();
             this.IsTrigger2CheckBox = new System.Windows.Forms.CheckBox();
             this.HeightLabel = new System.Windows.Forms.Label();
             this.OffSet3x = new System.Windows.Forms.TextBox();
@@ -710,8 +712,6 @@ namespace LittleWorm
             this.OffSet3yLabel = new System.Windows.Forms.Label();
             this.OffSet3zLabel = new System.Windows.Forms.Label();
             this.RadiusLabel = new System.Windows.Forms.Label();
-            this.IsStaticCheckBox = new System.Windows.Forms.CheckBox();
-            this.IsStatic2CheckBox = new System.Windows.Forms.CheckBox();
             this.TransformGroupBox.SuspendLayout();
             this.MeshRendererGroupBox.SuspendLayout();
             this.BoxColliderGroupBox.SuspendLayout();
@@ -1402,6 +1402,17 @@ namespace LittleWorm
             this.BoxColliderGroupBox.TabStop = false;
             this.BoxColliderGroupBox.Text = "BoxCollider";
             // 
+            // IsStaticCheckBox
+            // 
+            this.IsStaticCheckBox.AutoSize = true;
+            this.IsStaticCheckBox.Location = new System.Drawing.Point(403, 38);
+            this.IsStaticCheckBox.Name = "IsStaticCheckBox";
+            this.IsStaticCheckBox.Size = new System.Drawing.Size(68, 19);
+            this.IsStaticCheckBox.TabIndex = 22;
+            this.IsStaticCheckBox.Text = "Is Static";
+            this.IsStaticCheckBox.UseVisualStyleBackColor = true;
+            this.IsStaticCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
+            // 
             // IsTriggerCheckBox
             // 
             this.IsTriggerCheckBox.AutoSize = true;
@@ -1454,6 +1465,17 @@ namespace LittleWorm
             this.CapsuleColliderGroupBox.TabIndex = 4;
             this.CapsuleColliderGroupBox.TabStop = false;
             this.CapsuleColliderGroupBox.Text = "CapsuleCollider";
+            // 
+            // IsStatic2CheckBox
+            // 
+            this.IsStatic2CheckBox.AutoSize = true;
+            this.IsStatic2CheckBox.Location = new System.Drawing.Point(403, 34);
+            this.IsStatic2CheckBox.Name = "IsStatic2CheckBox";
+            this.IsStatic2CheckBox.Size = new System.Drawing.Size(68, 19);
+            this.IsStatic2CheckBox.TabIndex = 22;
+            this.IsStatic2CheckBox.Text = "Is Static";
+            this.IsStatic2CheckBox.UseVisualStyleBackColor = true;
+            this.IsStatic2CheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
             // 
             // IsTrigger2CheckBox
             // 
@@ -1556,28 +1578,6 @@ namespace LittleWorm
             this.RadiusLabel.TabIndex = 3;
             this.RadiusLabel.Text = "Radius";
             // 
-            // IsStaticCheckBox
-            // 
-            this.IsStaticCheckBox.AutoSize = true;
-            this.IsStaticCheckBox.Location = new System.Drawing.Point(403, 38);
-            this.IsStaticCheckBox.Name = "IsStaticCheckBox";
-            this.IsStaticCheckBox.Size = new System.Drawing.Size(68, 19);
-            this.IsStaticCheckBox.TabIndex = 22;
-            this.IsStaticCheckBox.Text = "Is Static";
-            this.IsStaticCheckBox.UseVisualStyleBackColor = true;
-            this.IsStaticCheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
-            // 
-            // IsStatic2CheckBox
-            // 
-            this.IsStatic2CheckBox.AutoSize = true;
-            this.IsStatic2CheckBox.Location = new System.Drawing.Point(403, 34);
-            this.IsStatic2CheckBox.Name = "IsStatic2CheckBox";
-            this.IsStatic2CheckBox.Size = new System.Drawing.Size(68, 19);
-            this.IsStatic2CheckBox.TabIndex = 22;
-            this.IsStatic2CheckBox.Text = "Is Static";
-            this.IsStatic2CheckBox.UseVisualStyleBackColor = true;
-            this.IsStatic2CheckBox.CheckedChanged += new System.EventHandler(this.CheckBox_CheckedChanged);
-            // 
             // Inspector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1594,7 +1594,7 @@ namespace LittleWorm
             this.Controls.Add(this.AddComponentDropDown);
             this.Controls.Add(this.AddGameObjectLabel);
             this.Controls.Add(this.AddGameObject);
-            this.Controls.Add(this.Debugger);
+            //this.Controls.Add(this.Debugger);
             this.Controls.Add(this.MeshRendererGroupBox);
             this.Controls.Add(this.TransformGroupBox);
             this.Controls.Add(this.ComponentDropDown);

@@ -32,11 +32,11 @@ class Test_Mesh2 : DesignerProgram
         {
             if (GetComponent<BoxCollider>().Is_Static)
             {
-                GetComponent<BoxCollider>().Attaching_Rigibody.Set_Static(false);
+                GetComponent<BoxCollider>().Attaching_Rigidbody.Set_Static(false);
             }
             else
             {
-                GetComponent<BoxCollider>().Attaching_Rigibody.Set_Static(true);
+                GetComponent<BoxCollider>().Attaching_Rigidbody.Set_Static(true);
             }
         }
         if (Input.GetKeyDown(KeyCode.Right))
@@ -52,7 +52,7 @@ class Test_Mesh2 : DesignerProgram
             Debug.Log("T");
             transform.Position.y = 10;
         }
-        GetComponent<BoxCollider>().Attaching_Rigibody.Set_LinearVelocity(Vector3.Right * _x);
+        GetComponent<BoxCollider>().Attaching_Rigidbody.Set_LinearVelocity(Vector3.Right * _x);
         /*
         if (Input.GetKey(KeyCode.T))
         {

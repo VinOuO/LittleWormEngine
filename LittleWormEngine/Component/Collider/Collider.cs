@@ -14,7 +14,7 @@ namespace LittleWormEngine
         public string Tag { get; set; }
         public bool Started = false;
         public Vector3 OffSet { get; set; }
-        public RigidBody Attaching_Rigibody { get; set; }
+        public RigidBody Attaching_Rigidbody { get; set; }
         public List<GameObject> CollidingGameObjects = new List<GameObject>();
         public bool Is_Trigger { get; set; }
         public bool Is_Static { get; set; }
@@ -31,11 +31,11 @@ namespace LittleWormEngine
                     Attaching_GameObject.ColliderComponent = this;
                     if (!Is_Trigger)
                     {
-                        Attaching_Rigibody = new RigidBody(PhysicsWorld.Get_Rigibody(Attaching_GameObject));
-                        Attaching_Rigibody.Attaching_Collider = this;
+                        Attaching_Rigidbody = new RigidBody(PhysicsWorld.Get_Rigibody(Attaching_GameObject));
+                        Attaching_Rigidbody.Attaching_Collider = this;
                         if (Is_Static)
                         {
-                            Attaching_Rigibody.Set_Static(true);
+                            Attaching_Rigidbody.Set_Static(true);
                         }
                     }
                     break;

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "V:\\Work\\Game Project\\LittleWorm\\LittleWorm.csproj": {}
+    "V:\\Work\\Game Project\\LittleWorm_All\\Demo_Editor\\LittleWorm\\LittleWorm.csproj": {}
   },
   "projects": {
-    "V:\\Work\\Game Project\\LittleWorm\\LittleWorm.csproj": {
+    "V:\\Work\\Game Project\\LittleWorm_All\\Demo_Editor\\LittleWorm\\LittleWorm.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "V:\\Work\\Game Project\\LittleWorm\\LittleWorm.csproj",
+        "projectUniqueName": "V:\\Work\\Game Project\\LittleWorm_All\\Demo_Editor\\LittleWorm\\LittleWorm.csproj",
         "projectName": "LittleWorm",
-        "projectPath": "V:\\Work\\Game Project\\LittleWorm\\LittleWorm.csproj",
+        "projectPath": "V:\\Work\\Game Project\\LittleWorm_All\\Demo_Editor\\LittleWorm\\LittleWorm.csproj",
         "packagesPath": "C:\\Users\\Vincent\\.nuget\\packages\\",
-        "outputPath": "V:\\Work\\Game Project\\LittleWorm\\obj\\",
+        "outputPath": "V:\\Work\\Game Project\\LittleWorm_All\\Demo_Editor\\LittleWorm\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -81,6 +81,18 @@ namespace LittleWormEngine
             }
         }
 
+        public void RemoveCustomComponent<T>() where T : CustomComponent
+        {
+            foreach (CustomComponent _Component in CustomComponents)
+            {
+                if (_Component.GetType().Name == typeof(T).Name)
+                {
+                    CustomComponents.Remove(_Component);
+                    break;
+                }
+            }
+        }
+
         public void AddComponent(string _T)
         {
             Component _Adding_Component = (Component)Activator.CreateInstance(Type.GetType("LittleWormEngine." + _T));

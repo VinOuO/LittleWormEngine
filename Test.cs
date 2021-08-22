@@ -9,12 +9,12 @@ using LittleWormEngine.Mathematics;
 class Test : DesignerProgram
 {
     public string UnderWorldTexture = "Tex2.png";
-    override public void Start()
+    public override void Start()
     {
         Inis_Shader();
     }
 
-    override public void Update()
+    public override void Update()
     {
         GetComponent<MeshRenderer>().RenderShader.SetUniform("Camera_Pos", Camera.Main.Attaching_GameObject.transform.Position);
         GetComponent<MeshRenderer>().RenderShader.SetUniform("FlashLightDir", Camera.Main.Get_MouseDir());

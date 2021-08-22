@@ -127,14 +127,12 @@ namespace LittleWormEngine
         {
             Inis_ShadowMapping();
 
-            //Matrix4 _LightSpace = Matrix4.PerspectiveProjection(Core.MainCamera.zNear, Core.MainCamera.zFar, Core.MainCamera.Width, Core.MainCamera.Height, Core.MainCamera.fov) * Matrix4.GetCameraTransform() * Attaching_GameObject.transform.GetTransform(OffSet);
             LightSpace = Matrix4.Flip(Matrix4.OrthographicProjection(Core.LightCamera.zNear, Core.LightCamera.zFar, Core.LightCamera.Width, Core.LightCamera.Height, Core.LightCamera.fov, Core.LightCamera.Zoomer)) * Matrix4.RotateX(Core.LightCamera.transform.Rotation.x) * Matrix4.RotateY(Core.LightCamera.transform.Rotation.y) * Matrix4.RotateZ(Core.LightCamera.transform.Rotation.z) * Matrix4.CameraTranslation(Core.LightCamera.transform.Position) * Attaching_GameObject.transform.GetTransform(OffSet);
             ShadowShader.SetUniform("LightSpace", LightSpace);
             Debug.Log_Once(glGetProgramInfoLog(ShadowShader.Program));
 
             glViewport(0, 0, ShadowMap.Width, ShadowMap.Height);
             glBindFramebuffer(GL_FRAMEBUFFER, ShadowMap.FrameBufferID);
-            //glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
             glBindVertexArray(RenderMesh.Vao);
             Draw();
@@ -152,17 +150,7 @@ namespace LittleWormEngine
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             glActiveTexture(GL_TEXTURE0); // Texture unit i
-            /*
-            i = (int)(Time.PresentTime() / 1);
-            i %= Core.GameObjects.Count;
-            if (!Core.GameObjects[i].Is_Component_Attached("MeshRenderer"))
-            {
-                i++;
-            }
-            Debug.Log("" + i);
 
-            glBindTexture(GL_TEXTURE_2D, Core.GameObjects[i].GetComponent<MeshRenderer>().ShadowMap.TexID);
-            */
             glBindTexture(GL_TEXTURE_2D, Combined_ShadowMap.TexID);
             glUseProgram(DebugShader.Program);
             glBindVertexArray(DebugMesh.Vao);
@@ -313,29 +301,7 @@ namespace LittleWormEngine
             Set_ShadowMap();
             Set_PhongLignt();
         }
-        /* Can not use if the mesh doesn't contain normal
-        public void Set(Mesh _RenderMesh, string _TextureFileName)
-        {
-            MeshFileName = "Defined in Game";
-            TextureFileName = _TextureFileName;
-            RenderMesh = _RenderMesh;
-            RenderTextures = new List<Texture>();
-            RenderTexture = ResourceLoader.Load_Texture(_TextureFileName);
-            RenderTextures.Add(RenderTexture);
-            RenderShader = new Shader("BasicVertex.vs", "", "BasicFragment.fs");
-            RenderShader.AddUniform("transform");
-            RenderShader.AddUniform("nptransform");
-            RenderShader.AddUniform("cam_pos");
-            RenderShader.AddUniform("light_angle");
-            RenderShader.AddUniform("sampler");
 
-            if (!ShadowMapping_SetUp)
-            {
-                Set_ShadowMap();
-                ShadowMapping_SetUp = true;
-            }
-        }
-        */
         bool Using_Defult_Shader = true;
         public void Set(string _MeshFileName, string _TextureFileName)
         {
