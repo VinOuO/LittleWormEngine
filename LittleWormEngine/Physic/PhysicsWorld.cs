@@ -30,7 +30,7 @@ namespace LittleWormEngine
         ///the default constraint solver. For parallel processing you can use a different solver (see Extras/BulletMultiThreaded)
         static SequentialImpulseConstraintSolver solver;// = new SequentialImpulseConstraintSolver();
 
-        static DiscreteDynamicsWorld DynamicsWorld;// = new DiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
+        public static DiscreteDynamicsWorld DynamicsWorld;// = new DiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
         static List<CollisionShape> collisionShapes;
 
         public static void Start_Simulation()
@@ -48,14 +48,14 @@ namespace LittleWormEngine
 
         static void Create_Colliders()
         {
-            foreach(GameObject _Gameobject in Core.GameObjects)
+            foreach (GameObject _Gameobject in Core.GameObjects)
             {
                 foreach (Component _Component in _Gameobject.Components)
                 {
                     switch (_Component.GetType().Name)
                     {
                         case "BoxCollider":
-                            if(_Gameobject.Name == "Box" || _Gameobject.Name == "Ashe")
+                            if (_Gameobject.Name == "Box" || _Gameobject.Name == "Ashe")
                             {
                                 Create_Box(_Gameobject, (_Component as BoxCollider).HalfSize);
                             }
@@ -68,32 +68,31 @@ namespace LittleWormEngine
                 }
             }
         }
-
-        public static void Create_Collider(Collider _Collider)
+        public static List<Collider> Creating_Colliders = new List<Collider>();
+        public static CollisionObject Create_Collider(Collider _Collider)
         {
             switch (_Collider.GetType().Name)
             {
                 case "BoxCollider":
                     if (!_Collider.Is_Trigger)
                     {
-                        Create_Box(_Collider.Attaching_GameObject, (_Collider as BoxCollider).HalfSize);
+                        return Create_Box(_Collider.Attaching_GameObject, (_Collider as BoxCollider).HalfSize);
                     }
                     else
                     {
-                        Create_GhostBox(_Collider.Attaching_GameObject, (_Collider as BoxCollider).HalfSize);
+                        return Create_GhostBox(_Collider.Attaching_GameObject, (_Collider as BoxCollider).HalfSize);
                     }
-                    break;
                 case "CapsuleCollider":
                     if (!_Collider.Is_Trigger)
                     {
-                        Create_Capsule(_Collider.Attaching_GameObject, (_Collider as CapsuleCollider).RadiusHeight);
+                        return Create_Capsule(_Collider.Attaching_GameObject, (_Collider as CapsuleCollider).RadiusHeight);
                     }
                     else
                     {
-                        Create_GhostCapsule(_Collider.Attaching_GameObject, (_Collider as CapsuleCollider).RadiusHeight);
+                        return Create_GhostCapsule(_Collider.Attaching_GameObject, (_Collider as CapsuleCollider).RadiusHeight);
                     }
-                    break;
             }
+            return null;
         }
 
         static void Add_PairTests()
@@ -126,13 +125,13 @@ namespace LittleWormEngine
             //dynamicsWorld.Broadphase.OverlappingPairCache.SetInternalGhostPairCallback(new GhostPairCallback());
             DynamicsWorld.PairCache.SetInternalGhostPairCallback(new GhostPairCallback());
             //---init
-            DynamicsWorld.Gravity = new BulletSharp.Math.Vector3(0, -5, 0);
+            DynamicsWorld.Gravity = new BulletSharp.Math.Vector3(0, -5f, 0);
 
             //---create the ground
-            CollisionShape groundShape = new BoxShape(99999999, 10, 10);
+            CollisionShape groundShape = new BoxShape(99999999, 10, 99999999);
             collisionShapes.Add(groundShape);
             BulletSharp.Math.Matrix groundTransform = BulletSharp.Math.Matrix.Identity;
-            groundTransform.Origin = new BulletSharp.Math.Vector3(0, -60, 0);
+            groundTransform.Origin = new BulletSharp.Math.Vector3(0, -100000, 0);
 
             float mass = 0;
             //rigidbody is dynamic if and only if mass is non zero, otherwise static
@@ -164,7 +163,7 @@ namespace LittleWormEngine
         }
 
         static List<BulletSharp.RigidBody> Rigidbodys = new List<BulletSharp.RigidBody>();
-        public static void Create_Box(GameObject _GameObject, LittleWormEngine.Utility.Vector3 _HalfSize) //Use this to design collider component
+        public static CollisionObject Create_Box(GameObject _GameObject, LittleWormEngine.Utility.Vector3 _HalfSize) //Use this to design collider component
         {
             CollisionShape colShape = Create_BoxShape(_HalfSize);
             collisionShapes.Add(colShape);
@@ -172,7 +171,7 @@ namespace LittleWormEngine
             //---create a dynamic rigidbody
             BulletSharp.Math.Matrix startTransform;
             startTransform = BulletSharp.Math.Matrix.Identity;
-            
+
             float mass = 1;
 
             //rigidbody is dynamic if and only if mass is non zero, otherwise static
@@ -183,7 +182,7 @@ namespace LittleWormEngine
             {
                 colShape.CalculateLocalInertia(mass, out localInertia);
             }
-
+            //Debug.Log(_GameObject.Name, _GameObject.transform.Position, 0.1f);
             startTransform.Origin = new BulletSharp.Math.Vector3(_GameObject.transform.Position.x, _GameObject.transform.Position.y, _GameObject.transform.Position.z) * btWorldtoLWWorldScale;
 
             //using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
@@ -192,11 +191,13 @@ namespace LittleWormEngine
             BulletSharp.RigidBody body = new BulletSharp.RigidBody(rbInfo);
             body.UserObject = _GameObject;
             DynamicsWorld.AddRigidBody(body);
+            while (Is_Using_Rigidbodys) { }
             Rigidbodys.Add(body);
             //---create a dynamic rigidbody
+            return body;
         }
 
-        public static void Create_GhostBox(GameObject _GameObject, LittleWormEngine.Utility.Vector3 _HalfSize) //Use this to design collider component
+        public static CollisionObject Create_GhostBox(GameObject _GameObject, LittleWormEngine.Utility.Vector3 _HalfSize) //Use this to design collider component
         {
             CollisionShape colShape = Create_BoxShape(_HalfSize);
             collisionShapes.Add(colShape);
@@ -213,9 +214,10 @@ namespace LittleWormEngine
             DynamicsWorld.AddCollisionObject(GObj, CollisionFilterGroups.SensorTrigger, CollisionFilterGroups.AllFilter & ~CollisionFilterGroups.SensorTrigger);
             //dynamicsWorld.AddCollisionObject(GObj);
             //---create a Ghost
+            return GObj;
         }
 
-        public static void Create_Capsule(GameObject _GameObject, LittleWormEngine.Utility.Vector2 _RadiusHeight) //Use this to design collider component
+        public static CollisionObject Create_Capsule(GameObject _GameObject, LittleWormEngine.Utility.Vector2 _RadiusHeight) //Use this to design collider component
         {
             CollisionShape colShape = Create_CapsuleShape(_RadiusHeight);
             collisionShapes.Add(colShape);
@@ -234,7 +236,7 @@ namespace LittleWormEngine
             {
                 colShape.CalculateLocalInertia(mass, out localInertia);
             }
-
+            //Debug.Log(_GameObject.Name, _GameObject.transform.Position, 0.1f);
             startTransform.Origin = new BulletSharp.Math.Vector3(_GameObject.transform.Position.x, _GameObject.transform.Position.y, _GameObject.transform.Position.z) * btWorldtoLWWorldScale;
 
             //using motionstate is recommended, it provides interpolation capabilities, and only synchronizes 'active' objects
@@ -243,11 +245,13 @@ namespace LittleWormEngine
             BulletSharp.RigidBody body = new BulletSharp.RigidBody(rbInfo);
             body.UserObject = _GameObject;
             DynamicsWorld.AddRigidBody(body);
+            while (Is_Using_Rigidbodys) { }
             Rigidbodys.Add(body);
             //---create a dynamic rigidbody
+            return body;
         }
 
-        public static void Create_GhostCapsule(GameObject _GameObject, LittleWormEngine.Utility.Vector2 _RadiusHeight) //Use this to design collider component
+        public static CollisionObject Create_GhostCapsule(GameObject _GameObject, LittleWormEngine.Utility.Vector2 _RadiusHeight) //Use this to design collider component
         {
             CollisionShape colShape = Create_CapsuleShape(_RadiusHeight);
             collisionShapes.Add(colShape);
@@ -264,6 +268,7 @@ namespace LittleWormEngine
             DynamicsWorld.AddCollisionObject(GObj, CollisionFilterGroups.SensorTrigger, CollisionFilterGroups.AllFilter & ~CollisionFilterGroups.SensorTrigger);
             //dynamicsWorld.AddCollisionObject(GObj);
             //---create a Ghost
+            return GObj;
         }
 
         public static GameObject RayCastHitGameObject(Vector3 _From, Vector3 _To)
@@ -341,13 +346,13 @@ namespace LittleWormEngine
 
         public static BulletSharp.RigidBody Get_Rigibody(GameObject _GameObject)
         {
-            foreach(CollisionObject _Cobj in DynamicsWorld.CollisionObjectArray)
+            foreach (CollisionObject _Cobj in DynamicsWorld.CollisionObjectArray)
             {
-                if(_Cobj.UserObject == null)
+                if (_Cobj.UserObject == null)
                 {
                     continue;
                 }
-                if((_Cobj.UserObject as GameObject) == _GameObject)
+                if ((_Cobj.UserObject as GameObject) == _GameObject)
                 {
                     return BulletSharp.RigidBody.Upcast(_Cobj);
                 }
@@ -401,12 +406,12 @@ namespace LittleWormEngine
             }
         }
 
-
+        public static bool Is_Using_Rigidbodys = false;
         static void Simulation()
         {
             while (true)
             {
-                if(Core.Physics_Simulation_Time != 0)
+                if (Core.Physics_Simulation_Time != 0)
                 {
                     Core.Physics_Simulation_Time = 0;
                     //DynamicsWorld.UpdateAabbs();
@@ -443,15 +448,7 @@ namespace LittleWormEngine
                             }
                         }
                     }
-                    /*
-                    RaySensorCallback _Ray = new RaySensorCallback();
-                    DynamicsWorld.RayTest(Get_Vector(Vector3.Up * 100), Get_Vector(Vector3.Down * 100), _Ray);
-                    Debug.Log("HasHit: " + _Ray.HasHit);
-                    DynamicsWorld.RayTest(Get_Vector(Vector3.Backward * 100), Get_Vector(Vector3.Forward * 100), _Ray);
-                    Debug.Log("HasHit: " + _Ray.HasHit);
-                    DynamicsWorld.RayTest(Get_Vector(Vector3.Left * 100), Get_Vector(Vector3.Right * 100), _Ray);
-                    Debug.Log("HasHit: " + _Ray.HasHit);
-                    */
+                    Is_Using_Rigidbodys = true;
                     List<CollisionObject> _Objs = new List<CollisionObject>();
                     foreach (BulletSharp.RigidBody _RigA in Rigidbodys)
                     {
@@ -471,14 +468,16 @@ namespace LittleWormEngine
                             {
                                 if (_Obj.UserObject != null)
                                 {
-                                    if(_Obj.UserObject != _RigA.UserObject)
+                                    if (_Obj.UserObject != _RigA.UserObject)
                                     {
                                         _TempGameObjects.Add(_Obj.UserObject as GameObject);
                                     }
                                 }
                             }
                         }
+                        _Objs.Clear();
                     }
+                    Is_Using_Rigidbodys = false;
                 }
             }
         }

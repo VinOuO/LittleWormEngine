@@ -10,9 +10,9 @@ namespace LittleWormEngine
         public string Name { get { return Attaching_GameObject.Name; } set{ Attaching_GameObject.Name = value; } }
         public abstract void Start();
         public abstract void Update();
-        public virtual void OnCollitionEnter(GameObject _Other) { }
-        public virtual void OnCollitionStay(GameObject _Other) { }
-        public virtual void OnCollitionExit(GameObject _Other) { }
+        public virtual void OnCollisionEnter(GameObject _Other) { }
+        public virtual void OnCollisionStay(GameObject _Other) { }
+        public virtual void OnCollisionExit(GameObject _Other) { }
         public virtual void ShaderUniformUpdate() { }
         public Transform transform { get { return GetComponent<Transform>(); } }
 

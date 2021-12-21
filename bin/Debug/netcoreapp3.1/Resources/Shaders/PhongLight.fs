@@ -28,9 +28,10 @@ float IsShadow()
 
 float LightIntensity()
 {
-	float _Intensity = 0.1f + 0.6f * dot(LightDir, Normal) + 0.3f * dot(reflect(LightDir, Normal), CameraDir);
+	float _Intensity = 0.1f + 0.6f * (1-dot(-LightDir, -Normal)) + 0.3f * (dot(reflect(-LightDir, -Normal), -CameraDir));
 	return _Intensity * 0.5f + 0.5f;
 }
+
 
 void main()
 {

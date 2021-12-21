@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LittleWormEngine.Mathematics
 {
-    class LWRandom
+    static class LWRandom
     {
         public static float Range()
         {

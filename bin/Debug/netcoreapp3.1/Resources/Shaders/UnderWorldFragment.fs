@@ -14,6 +14,7 @@ uniform mat4 Transform;
 uniform mat4 NPTransform;
 uniform sampler2D UnderWorldSampler;
 uniform vec3 LightDir;
+uniform int Light_On;
 
 vec4 temp_Pos;
 
@@ -22,17 +23,28 @@ float R = 0.0f;
 
 float LightIntensity()
 {
-	float _Intensity = 0.1f + 0.6f * dot(LightDir, normal0) + 0.3f * dot(reflect(LightDir, normal0), CameraDir);
-	return _Intensity;
+	float _Intensity = 0.1f + 0.6f * (1-dot(-LightDir, -normal0)) + 0.3f * (dot(reflect(-LightDir, -normal0), -CameraDir));
+	return _Intensity * 0.5f + 0.5f;
 }
 
 void main()
 {
-	if(dot(normalize(FlashLightDir), normalize(position0 - Camera_Pos)) >= 0.99f){
-		fragColor = texture(UnderWorldSampler, texCoord0);
-	} 
-	else{
-		fragColor = texture(NormalSampler, texCoord0);
+	if(Light_On == 1)
+	{
+		if(dot(normalize(FlashLightDir), normalize(position0 - Camera_Pos)) >= 0.99f)
+		{
+			fragColor = texture(UnderWorldSampler, texCoord0);
+		} 
+		else
+		{
+			fragColor = texture(NormalSampler, texCoord0);
+		}
+		fragColor *= LightIntensity() * 0.5 + 0.5;
 	}
-    fragColor *= LightIntensity() * 0.5 + 0.5;
+	else
+	{
+		fragColor = texture(UnderWorldSampler, texCoord0);
+		fragColor *= 0.2;
+	}
+    
 }

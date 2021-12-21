@@ -76,7 +76,7 @@ namespace LittleWormEngine
                         CollidingGameObjects.Add(_GameObject);
                         foreach (CustomComponent _CustomComponent in Attaching_GameObject.CustomComponents)
                         {
-                            _CustomComponent.OnCollitionEnter(_GameObject);
+                            _CustomComponent.OnCollisionEnter(_GameObject);
                         }
                     }
                 }
@@ -88,7 +88,7 @@ namespace LittleWormEngine
                     {
                         foreach (CustomComponent _CustomComponent in Attaching_GameObject.CustomComponents)
                         {
-                            _CustomComponent.OnCollitionStay(_GameObject);
+                            _CustomComponent.OnCollisionStay(_GameObject);
                         }
                     }
                     else
@@ -96,7 +96,7 @@ namespace LittleWormEngine
                         _To_be_Remove.Add(_GameObject);
                         foreach (CustomComponent _CustomComponent in Attaching_GameObject.CustomComponents)
                         {
-                            _CustomComponent.OnCollitionExit(_GameObject);
+                            _CustomComponent.OnCollisionExit(_GameObject);
                         }
                     }
                 }

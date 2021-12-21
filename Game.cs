@@ -9,41 +9,13 @@ using LittleWormEngine.Mathematics;
 
 class Game
 {
+    static float Timer = 1;
+    static float Timer2 = 1;
+    static int Counter = 0;
+    static int Max_Counter = 6;
+    public static int Light_On = 1;
     public static void Start()
     {
-        /*
-        GameObject Ground = new GameObject("Ground");
-        Ground.AddComponent<Transform>();
-        Ground.transform.Position.y = -10;
-        Ground.transform.Scale.x = 1000;
-        Ground.transform.Scale.z = 1000;
-        Ground.AddComponent<MeshRenderer>();
-        Ground.GetComponent<MeshRenderer>().Set("Ground.obj", "Tex4.png");
-        DesignerHandler.AddGameObject(Ground);
-        */
-        /*
-        GameObject.Find("Ashe").AddCustomComponent<Test>();
-        Floor.AddCustomComponent<Test>();
-        GameObject Wall = new GameObject("Wall");
-        Wall.AddComponent<Transform>();
-        Wall.transform.Position.x = -19;
-        Wall.transform.Rotation.y = 30;
-        Wall.transform.Scale.y = 1000;
-        Wall.transform.Scale.z = 1000;
-        Wall.AddComponent<MeshRenderer>();
-        Wall.GetComponent<MeshRenderer>().Set("Floor.obj", "Tex4.png");
-        DesignerHandler.AddGameObject(Wall);
-        Wall.AddCustomComponent<Test>();
-        GameObject TeaTAble = new GameObject("TeaTAble");
-        TeaTAble.AddComponent<Transform>();
-        TeaTAble.transform.Position.x = 3f;
-        TeaTAble.transform.Position.y = -7.3f;
-        TeaTAble.transform.Position.z = -8.6f;
-        TeaTAble.AddComponent<MeshRenderer>();
-        TeaTAble.GetComponent<MeshRenderer>().Set("TeaTAble.obj", "Crate.jpg");
-        DesignerHandler.AddGameObject(TeaTAble);
-        TeaTAble.AddCustomComponent<Test>();
-        */
         GameObject Light = Core.Create_Prefab("LightCamera");
         Light.Name = "Light";
         Core.LightCamera = Light.GetComponent<Camera>();
@@ -58,6 +30,28 @@ class Game
     static GameObject Cam;
     public static void Update()
     {
+        if (Time.time > Timer && Counter == -1)
+        {
+            Timer = Time.time + LWRandom.Range()/2;
+            Counter = 0;
+            Max_Counter = (int)LWRandom.Range();
+        }
+
+        if (Time.time > Timer2 && Counter >= 0)
+        {
+            Timer2 = Time.time + 0.05f;
+            if (Counter < Max_Counter)
+            {
+                Light_On *= (Counter % 2 == 0 ? -1 : 1);
+                Counter++;
+            }
+            else
+            {
+                Light_On = 1;
+                Counter = -1;
+            }
+        }
+
         if (Input.GetKey(KeyCode.W))
         {
             Cam.transform.Position += Camera.Main.ForwardDir * Time.DeltaTime * 50;

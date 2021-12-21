@@ -12,7 +12,7 @@ namespace LittleWormEngine
 {
     class Core
     {
-        public static string Mode = "Game";
+        public static string Mode = "Editor"; //"Game": Game Mode; "Editor": Editor Mode
         public static string SceneName = "Scene_Demo1" + ".lws";
         public static Camera MainCamera;
         public static Camera LightCamera;
@@ -38,6 +38,7 @@ namespace LittleWormEngine
             Glfw.SetCursorPositionCallback(The_GameWindow, Input.Check_Cursor_Position);
             MainCamera = Get_Camera();
 
+            Time.Inis_Time();
             Game.Start();
             PhysicsWorld.Set_PhysicWorld();
             MeshRenderer.Set_Combin_Shadow();
@@ -85,20 +86,20 @@ namespace LittleWormEngine
                 This_Run_nTime = Time.Get_Time();
                 Passed_nTime = This_Run_nTime - Last_Run_nTime;
                 Last_Run_nTime = Time.Get_Time();
-                Unprossed_Time += Time.nano_to_Scend(Passed_nTime);
+                Unprossed_Time += Time.nano_to_Second(Passed_nTime);
                 FPS_Passed_nTime += Passed_nTime;
 
                 while (Unprossed_Time > Min_Elapsed_Frame_Time)
                 {
                     This_Frame_nTime = Time.Get_Time();
-                    Time.PersiceDeltaTime = Time.nano_to_Scend(This_Frame_nTime - Last_Frame_nTime);
+                    Time.PersiceDeltaTime = Time.nano_to_Second(This_Frame_nTime - Last_Frame_nTime);
                     Time.DeltaTime = (float)Time.PersiceDeltaTime;
                     Physics_Simulation_Time = Time.DeltaTime;
                     Last_Frame_nTime = Time.Get_Time();
                     Start_Rendering = true;
                     Unprossed_Time -= Min_Elapsed_Frame_Time;
 
-                    if (Time.nano_to_Scend(FPS_Passed_nTime) > 0.5f)
+                    if (Time.nano_to_Second(FPS_Passed_nTime) > 0.5f)
                     {
                         //**********************************FPS
                         //Console.WriteLine(FPS_Frame_Num * 2);
@@ -272,7 +273,7 @@ namespace LittleWormEngine
             }
 
         }
-        public static bool Using_ShadowMapping = true;
+        public static bool Using_ShadowMapping = false;
         static void Render_Meshes()
         {
             if (Using_ShadowMapping)
@@ -480,8 +481,8 @@ namespace LittleWormEngine
             switch (Mode)
             {
                 case "Game":
-                    The_GameWindow = GameWindow.Create_Window(Width, Height, "Game");
-                    //The_GameWindow = GameWindow.Create_Window("Game");
+                    //The_GameWindow = GameWindow.Create_Window(Width, Height, "Game");
+                    The_GameWindow = GameWindow.Create_Window("Game");
                     break;
                 case "Editor":
                     The_GameWindow = GameWindow.Create_Window(Width, Height, "Scene");
