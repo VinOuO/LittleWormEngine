@@ -12,7 +12,7 @@ namespace LittleWormEngine
 {
     class Core
     {
-        public static string Mode = "Editor"; //"Game": Game Mode; "Editor": Editor Mode
+        public static string Mode = "Game"; //"Game": Game Mode; "Editor": Editor Mode
         public static string SceneName = "Scene_Demo1" + ".lws";
         public static Camera MainCamera;
         public static Camera LightCamera;
