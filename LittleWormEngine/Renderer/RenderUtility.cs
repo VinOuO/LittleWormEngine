@@ -28,7 +28,7 @@ namespace LittleWormEngine.Renderer
 
         public static void InitGraphics()
         {
-            glClearColor(0, 0, 0, 1);
+            glClearColor(0.37f, 0.98f, 1, 1);
             glEnable(GL_CULL_FACE);
             glEnable(GL_DEPTH_TEST);
             //glDepthFunc(GL_ALWAYS);

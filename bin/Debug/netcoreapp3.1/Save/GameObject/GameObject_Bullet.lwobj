@@ -1,0 +1,3 @@
+Transform -1.4285704 -10 -71.764824 0 0 0 0.1 0.1 0.1
+MeshRenderer Bullet.obj Bullet_Texture.png 0 0 0
+CapsuleCollider False False 0 0 0 1 1

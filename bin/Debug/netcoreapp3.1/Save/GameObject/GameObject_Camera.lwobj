@@ -1,2 +1,5 @@
 Camera
-Transform 0 -4.2086153 -44.101505 0 0 0 1 1 1
+Transform 0 -10.62342 -81.48785 0 0 0 1 1 1
+CapsuleCollider False False 0 0 0 1 1
+Custom Spawn_Enemy
+Custom Player

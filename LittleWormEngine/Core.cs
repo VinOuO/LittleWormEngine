@@ -12,7 +12,7 @@ namespace LittleWormEngine
 {
     class Core
     {
-        public static string Mode = "Editor";
+        public static string Mode = "Game";
         public static string SceneName = "Scene" + ".lws";
         public static Camera MainCamera;
         public static Camera LightCamera;
@@ -101,7 +101,7 @@ namespace LittleWormEngine
                     if (Time.nano_to_Scend(FPS_Passed_nTime) > 0.5f)
                     {
                         //**********************************FPS
-                        //Console.WriteLine(FPS_Frame_Num * 2);
+                        Console.WriteLine(FPS_Frame_Num * 2);
                         //**********************************FPS
                         FPS_Passed_nTime = 0;
                         FPS_Frame_Num = 0;
@@ -392,6 +392,7 @@ namespace LittleWormEngine
 
             while (DeletingGameObjects.Count > 0)
             {
+                DeletingGameObjects[0].ColliderComponent.Remove_Collider();
                 GameObjects.Remove(DeletingGameObjects[0]);
                 DeletingGameObjects.RemoveAt(0);
             }
@@ -480,8 +481,8 @@ namespace LittleWormEngine
             switch (Mode)
             {
                 case "Game":
-                    The_GameWindow = GameWindow.Create_Window(Width, Height, "Game");
-                    //The_GameWindow = GameWindow.Create_Window("Game");
+                    //The_GameWindow = GameWindow.Create_Window(Width, Height, "Game");
+                    The_GameWindow = GameWindow.Create_Window("Game");
                     break;
                 case "Editor":
                     The_GameWindow = GameWindow.Create_Window(Width, Height, "Scene");

@@ -11,6 +11,12 @@ class Game
 {
     public static void Start()
     {
+        foreach (GameObject _GameObject in Core.GameObjects)
+        {
+            Debug.Log(_GameObject.Name);
+        }
+        //GameObject.Find("Camera").AddCustomComponent<Player>();
+        GameObject.Find("Floor").AddCustomComponent<Floor>();
         /*
         GameObject Ground = new GameObject("Ground");
         Ground.AddComponent<Transform>();
@@ -43,7 +49,7 @@ class Game
         TeaTAble.GetComponent<MeshRenderer>().Set("TeaTAble.obj", "Crate.jpg");
         DesignerHandler.AddGameObject(TeaTAble);
         TeaTAble.AddCustomComponent<Test>();
-        */
+        
         if(Core.SceneName == "Scene_Demo1" + ".lws")
         {
             GameObject Light = Core.Create_Prefab("LightCamera");
@@ -57,11 +63,13 @@ class Game
             GameObject.Find("Closet").GetCustomComponent<Test>().UnderWorldTexture = "Closet_Under.png";
             Cam = GameObject.Find("Camera");
         }
-        
+        */
+
     }
     static GameObject Cam;
     public static void Update()
     {
+        /*
         if (Core.SceneName == "Scene_Demo1" + ".lws")
         {
             if (Input.GetKey(KeyCode.W))
@@ -106,8 +114,23 @@ class Game
                     break;
             }
         }
-            
+        */
+        switch (Core.Mode)
+        {
+            case "Editor":
 
+                break;
+            case "Game":
+                if (Camera.Get_MousePos().x > 0.8f)
+                {
+                    Camera.Main.transform.Rotation.y += Time.DeltaTime * 30;
+                }
+                else if (Camera.Get_MousePos().x < -0.8f)
+                {
+                    Camera.Main.transform.Rotation.y -= Time.DeltaTime * 30;
+                }
+                break;
+        }
 
     }
 

@@ -7,6 +7,8 @@ namespace LittleWormEngine
 {
     class GameObject
     {
+        static int Game_Obj_Num = 0;
+        int ID;
         public string Name;
         public List<Component> RenderComponents = new List<Component>();
         public List<GameObject> CollidingGameObjects = new List<GameObject>();
@@ -17,16 +19,23 @@ namespace LittleWormEngine
 
         public Transform transform { get { return GetComponent<Transform>(); } }
 
-        public GameObject() { }
+        public GameObject() { ID = Game_Obj_Num; Game_Obj_Num++; Debug.Log(ID + " is Spawned!"); }
+
+        ~GameObject()
+        {
+            Debug.Log(ID + " " + Name + " is deleted!");
+        }
 
         public GameObject(string _Name)
         {
             Name = _Name;
+            ID = Game_Obj_Num; Game_Obj_Num++;
+            Debug.Log(ID + " " + Name + " is Spawned!");
         }
 
         public void Remove()
         {
-            Core.GameObjects.Remove(this);
+            Core.Delet_GameObject(this);
         }
 
         public void AddComponent<T>() where T : Component

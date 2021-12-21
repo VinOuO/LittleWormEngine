@@ -59,9 +59,9 @@ namespace LittleWormEngine
                 RenderShader.SetUniform("transform", Attaching_GameObject.GetComponent<Transform>().GetProjectdTransform(OffSet));
                 RenderShader.SetUniform("nptransform", Attaching_GameObject.GetComponent<Transform>().GetTransform(OffSet));
                 RenderShader.SetUniform("cam_pos", Camera.Main.Attaching_GameObject.transform.Position);
-                Light_Dir = Matrix3.RotateY(30 * Time.DeltaTime) * Light_Dir;
-                _temp = Matrix3.RotateX(-Attaching_GameObject.GetComponent<Transform>().Rotation.x) * (Matrix3.RotateY(-Attaching_GameObject.GetComponent<Transform>().Rotation.y) * (Matrix3.RotateZ(-Attaching_GameObject.GetComponent<Transform>().Rotation.z) * Light_Dir.Normalize()));
-                RenderShader.SetUniform("light_angle", _temp);
+                //Light_Dir = Matrix3.RotateY(30 * Time.DeltaTime) * Light_Dir;
+                //_temp = Matrix3.RotateX(-Attaching_GameObject.GetComponent<Transform>().Rotation.x) * (Matrix3.RotateY(-Attaching_GameObject.GetComponent<Transform>().Rotation.y) * (Matrix3.RotateZ(-Attaching_GameObject.GetComponent<Transform>().Rotation.z) * Light_Dir.Normalize()));
+                //RenderShader.SetUniform("light_angle", _temp);
             }
             else
             {
@@ -317,6 +317,7 @@ namespace LittleWormEngine
             RenderShader.AddUniform("cam_pos");
             RenderShader.AddUniform("light_angle");
             RenderShader.AddUniform("sampler");
+            RenderShader.SetUniform("light_angle", Vector3.Right + Vector3.Up);
         }
 
         void Reset_Mesh()

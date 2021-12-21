@@ -53,7 +53,8 @@ namespace LittleWormEngine.Utility
 
         public static float Distance(Vector3 _a, Vector3 _b)
         {
-            return (float)Math.Sqrt(_a.x * _b.x + _a.y * _b.y + _a.z * _b.z);
+            Vector3 _Temp = _a - _b;
+            return (float)Math.Sqrt(_Temp.x * _Temp.x + _Temp.y * _Temp.y + _Temp.z * _Temp.z);
         }
         
         public Vector3 Rotate(Vector3 _Rotate_xyz)

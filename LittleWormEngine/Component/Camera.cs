@@ -74,7 +74,7 @@ namespace LittleWormEngine
             if (Input.GetKeyDown(MouseCode.Left))
             {
                 //Debug.Log(_TempVec3);
-                Debug.Log(ForwardDir);
+                //Debug.Log(ForwardDir);
                 //Debug.Log(Mathematics.Math_of_Rotation.ForwardBasedRotate(_TempVec3, Vector3.Forward));
             }
             return Mathematics.Math_of_Rotation.ForwardBasedRotate(_TempVec3, ForwardDir, Vector3.Up);

@@ -15,9 +15,15 @@ namespace LittleWormEngine
         public bool Started = false;
         public Vector3 OffSet { get; set; }
         public RigidBody Attaching_Rigidbody { get; set; }
+        BulletSharp.CollisionObject CObj;
         public List<GameObject> CollidingGameObjects = new List<GameObject>();
         public bool Is_Trigger { get; set; }
         public bool Is_Static { get; set; }
+
+        ~Collider()
+        {
+            Debug.Log("Collider Bye");
+        }
 
         public void Start()
         {
@@ -27,7 +33,7 @@ namespace LittleWormEngine
                     Set_Mesh(ColliderMesh(), new Shader("ColliderVertex.vs", "", "ColliderFragment.fs"));
                     break;
                 case "Game":
-                    PhysicsWorld.Create_Collider(this);
+                    CObj = PhysicsWorld.Create_Collider(this);
                     Attaching_GameObject.ColliderComponent = this;
                     if (!Is_Trigger)
                     {
@@ -76,7 +82,7 @@ namespace LittleWormEngine
                         CollidingGameObjects.Add(_GameObject);
                         foreach (CustomComponent _CustomComponent in Attaching_GameObject.CustomComponents)
                         {
-                            _CustomComponent.OnCollitionEnter(_GameObject);
+                            _CustomComponent.OnCollisionEnter(_GameObject);
                         }
                     }
                 }
@@ -88,7 +94,7 @@ namespace LittleWormEngine
                     {
                         foreach (CustomComponent _CustomComponent in Attaching_GameObject.CustomComponents)
                         {
-                            _CustomComponent.OnCollitionStay(_GameObject);
+                            _CustomComponent.OnCollisionStay(_GameObject);
                         }
                     }
                     else
@@ -96,7 +102,7 @@ namespace LittleWormEngine
                         _To_be_Remove.Add(_GameObject);
                         foreach (CustomComponent _CustomComponent in Attaching_GameObject.CustomComponents)
                         {
-                            _CustomComponent.OnCollitionExit(_GameObject);
+                            _CustomComponent.OnCollisionExit(_GameObject);
                         }
                     }
                 }
@@ -107,6 +113,21 @@ namespace LittleWormEngine
                 }
             }
 
+        }
+
+        public void Remove_Collider()
+        {
+            //while (PhysicsWorld.Is_Using_Rigidbodys) { }
+            
+            //Debug.Log("Try to delet collider");
+            PhysicsWorld.DynamicsWorld.RemoveCollisionObject(CObj);
+            if (!Is_Trigger)
+            {
+                //Debug.Log("Try to delet rigidbody");
+                PhysicsWorld.DynamicsWorld.RemoveRigidBody(Attaching_Rigidbody.Rig);
+                Attaching_Rigidbody.Attaching_Collider = null;
+                Attaching_Rigidbody = null;
+            }
         }
 
         public void Set_Position(Vector3 _Pos)

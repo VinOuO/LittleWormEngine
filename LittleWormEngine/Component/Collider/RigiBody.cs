@@ -7,7 +7,7 @@ namespace LittleWormEngine
     class RigidBody
     {
         public Collider Attaching_Collider;
-        BulletSharp.RigidBody Rig;
+        public BulletSharp.RigidBody Rig;
         float Mass;
 
         public RigidBody(BulletSharp.RigidBody _Rig)

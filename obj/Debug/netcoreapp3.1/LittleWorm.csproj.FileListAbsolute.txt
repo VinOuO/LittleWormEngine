@@ -67,3 +67,117 @@ V:\Work\Game Project\LittleWorm_All\Demo_Editor\LittleWorm\obj\Debug\netcoreapp3
 V:\Work\Game Project\LittleWorm_All\Demo_Editor\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.dll
 V:\Work\Game Project\LittleWorm_All\Demo_Editor\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.pdb
 V:\Work\Game Project\LittleWorm_All\Demo_Editor\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.genruntimeconfig.cache
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.exe
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.deps.json
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.runtimeconfig.json
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.runtimeconfig.dev.json
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.dll
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.pdb
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\BulletSharp.dll
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\Microsoft.Win32.SystemEvents.dll
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\System.Drawing.Common.dll
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.Inspector.resources
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.LittleWormEngine.GLFW.Strings.resources
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.csproj.GenerateResource.cache
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.AssemblyInfoInputs.cache
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.AssemblyInfo.cs
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.csproj.CoreCompileInputs.cache
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.csproj.CopyComplete
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.dll
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.pdb
+V:\Work\Game Project\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.genruntimeconfig.cache
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.exe
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.deps.json
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.runtimeconfig.json
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.runtimeconfig.dev.json
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.dll
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.pdb
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\BulletSharp.dll
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\Microsoft.Win32.SystemEvents.dll
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\System.Drawing.Common.dll
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.csprojAssemblyReference.cache
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.Inspector.resources
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.LittleWormEngine.GLFW.Strings.resources
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.csproj.GenerateResource.cache
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.AssemblyInfoInputs.cache
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.AssemblyInfo.cs
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.csproj.CoreCompileInputs.cache
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.csproj.CopyComplete
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.dll
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.pdb
+D:\Vincent\Work\碩士\Thesis\LittleWorm_All\Demo_Editor_Empty\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.genruntimeconfig.cache
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.exe
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.deps.json
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.runtimeconfig.json
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.runtimeconfig.dev.json
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.dll
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.pdb
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\BulletSharp.dll
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\Microsoft.Win32.SystemEvents.dll
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\System.Drawing.Common.dll
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.csprojAssemblyReference.cache
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.Inspector.resources
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.LittleWormEngine.GLFW.Strings.resources
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.csproj.GenerateResource.cache
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.AssemblyInfoInputs.cache
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.AssemblyInfo.cs
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.csproj.CoreCompileInputs.cache
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.csproj.CopyComplete
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.dll
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.pdb
+V:\Work\Game Project\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.genruntimeconfig.cache
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.exe
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.deps.json
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.runtimeconfig.json
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.runtimeconfig.dev.json
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.dll
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.pdb
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\BulletSharp.dll
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\Microsoft.Win32.SystemEvents.dll
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\System.Drawing.Common.dll
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.csprojAssemblyReference.cache
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.Inspector.resources
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.LittleWormEngine.GLFW.Strings.resources
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.csproj.GenerateResource.cache
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.AssemblyInfoInputs.cache
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.AssemblyInfo.cs
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.csproj.CoreCompileInputs.cache
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.csproj.CopyComplete
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.dll
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.pdb
+E:\Data\Vincent\Work\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.genruntimeconfig.cache
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.exe
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.deps.json
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.runtimeconfig.json
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.runtimeconfig.dev.json
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.dll
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\LittleWorm.pdb
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\BulletSharp.dll
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\Microsoft.Win32.SystemEvents.dll
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\System.Drawing.Common.dll
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.csprojAssemblyReference.cache
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.Inspector.resources
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.LittleWormEngine.GLFW.Strings.resources
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.csproj.GenerateResource.cache
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.AssemblyInfoInputs.cache
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.AssemblyInfo.cs
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.csproj.CoreCompileInputs.cache
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.csproj.CopyComplete
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.dll
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.pdb
+E:\Data\Vincent\Work\Thesis\LittleWorm_All\Demo2\LittleWorm\obj\Debug\netcoreapp3.1\LittleWorm.genruntimeconfig.cache
